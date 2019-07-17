@@ -70,8 +70,8 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("会写代码的怪叔叔");
+        gc.setOutputDir(projectPath + "byte-easy/src/main/java");
+        gc.setAuthor("艾乐");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
 
