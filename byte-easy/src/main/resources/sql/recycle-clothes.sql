@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-07-17 19:26:27
+Date: 2019-07-17 20:21:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -210,12 +210,12 @@ CREATE TABLE `sys_generator` (
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_generator
 -- ----------------------------
-INSERT INTO `sys_generator` VALUES ('1', 'admin', 'weixin_user', '0', '', '1', '2019-04-20 15:27:14', '2019-04-20 15:27:14');
+INSERT INTO `sys_generator` VALUES ('3', 'admin', 't_person', '1', 't_', '1', '2019-07-13 10:06:35', '2019-07-13 10:06:35');
 
 -- ----------------------------
 -- Table structure for `sys_organization`
@@ -249,7 +249,7 @@ CREATE TABLE `sys_resource` (
   `parent_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK3fekum3ead5klp7y4lckn5ohi` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_resource
@@ -272,12 +272,8 @@ INSERT INTO `sys_resource` VALUES ('16', null, '权限编辑', '100', '/resource
 INSERT INTO `sys_resource` VALUES ('150', '', '编辑管理员信息', '100', '/user/edit-user', '1', '/user/edit-user', '5');
 INSERT INTO `sys_resource` VALUES ('154', null, '代码生成工具', '1', '/generator/sysGenerator', '0', '/generator/sysGenerator', '1');
 INSERT INTO `sys_resource` VALUES ('155', null, '基础页面生成', '1', '/generator/sysGenerator', '0', '/generator/sysGenerator', '154');
-INSERT INTO `sys_resource` VALUES ('156', null, '马里奥', '1', '', '0', '', '1');
-INSERT INTO `sys_resource` VALUES ('157', null, '马里奥1', '1', '', '0', '/food/tFood', '156');
-INSERT INTO `sys_resource` VALUES ('164', null, '舒克', '1', '', '0', '', '1');
-INSERT INTO `sys_resource` VALUES ('165', null, '舒克1', '1', '', '0', 'animal/tAnimal', '164');
-INSERT INTO `sys_resource` VALUES ('174', null, '人员管理', '1', '', '0', '', '1');
-INSERT INTO `sys_resource` VALUES ('175', null, '人员管理模块', '1', '', '0', '/peoples/tPeoples', '174');
+INSERT INTO `sys_resource` VALUES ('156', null, '微信用户管理', '1', '/admin/person', '0', '/admin/person', '157');
+INSERT INTO `sys_resource` VALUES ('157', null, '微信用户', '1', '', '0', '', '1');
 
 -- ----------------------------
 -- Table structure for `sys_role`
@@ -327,8 +323,8 @@ INSERT INTO `sys_role_resources` VALUES ('1', '14');
 INSERT INTO `sys_role_resources` VALUES ('1', '150');
 INSERT INTO `sys_role_resources` VALUES ('1', '154');
 INSERT INTO `sys_role_resources` VALUES ('1', '155');
-INSERT INTO `sys_role_resources` VALUES ('1', '182');
-INSERT INTO `sys_role_resources` VALUES ('1', '183');
+INSERT INTO `sys_role_resources` VALUES ('1', '157');
+INSERT INTO `sys_role_resources` VALUES ('1', '156');
 
 -- ----------------------------
 -- Table structure for `sys_user`
@@ -350,7 +346,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '2017-07-11 17:42:18', '$2a$10$SIU57gfkh/TsIVYALXBNAeDnQzkm652FT9cg4h8wtEfC306uliyYa', '2019-04-16 17:13:21', 'admin', '', '1191134106@qq.com', '15030103078', '1');
+INSERT INTO `sys_user` VALUES ('1', '2017-07-11 17:42:18', '$2a$10$SIU57gfkh/TsIVYALXBNAeDnQzkm652FT9cg4h8wtEfC306uliyYa', '2019-06-20 14:19:58', 'admin', '', '1191134106@qq.com', '15030103078', '1');
 
 -- ----------------------------
 -- Table structure for `sys_user_roles`
@@ -367,6 +363,26 @@ CREATE TABLE `sys_user_roles` (
 -- Records of sys_user_roles
 -- ----------------------------
 INSERT INTO `sys_user_roles` VALUES ('1', '1');
+
+-- ----------------------------
+-- Table structure for `t_person`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_person`;
+CREATE TABLE `t_person` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `cre_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `file_path` varchar(100) DEFAULT NULL COMMENT '头像',
+  `descrption` text COMMENT '简介',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_person
+-- ----------------------------
+INSERT INTO `t_person` VALUES ('1', 'ce', null, '/fileSuffix/20190713/20190713101256498_WAQIS2.jpg', '<p>123123123<br/></p>');
+INSERT INTO `t_person` VALUES ('2', '123', '2019-07-17 00:00:00', '/fileSuffix/20190713/20190713101555845_CP6UAN.jpg', '<p>123<br/></p>');
+INSERT INTO `t_person` VALUES ('3', '123', '2019-07-13 00:02:00', '/fileSuffix/20190713/20190713101609759_GONYUD.jpg', '<p>123123<br/></p>');
 
 -- ----------------------------
 -- Table structure for `user_prop`
