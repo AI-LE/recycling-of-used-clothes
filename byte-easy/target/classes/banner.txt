@@ -1,2 +1,12 @@
 recycle-clothes
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+秦策
+艾乐
+魏皓
+刘鹏
+=======
+>>>>>>> 67074eba0bc7455b5142451506936f6a1ebdb91f
+>>>>>>> c7d7d4077010acf9fceee8ccdb1e5a32ad04cbff
