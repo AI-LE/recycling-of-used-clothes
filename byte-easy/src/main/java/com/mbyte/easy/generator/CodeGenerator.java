@@ -50,7 +50,7 @@ public class CodeGenerator {
         /**
          * 输入表名和模块名
          */
-        String moduleName = scanner("模块名");
+        String moduleName = "recycle";
         String tableName = scanner("表名");
         String ignoreFlag = scanner("是否忽略指定前缀(1为是其它为否)");
         String ignorePrefix = null;
@@ -70,7 +70,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "byte-easy/src/main/java");
+        gc.setOutputDir(projectPath + "/byte-easy/src/main/java");
         gc.setAuthor("艾乐");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
@@ -189,7 +189,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义Mapper.xml文件存放的路径
-                return projectPath + "/src/main/resources/mybatis/mapper/" + tableInfo.getEntityName().toLowerCase()
+                return projectPath + "/byte-easy/src/main/resources/mybatis/mapper/recycle/"
                         + File.separator + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
