@@ -198,7 +198,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 System.out.println("tableInfo:"+tableInfo);
-                String expand = projectPath + File.separator + "src/main/java/com/mbyte/easy" + File.separator  + pc.getModuleName() + "/controller";
+                String expand = projectPath + File.separator + "/byte-easy/src/main/java/com/mbyte/easy" + File.separator  + pc.getModuleName() + "/controller";
                 String entityFile = String.format((expand + File.separator + "%s" + ".java"), tableInfo.getControllerName());
                 return entityFile;
             }
