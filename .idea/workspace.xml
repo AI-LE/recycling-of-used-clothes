@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a78ccd6-0fc0-4133-ab76-fadef50da331" name="Default Changelist" comment="" />
+    <list default="true" id="8a78ccd6-0fc0-4133-ab76-fadef50da331" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/byte-easy/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/byte-easy/.gitignore" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/byte-easy/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,17 +19,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byte-easy/src/main/resources/banner.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="72">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byte-easy/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+            <state relative-caret-position="648">
+              <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -80,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/generator/CodeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="132" column="25" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="25" />
+            <state relative-caret-position="520">
+              <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
               <folding>
                 <element signature="e#3772#5782#0" expanded="true" />
                 <element signature="e#5781#5782#0" expanded="true" />
@@ -237,6 +239,18 @@
               <item name="byte-easy" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="mbyte" type="462c0819:PsiDirectoryNode" />
+              <item name="easy" type="462c0819:PsiDirectoryNode" />
+              <item name="generator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="recycling-of-used-clothes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="recycling-of-used-clothes" type="462c0819:PsiDirectoryNode" />
+              <item name="byte-easy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -347,12 +361,12 @@
       <option name="presentableId" value="Default" />
       <updated>1563362238371</updated>
       <workItem from="1563362241198" duration="1582000" />
-      <workItem from="1563364737135" duration="6712000" />
+      <workItem from="1563364737135" duration="6955000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8294000" />
+    <option name="totallyTimeSpent" value="8537000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -447,23 +461,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/admin/controller/PersonController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-432">
-          <caret line="28" column="30" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="30" />
-          <folding>
-            <element signature="e#1631#1639#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/security/auth/CustomWebAuthenticationDetails.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/security/auth/CustomAuthenticationDetailsSource.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -510,13 +507,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/security/auth/MyAuthenticationProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1848">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/contorller/test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
@@ -537,28 +527,52 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mbyte/easy/recyle/controller/GoodsImgController.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/generator/CodeGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="132" column="25" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="25" />
-          <folding>
-            <element signature="e#3772#5782#0" expanded="true" />
-            <element signature="e#5781#5782#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/byte-easy/src/main/resources/banner.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="72">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/byte-easy/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        <state relative-caret-position="648">
+          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/security/auth/CustomWebAuthenticationDetails.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/security/auth/MyAuthenticationProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1848">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/admin/controller/PersonController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-432">
+          <caret line="28" column="30" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="30" />
+          <folding>
+            <element signature="e#1631#1639#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/generator/CodeGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
+          <folding>
+            <element signature="e#3772#5782#0" expanded="true" />
+            <element signature="e#5781#5782#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
