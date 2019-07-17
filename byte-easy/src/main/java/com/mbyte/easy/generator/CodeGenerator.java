@@ -204,7 +204,7 @@ public class CodeGenerator {
             }
         });
 
-        String templatesPath = projectPath + File.separator + "src/main/resources/templates" + File.separator + pc.getModuleName();
+        String templatesPath = projectPath + File.separator + "/byte-easy/src/main/resources/templates" + File.separator + pc.getModuleName();
         focList.add(new FileOutConfig("/generator/template/list.html.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
