@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a78ccd6-0fc0-4133-ab76-fadef50da331" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/byte-easy/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/byte-easy/src/main/resources/banner.txt" afterDir="false" />
-    </list>
+    <list default="true" id="8a78ccd6-0fc0-4133-ab76-fadef50da331" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/byte-easy/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +14,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/byte-easy/src/main/resources/banner.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
               <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/byte-easy/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="552">
+              <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -114,11 +121,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/byte-easy/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/byte-easy/.gitignore" />
         <option value="$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/config/WebSecurityConfig.java" />
         <option value="$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/recycle/controller/GoodsController.java" />
         <option value="$PROJECT_DIR$/byte-easy/src/main/java/com/mbyte/easy/generator/CodeGenerator.java" />
         <option value="$PROJECT_DIR$/byte-easy/src/main/resources/banner.txt" />
+        <option value="$PROJECT_DIR$/byte-easy/.gitignore" />
       </list>
     </option>
   </component>
@@ -340,16 +347,15 @@
       <option name="presentableId" value="Default" />
       <updated>1563362238371</updated>
       <workItem from="1563362241198" duration="1582000" />
-      <workItem from="1563364737135" duration="6450000" />
+      <workItem from="1563364737135" duration="6712000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8032000" />
+    <option name="totallyTimeSpent" value="8294000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32889125" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -421,13 +427,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="3" column="80" selection-start-line="3" selection-start-column="80" selection-end-line="3" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/byte-easy/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="27" column="14" lean-forward="true" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -553,6 +552,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/byte-easy/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
         </state>
       </provider>
     </entry>
