@@ -235,7 +235,6 @@ public class CodeGenerator {
         mpg.setCfg(injectionConfig);
         mpg.setTemplate(new TemplateConfig().setXml(null));
 
-
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
