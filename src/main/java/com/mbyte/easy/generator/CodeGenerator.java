@@ -70,8 +70,8 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/byte-easy/src/main/java");
-        gc.setAuthor("艾乐");
+        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setAuthor("Author");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
 
@@ -189,7 +189,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义Mapper.xml文件存放的路径
-                return projectPath + "/byte-easy/src/main/resources/mybatis/mapper/recycle/"
+                return projectPath + "/src/main/resources/mybatis/mapper/recycle/"
                         + File.separator + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
@@ -198,13 +198,13 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 System.out.println("tableInfo:"+tableInfo);
-                String expand = projectPath + File.separator + "/byte-easy/src/main/java/com/mbyte/easy" + File.separator  + pc.getModuleName() + "/controller";
+                String expand = projectPath + File.separator + "/src/main/java/com/mbyte/easy" + File.separator  + pc.getModuleName() + "/controller";
                 String entityFile = String.format((expand + File.separator + "%s" + ".java"), tableInfo.getControllerName());
                 return entityFile;
             }
         });
 
-        String templatesPath = projectPath + File.separator + "/byte-easy/src/main/resources/templates" + File.separator + pc.getModuleName();
+        String templatesPath = projectPath + File.separator + "/src/main/resources/templates" + File.separator + pc.getModuleName();
         focList.add(new FileOutConfig("/generator/template/list.html.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
