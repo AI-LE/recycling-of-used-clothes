@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Author
  * @since 2019-07-18
  */
-public interface IPubService  {
+public interface IWeixinUserService extends IService<WeixinUser> {
 
 }
