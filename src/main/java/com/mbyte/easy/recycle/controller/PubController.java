@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -113,5 +114,11 @@ public class PubController extends BaseController {
         return this.success();
     }
 
+
+    @RequestMapping("back")
+    @ResponseBody
+    public String backTest(){
+        return "backTest";
+    }
 
 }
