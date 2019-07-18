@@ -95,6 +95,23 @@ public class PubController extends BaseController {
         return error();
     }
 
+    /**
+     * 绑定用户信息
+     */
+    @RequestMapping(value = {"/getInfo"})
+    public AjaxResult getInfo(WeixinUser weixinUser){
+        QueryWrapper<WeixinUser> queryWrapper = new QueryWrapper<WeixinUser>();
+        if (weixinUser.getOpenId() != null && !"".equals(weixinUser.getOpenId())) {
+                queryWrapper = queryWrapper.eq("openId", weixinUser.getOpenId());
+            }
+            WeixinUser oldUser = weixinUserService.getOne(queryWrapper);
+            if (oldUser != null) {
+                weixinUserService.update(weixinUser, queryWrapper);
+            } else {
+                weixinUserService.save(weixinUser);
+            }
+        return this.success();
+    }
 
 
 }
