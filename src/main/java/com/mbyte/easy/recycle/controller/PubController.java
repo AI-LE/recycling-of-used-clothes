@@ -11,7 +11,6 @@ import com.mbyte.easy.recycle.mapper.UserPropMapper;
 import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.vo.WeChatAppLoginReq;
-import org.apache.catalina.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
