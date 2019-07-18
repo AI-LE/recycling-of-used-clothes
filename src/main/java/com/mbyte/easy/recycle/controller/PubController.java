@@ -6,9 +6,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.recycle.entity.WeixinUser;
+import com.mbyte.easy.vo.WeChatAppLoginReq;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,14 +72,14 @@ public class PubController extends BaseController {
             if (weixinUser.getOpenId() != null && !"".equals(weixinUser.getOpenId())) {
                 queryWrapper = queryWrapper.eq("openId", weixinUser.getOpenId());
             }
-            WeixinUser oldUser = weixinUserService.getOne(queryWrapper);
-            weixinUser.setCreatetime(LocalDateTime.now());
-
-            if (oldUser != null) {
-                weixinUserService.update(weixinUser, queryWrapper);
-            } else {
-                weixinUserService.save(weixinUser);
-            }
+//            WeixinUser oldUser = weixinUserService.getOne(queryWrapper);
+//            weixinUser.setCreatetime(LocalDateTime.now());
+//
+//            if (oldUser != null) {
+//                weixinUserService.update(weixinUser, queryWrapper);
+//            } else {
+//                weixinUserService.save(weixinUser);
+//            }
             Map<String, Object> map = new HashMap<String, Object>();
             String openId = jsonObject.getString("openid");
             map.put("openId", openId);
