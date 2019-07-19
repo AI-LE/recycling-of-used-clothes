@@ -12,7 +12,6 @@ import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.recycle.service.IPubService;
 import com.mbyte.easy.vo.WeChatAppLoginReq;
-import org.apache.catalina.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
