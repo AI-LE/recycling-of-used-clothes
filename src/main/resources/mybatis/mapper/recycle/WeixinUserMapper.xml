@@ -19,6 +19,10 @@
               id,
       nickName, gender, language, city, province, avatarUrl, openId, type, account, phone
   </sql>
+    <insert id="insertWeixinUser" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+        insert  into weixin_user (openId)
+        value (#{openId})
+    </insert>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
 <!--

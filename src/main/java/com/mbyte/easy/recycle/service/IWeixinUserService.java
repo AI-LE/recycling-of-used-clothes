@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IWeixinUserService extends IService<WeixinUser> {
 
+    Long insertWeixinUser(WeixinUser weixinUser);
 }

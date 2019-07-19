@@ -59,9 +59,9 @@ public class PubController extends BaseController {
     /**
      * 获得微信授权
      */
-    @RequestMapping(value = {"/getOpenId"})
+    @RequestMapping("/wechatuser")
     public AjaxResult getOpenId(@ModelAttribute WeChatAppLoginReq req) throws IOException {
-
+        System.out.println("______________Weixin authorized_________________");
         /**
          * TODO 小程序登录时获取的 code
          **/
@@ -82,7 +82,16 @@ public class PubController extends BaseController {
             JSONObject jsonObject = JSON.parseObject(result);
             Map<String, Object> map = new HashMap<String, Object>();
             String openId = jsonObject.getString("openid");
+            WeixinUser weixinUser = new WeixinUser();
+            System.out.println(">>>>>>>>>>>"+openId);
+            weixinUser.setOpenId(openId);
+            Long id = weixinUserService.insertWeixinUser(weixinUser);
+            System.out.println(id);
             map.put("openId", openId);
+            //根据openId查id
+            //存在，返回id
+            //不存在，插入
+
             return success(map);
         }
 
@@ -97,7 +106,7 @@ public class PubController extends BaseController {
         QueryWrapper<WeixinUser> queryWrapper = new QueryWrapper<WeixinUser>();
         if (weixinUser.getOpenId() != null && !"".equals(weixinUser.getOpenId())) {
                 queryWrapper = queryWrapper.eq("openId", weixinUser.getOpenId());
-            }
+        }
             WeixinUser oldUser = weixinUserService.getOne(queryWrapper);
             if (oldUser != null) {
                 weixinUserService.update(weixinUser, queryWrapper);
