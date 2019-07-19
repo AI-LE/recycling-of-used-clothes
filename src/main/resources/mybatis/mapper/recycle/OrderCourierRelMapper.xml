@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbyte.easy.recycle.mapper.OrderCourierRelMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.recycle.entity.OrderCourierRel">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="order_id" jdbcType="BIGINT" property="orderId" />
+      <id column="courier_id" jdbcType="BIGINT" property="courierId" />
+      <id column="pick_code" jdbcType="VARCHAR" property="pickCode" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      order_id, courier_id, pick_code
+  </sql>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from order_courier_rel
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  order_courier_rel
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.OrderCourierRel">
+    insert into order_courier_rel (order_id, courier_id, pick_code)
+    values (
+         order_id = #{orderId,jdbcType=BIGINT},
+         courier_id = #{courierId,jdbcType=BIGINT},
+         pick_code = #{pickCode,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.mbyte.easy.recycle.entity.OrderCourierRel">
+    insert into order_courier_rel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="courierId != null">
+        courier_id,
+      </if>
+      <if test="pickCode != null">
+        pick_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+
+      <if test="courierId != null">
+        courier_id = #{courierId,jdbcType=BIGINT},
+      </if>
+
+      <if test="pickCode != null">
+        pick_code = #{pickCode,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.recycle.entity.OrderCourierRel">
+    update order_courier_rel
+    <set>
+       <if test="orderId != null">
+         order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+       <if test="courierId != null">
+         courier_id = #{courierId,jdbcType=BIGINT},
+      </if>
+       <if test="pickCode != null">
+         pick_code = #{pickCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.recycle.entity.OrderCourierRel">
+    update order_courier_rel
+    set
+        order_id = #{orderId,jdbcType=BIGINT},
+        courier_id = #{courierId,jdbcType=BIGINT},
+        pick_code = #{pickCode,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>
