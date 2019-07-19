@@ -24,6 +24,7 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 /build/
+/com/mbyte/easy/generator/CodeGenerator
 /*.properties/
 .idea
 
