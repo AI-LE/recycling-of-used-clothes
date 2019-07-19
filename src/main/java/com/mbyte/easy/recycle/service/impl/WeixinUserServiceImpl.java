@@ -25,6 +25,8 @@ public class WeixinUserServiceImpl extends ServiceImpl<WeixinUserMapper, WeixinU
     @Override
     @Transactional
     public Long insertWeixinUser(WeixinUser weixinUser) {
-        return weixinUserMapper.insertWeixinUser(weixinUser.getOpenId());
+        String s = weixinUserMapper.insertWeixinUser(weixinUser.getOpenId());
+        System.out.println(">>>>>>>>>>>>>>"+s);
+        return 1L;
     }
 }

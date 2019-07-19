@@ -14,5 +14,5 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface WeixinUserMapper extends BaseMapper<WeixinUser> {
 
-    Long insertWeixinUser( String openId);
+    String insertWeixinUser( String openId);
 }

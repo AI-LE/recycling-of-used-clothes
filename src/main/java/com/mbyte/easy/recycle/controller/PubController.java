@@ -82,16 +82,25 @@ public class PubController extends BaseController {
             JSONObject jsonObject = JSON.parseObject(result);
             Map<String, Object> map = new HashMap<String, Object>();
             String openId = jsonObject.getString("openid");
-            WeixinUser weixinUser = new WeixinUser();
-            System.out.println(">>>>>>>>>>>"+openId);
-            weixinUser.setOpenId(openId);
-            Long id = weixinUserService.insertWeixinUser(weixinUser);
+
+            //用户不存在，插入
+            QueryWrapper<WeixinUser> queryWrapper = new QueryWrapper<WeixinUser>();
+            queryWrapper = queryWrapper.eq("openId",openId);
+            WeixinUser weixinUser = weixinUserService.getOne(queryWrapper);
+            if(ObjectUtils.isEmpty(weixinUser)){
+                weixinUser = new WeixinUser();
+                weixinUser.setOpenId(openId);
+                weixinUserService.save(weixinUser);
+            }
+
+            //获取插入后的id
+            weixinUser = weixinUserService.getOne(queryWrapper);
+            Long id = weixinUser.getId();
             System.out.println(id);
-            map.put("openId", openId);
+            map.put("id", id);
             //根据openId查id
             //存在，返回id
             //不存在，插入
-
             return success(map);
         }
 
@@ -103,16 +112,17 @@ public class PubController extends BaseController {
      */
     @RequestMapping(value = {"/setInfo"})
     public AjaxResult setInfo(WeixinUser weixinUser){
-        QueryWrapper<WeixinUser> queryWrapper = new QueryWrapper<WeixinUser>();
-        if (weixinUser.getOpenId() != null && !"".equals(weixinUser.getOpenId())) {
-                queryWrapper = queryWrapper.eq("openId", weixinUser.getOpenId());
+        WeixinUser oldUser = null;
+        if (!"".equals(weixinUser.getId())) {
+             oldUser = weixinUserService.getById(weixinUser.getId());
+             weixinUser.setOpenId(oldUser.getOpenId());
+             weixinUser.setCity("保定");
         }
-            WeixinUser oldUser = weixinUserService.getOne(queryWrapper);
-            if (oldUser != null) {
-                weixinUserService.update(weixinUser, queryWrapper);
-            } else {
-                weixinUserService.save(weixinUser);
-            }
+        if (oldUser != null) {
+            weixinUserService.updateById(weixinUser);
+        } else {
+            weixinUserService.save(weixinUser);
+        }
         return this.success();
     }
 
