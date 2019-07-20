@@ -7,31 +7,33 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
+ * 取货员订单联系表
+ * </p>
+ *
+ * @author 艾乐
  * @since 2019-07-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-
-public class GoodsType extends BaseEntity {
-
+public class OrderCourierRel extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 旧衣类型
+     * 订单id
      */
-    private String type;
+    private Long orderId;
 
     /**
-     * 图片地址
+     * 取货员id
      */
-    private String pic;
+    private Long courierId;
 
     /**
-     * 状态（1：已删除；2：正常）
+     * 取货码
      */
-    private Integer isDel;
+    private String pickCode;
 
 
 }

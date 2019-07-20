@@ -19,14 +19,31 @@
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-2 col-sm-2"><span
+<<<<<<< HEAD
                                 class="c-red">*</span>性别</label>
                             <div class="formControls col-xs-10 col-sm-10">
                                 <input type="input-text" class="input-text" th:value="${weixinUser.gender eq 1 ? '男':'女'}" name="gender"  placeholder="修改性别 1：男" id="gender"/>
+=======
+                                class="c-red">*</span>性别 1：男：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input type="input-text" class="input-text" th:value="${weixinUser.gender}" name="gender"  placeholder="修改性别 1：男" id="gender"/>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
 
                             </div>
                     </div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2"><span
+                                class="c-red">*</span>语言：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input type="input-text" class="input-text" th:value="${weixinUser.language}" name="language"  placeholder="修改语言" id="language"/>
+
+                            </div>
+                    </div>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-2 col-sm-2"><span
@@ -46,6 +63,7 @@
                             </div>
                     </div>
                 </div>
+<<<<<<< HEAD
 <!--                <div class="row cl">-->
 <!--                    <label class="form-label col-xs-2 col-sm-2"><span-->
 <!--                                class="c-red">*</span>头像地址：</label>-->
@@ -76,6 +94,35 @@
                                 class="c-red">*</span>用户类型:</label>
                             <div class="formControls col-xs-10 col-sm-10">
                                 <input type="input-text" class="input-text" th:value="${weixinUser.type eq 1 ? '普通用户':'取货员'}" name="type"  placeholder="修改用户类型表（1：普通用户；2：取货员）" id="type"/>
+=======
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2"><span
+                                class="c-red">*</span>头像地址：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input class="input-text upload-url" type="text"  readonly="" style="width:400px">
+                                <a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont"></i> 浏览文件</a>
+                                <input type="file" multiple="" style="width:100%; height:100%" th:value="${weixinUser.avatarUrl}" name="avatarUrlFile"   id="avatarUrl" class="input-file valid">
+                                <br/>
+                                <img th:src="@{{path}(path=${weixinUser.avatarUrl})}" style=" width:100xp; height:100px;"/>
+
+                            </div>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2"><span
+                                class="c-red">*</span>唯一主键id：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input type="input-text" class="input-text" th:value="${weixinUser.openId}" name="openId"  placeholder="修改唯一主键id" id="openId"/>
+
+                            </div>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2"><span
+                                class="c-red">*</span>用户类型表（1：普通用户；2：取货员）：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input type="input-text" class="input-text" th:value="${weixinUser.type}" name="type"  placeholder="修改用户类型表（1：普通用户；2：取货员）" id="type"/>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
 
                             </div>
                     </div>

@@ -1,7 +1,9 @@
+
 package com.mbyte.easy.recycle.mapper;
 
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 
 /**
  * <p>
@@ -13,4 +15,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface WeixinUserMapper extends BaseMapper<WeixinUser> {
 
+    String insertWeixinUser( String openId);
 }
+

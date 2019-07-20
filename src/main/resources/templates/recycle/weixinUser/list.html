@@ -24,7 +24,11 @@
                            onclick="deleteAll('/recycle/weixinUser/deleteAll')"
                            class="layui-btn  layui-btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
 						<a href="javascript:;"
+<<<<<<< HEAD
                            onclick="layer_show('添加','/recycle/weixinUser/addBefore',1200,700)"
+=======
+                           onclick="layer_show('添加','/recycle/weixinUser/addBefore',900,500)"
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
                            class="layui-btn  layui-btn-normal radius"><i class="Hui-iconfont">&#xe600;</i> 添加</a>
 						</span>
                         <span class="r wei-height">共有数据：<strong th:text="${pageInfo.total}"></strong> 条</span>
@@ -34,6 +38,7 @@
                     <div class="cl pd-5 bg-1 bk-gray ">
                         <div class="searchByField">
                                          <input type="input-text" class="input-text" th:value="${searchInfo.nickName}" name="nickName" placeholder="搜索昵称" id="nickName"/>
+<<<<<<< HEAD
 
                                             <select class="input-text" ”placeholder="搜索性别" th:value="${searchInfo.gender}" id="gender" name="gender"
                                                     style="width: 23.5%;margin-top: 5px">
@@ -53,6 +58,15 @@
                                                 <option value="2">取货员</option>
                                             </select>
 
+=======
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.gender}" name="gender" placeholder="搜索性别 1：男" id="gender"/>
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.language}" name="language" placeholder="搜索语言" id="language"/>
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.city}" name="city" placeholder="搜索城市" id="city"/>
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.province}" name="province" placeholder="搜索省份" id="province"/>
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.avatarUrl}" name="avatarUrl" placeholder="搜索头像地址" id="avatarUrl"/>
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.openId}" name="openId" placeholder="搜索唯一主键id" id="openId"/>
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.type}" name="type" placeholder="搜索用户类型表（1：普通用户；2：取货员）" id="type"/>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
                                          <input type="input-text" class="input-text" th:value="${searchInfo.account}" name="account" placeholder="搜索账户余额" id="account"/>
                                          <input type="input-text" class="input-text" th:value="${searchInfo.phone}" name="phone" placeholder="搜索电话号码" id="phone"/>
                             <button type="submit"
@@ -67,12 +81,23 @@
                         <tr class="text-c">
                             <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
+<<<<<<< HEAD
                                 <th width="40">头像</th>
                                 <th width="40">昵称</th>
                                 <th width="40">性别</th>
                                 <th width="40">省份</th>
                                 <th width="40">城市</th>
                                 <th width="40">用户类型</th>
+=======
+                                <th width="40">昵称</th>
+                                <th width="40">性别 1：男</th>
+                                <th width="40">语言</th>
+                                <th width="40">城市</th>
+                                <th width="40">省份</th>
+                                <th width="40">头像地址</th>
+                                <th width="40">唯一主键id</th>
+                                <th width="40">用户类型表（1：普通用户；2：取货员）</th>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
                                 <th width="40">账户余额</th>
                                 <th width="40">电话号码</th>
                             <th width="100">操作</th>
@@ -86,17 +111,32 @@
                             <td><input type="checkbox" value="1" th:value="${weixinUser.id}"
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
+<<<<<<< HEAD
                                         <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${weixinUser.avatarUrl})}" /></td>
                                         <td th:text="${weixinUser.nickName }"></td>
                                         <td th:text="${weixinUser.gender eq 1 ? '男':'女'}"></td>
                                         <td th:text="${weixinUser.province}"></td>
                                         <td th:text="${weixinUser.city}"></td>
                                         <td th:text="${weixinUser.type eq 1 ? '普通用户':'取货员'}"></td>
+=======
+                                        <td th:text="${weixinUser.nickName}"></td>
+                                        <td th:text="${weixinUser.gender}"></td>
+                                        <td th:text="${weixinUser.language}"></td>
+                                        <td th:text="${weixinUser.city}"></td>
+                                        <td th:text="${weixinUser.province}"></td>
+                                        <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${weixinUser.avatarUrl})}" /></td>
+                                        <td th:text="${weixinUser.openId}"></td>
+                                        <td th:text="${weixinUser.type}"></td>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
                                         <td th:text="${weixinUser.account}"></td>
                                         <td th:text="${weixinUser.phone}"></td>
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"
+<<<<<<< HEAD
                                    th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'weixinUser'+'/editBefore/'+${weixinUser.id}+'\',1200,700)'"
+=======
+                                   th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'weixinUser'+'/editBefore/'+${weixinUser.id}+'\',900,500)'"
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
                                    class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                                 <a title="删除" href="javascript:;"
                                    th:onclick="'javascript:deleteById(\'/recycle/'+'weixinUser'+'/delete/'+${weixinUser.id}+'\')'"

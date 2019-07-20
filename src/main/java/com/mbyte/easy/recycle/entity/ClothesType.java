@@ -7,14 +7,16 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
+ * 旧衣类型表
+ * </p>
+ *
+ * @author 艾乐
  * @since 2019-07-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-
-public class GoodsType extends BaseEntity {
-
+public class ClothesType extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
