@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mbyte.easy.recycle.mapper.ClothesTypeMapper">
-  <resultMap id="BaseResultMap" type="com.mbyte.easy.recycle.entity.ClothesType">
+<mapper namespace="com.mbyte.easy.recycle.mapper.GoodsTypeMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.recycle.entity.GoodsType">
       <id column="id" jdbcType="BIGINT" property="id" />
       <id column="type" jdbcType="VARCHAR" property="type" />
       <id column="pic" jdbcType="VARCHAR" property="pic" />
@@ -12,22 +12,31 @@
               id,
       type, pic, is_del
   </sql>
+    <select id="selectType" resultType="com.mbyte.easy.recycle.entity.Goods">
+            select DISTINCT goods_type.type as goodsType,goods_type.id  from goods_type left join  goods on  goods_type.id = goods.goods_type_id
+
+         </select>
+<!--    <select id="selectTypes" resultType="com.mbyte.easy.recycle.entity.GoodsType">-->
+<!--            select DISTINCT goods_type.type,goods_type.id  from goods_type left join  goods on  goods_type.id = goods.goods_type_id-->
+
+<!--         </select>-->
+
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
 <!--
  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from clothes_type
+    from goods_type
        where id = #{id,jdbcType=BIGINT}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from  clothes_type
+    delete from  goods_type
        where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.ClothesType">
-    insert into clothes_type (type, pic, is_del)
+  <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.GoodsType">
+    insert into goods_type (type, pic, is_del)
     values (
          type = #{type,jdbcType=VARCHAR},
          pic = #{pic,jdbcType=VARCHAR},
@@ -35,8 +44,8 @@
     )
   </insert>
 
-  <insert id="insertSelective" parameterType="com.mbyte.easy.recycle.entity.ClothesType">
-    insert into clothes_type
+  <insert id="insertSelective" parameterType="com.mbyte.easy.recycle.entity.GoodsType">
+    insert into goods_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="type != null">
         type,
@@ -64,8 +73,8 @@
 
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.recycle.entity.ClothesType">
-    update clothes_type
+  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.recycle.entity.GoodsType">
+    update goods_type
     <set>
        <if test="type != null">
          type = #{type,jdbcType=VARCHAR},
@@ -79,8 +88,8 @@
     </set>
        where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.recycle.entity.ClothesType">
-    update clothes_type
+  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.recycle.entity.GoodsType">
+    update goods_type
     set
         type = #{type,jdbcType=VARCHAR},
         pic = #{pic,jdbcType=VARCHAR},

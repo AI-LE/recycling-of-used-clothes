@@ -1,7 +1,10 @@
+
 package com.mbyte.easy.recycle.service;
 
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+
 
 /**
  * <p>
@@ -15,3 +18,4 @@ public interface IWeixinUserService extends IService<WeixinUser> {
 
     Long insertWeixinUser(WeixinUser weixinUser);
 }
+

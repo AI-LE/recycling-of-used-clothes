@@ -1,11 +1,12 @@
-package com.mbyte.easy.recycle.entity;
 
+package com.mbyte.easy.recycle.entity;
 import java.math.BigDecimal;
 import com.mbyte.easy.common.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -159,3 +160,4 @@ public class WeixinUser extends BaseEntity {
         this.phone = phone;
     }
 }
+

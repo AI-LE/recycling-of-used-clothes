@@ -5,6 +5,27 @@
 </head>
 <body>
 <article class="page-container">
+<<<<<<< HEAD
+	<form class="form form-horizontal"  enctype="multipart/form-data" method="post" id="form-weixinUser-add" action="#" th:action="@{/recycle/weixinUser/add}">
+        <div class="row cl">
+             <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>昵称：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                    <input type="input-text" class="input-text" t name="nickName"  placeholder="昵称" id="nickName"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2“”“"”><span class="c-red">*</span>性别：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                男 &nbsp<input type="radio" name="gender" value="1" th:title="男" >
+                女 &nbsp<input type="radio" name="gender" value="2" th:title="女" checked>
+            </div>
+        </div>
+
+        <div class="row cl">
+             <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>城市：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                    <input type="input-text" class="input-text" t name="city"  placeholder="城市" id="city"/>
+=======
 	<form class="form form-horizontal"  id="form-weixinUser-add" action="#" th:action="@{/recycle/weixinUser/add}">
         <div class="row cl">
              <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>昵称：</label>
@@ -28,11 +49,38 @@
              <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>城市：</label>
             <div class="formControls col-xs-10 col-sm-10">
                     <input type="input-text" class="input-text" t name="city"  placeholder="修改城市" id="city"/>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
             </div>
         </div>
         <div class="row cl">
              <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>省份：</label>
             <div class="formControls col-xs-10 col-sm-10">
+<<<<<<< HEAD
+                    <input type="input-text" class="input-text" t name="province"  placeholder="省份" id="province"/>
+            </div>
+        </div>
+        <div class="row cl">
+             <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>头像：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                    <input class="input-text upload-url" type="text" name="avatarUrl"  readonly="" style="width:400px">
+                    <a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont"></i> 浏览文件</a>
+                    <input type="file" accept="image/*" style="width:100%; height:100%"  name="file"   id="avatarUrl" class="input-file valid">
+            </div>
+        </div>
+
+            <label style="margin-top: 21px;margin-left: 5px" class="form-label col-xs-2 col-sm-2"><span class="c-red" >*</span>用户类型：</label>
+            <select class="input-text"  placeholder="用户类型"  id="type" name="type"
+                    style="width: 23.5%;margin-top: 14px;">
+                <option value="">选择用户类型</option>
+                <option value="1">个人用户</option>
+                <option value="2">取货员</option>
+            </select>
+
+        <div class="row cl">
+             <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>账户余额：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                    <input type="input-text" class="input-text" t name="account"  placeholder="账户余额" id="account"/>
+=======
                     <input type="input-text" class="input-text" t name="province"  placeholder="修改省份" id="province"/>
             </div>
         </div>
@@ -60,12 +108,17 @@
              <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>账户余额：</label>
             <div class="formControls col-xs-10 col-sm-10">
                     <input type="input-text" class="input-text" t name="account"  placeholder="修改账户余额" id="account"/>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
             </div>
         </div>
         <div class="row cl">
              <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>电话号码：</label>
             <div class="formControls col-xs-10 col-sm-10">
+<<<<<<< HEAD
+                    <input type="input-text" class="input-text" t name="phone"  placeholder="电话号码" id="phone"/>
+=======
                     <input type="input-text" class="input-text" t name="phone"  placeholder="修改电话号码" id="phone"/>
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
             </div>
         </div>
 	<div class="row cl">
@@ -83,6 +136,10 @@
  <!--/_footer 作为公共模版分离出去-->
 <!--请在下方写此页面业务相关的脚本-->
 <script>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 76aa15fa263c3487b5eb3ce41b037f77d05b66c9
  $(function(){
 	$("#form-weixinUser-add").validate({
 		rules:{
