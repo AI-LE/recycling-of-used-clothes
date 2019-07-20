@@ -46,7 +46,7 @@ public class FileUtil {
             File destFile = new File(destFileDir.getAbsoluteFile()+File.separator+fileName);
             multipartFile.transferTo(destFile);
             logger.info("文件【"+multipartFile.getOriginalFilename()+"】上传成功");
-            return uploadSuffixPath + "/" + dateDir+"/"+fileName;
+            return dateDir+"/"+fileName;
         } catch (IOException e) {
             logger.error("文件上传异常："+multipartFile.getOriginalFilename(),e);
             return null;

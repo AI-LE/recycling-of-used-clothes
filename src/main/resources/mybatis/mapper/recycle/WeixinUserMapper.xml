@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbyte.easy.recycle.mapper.WeixinUserMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.recycle.entity.WeixinUser">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="nickName" jdbcType="VARCHAR" property="nickName" />
+      <id column="gender" jdbcType="INTEGER" property="gender" />
+      <id column="language" jdbcType="VARCHAR" property="language" />
+      <id column="city" jdbcType="VARCHAR" property="city" />
+      <id column="province" jdbcType="VARCHAR" property="province" />
+      <id column="avatarUrl" jdbcType="VARCHAR" property="avatarUrl" />
+      <id column="openId" jdbcType="VARCHAR" property="openId" />
+      <id column="type" jdbcType="SMALLINT" property="type" />
+      <id column="account" jdbcType="DECIMAL" property="account" />
+      <id column="phone" jdbcType="VARCHAR" property="phone" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      nickName, gender, language, city, province, avatarUrl, openId, type, account, phone
+  </sql>
+    <select id="selectWeixinUserIfo" resultType="com.mbyte.easy.recycle.entity.WeixinUser" >
+        select
+    </select>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from weixin_user
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  weixin_user
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.WeixinUser">
+    insert into weixin_user (nickName, gender, language, city, province, avatarUrl, openId, type, account, phone)
+    values (
+         nickName = #{nickName,jdbcType=VARCHAR},
+         gender = #{gender,jdbcType=INTEGER},
+         language = #{language,jdbcType=VARCHAR},
+         city = #{city,jdbcType=VARCHAR},
+         province = #{province,jdbcType=VARCHAR},
+         avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+         openId = #{openId,jdbcType=VARCHAR},
+         type = #{type,jdbcType=SMALLINT},
+         account = #{account,jdbcType=DECIMAL},
+         phone = #{phone,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.mbyte.easy.recycle.entity.WeixinUser">
+    insert into weixin_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nickName != null">
+        nickName,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="avatarUrl != null">
+        avatarUrl,
+      </if>
+      <if test="openId != null">
+        openId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="nickName != null">
+        nickName = #{nickName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+
+      <if test="avatarUrl != null">
+        avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+
+      <if test="openId != null">
+        openId = #{openId,jdbcType=VARCHAR},
+      </if>
+
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+
+      <if test="account != null">
+        account = #{account,jdbcType=DECIMAL},
+      </if>
+
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.recycle.entity.WeixinUser">
+    update weixin_user
+    <set>
+       <if test="nickName != null">
+         nickName = #{nickName,jdbcType=VARCHAR},
+      </if>
+       <if test="gender != null">
+         gender = #{gender,jdbcType=INTEGER},
+      </if>
+       <if test="language != null">
+         language = #{language,jdbcType=VARCHAR},
+      </if>
+       <if test="city != null">
+         city = #{city,jdbcType=VARCHAR},
+      </if>
+       <if test="province != null">
+         province = #{province,jdbcType=VARCHAR},
+      </if>
+       <if test="avatarUrl != null">
+         avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+       <if test="openId != null">
+         openId = #{openId,jdbcType=VARCHAR},
+      </if>
+       <if test="type != null">
+         type = #{type,jdbcType=SMALLINT},
+      </if>
+       <if test="account != null">
+         account = #{account,jdbcType=DECIMAL},
+      </if>
+       <if test="phone != null">
+         phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.recycle.entity.WeixinUser">
+    update weixin_user
+    set
+        nickName = #{nickName,jdbcType=VARCHAR},
+        gender = #{gender,jdbcType=INTEGER},
+        language = #{language,jdbcType=VARCHAR},
+        city = #{city,jdbcType=VARCHAR},
+        province = #{province,jdbcType=VARCHAR},
+        avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+        openId = #{openId,jdbcType=VARCHAR},
+        type = #{type,jdbcType=SMALLINT},
+        account = #{account,jdbcType=DECIMAL},
+        phone = #{phone,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>
