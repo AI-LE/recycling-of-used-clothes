@@ -1,6 +1,8 @@
 package com.mbyte.easy.recycle.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.mbyte.easy.common.entity.BaseEntity;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -12,8 +14,8 @@ import lombok.experimental.Accessors;
  * 商品信息表
  * </p>
  *
- * @author 魏皓
- * @since 2019-07-18
+ * @author Author
+ * @since 2019-07-19
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -28,9 +30,9 @@ public class Goods extends BaseEntity {
     private String name;
 
     /**
-     * 商品销量
+     * 销量
      */
-    private String sales;
+    private Integer sales;
 
     /**
      * 图片地址
@@ -51,6 +53,12 @@ public class Goods extends BaseEntity {
      * 商品类型id
      */
     private Long goodsTypeId;
+
+    /**
+     * 商品类型
+     */
+    @TableField(exist = false)
+    private String goodsType;
 
     /**
      * 货物创建时间

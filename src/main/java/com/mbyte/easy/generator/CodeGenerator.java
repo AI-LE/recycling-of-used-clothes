@@ -71,7 +71,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("魏皓");
+        gc.setAuthor("Author");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
 

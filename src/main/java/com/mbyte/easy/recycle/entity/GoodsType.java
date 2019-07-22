@@ -7,16 +7,14 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 商品类型表
- * </p>
- *
- * @author 魏皓
- * @since 2019-07-19
+ * @since 2019-07-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
+
 public class GoodsType extends BaseEntity {
+
 
     private static final long serialVersionUID = 1L;
 
