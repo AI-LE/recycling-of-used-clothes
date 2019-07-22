@@ -7,29 +7,31 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * @since 2019-07-18
+ * 购物车
+ * </p>
+ *
+ * @author 魏皓
+ * @since 2019-07-19
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-
-public class GoodsType extends BaseEntity {
-
+public class ShopCar extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 旧衣类型
+     * 商品id
      */
-    private String type;
+    private Long goodsId;
 
     /**
-     * 图片地址
+     * 用户id
      */
-    private String pic;
+    private Long userId;
 
     /**
-     * 状态（1：已删除；2：正常）
+     * 状态（1:已删除；2：正常）
      */
     private Integer isDel;
 
