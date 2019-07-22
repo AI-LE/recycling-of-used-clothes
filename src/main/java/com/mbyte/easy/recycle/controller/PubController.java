@@ -12,6 +12,7 @@ import com.mbyte.easy.recycle.mapper.UserPropMapper;
 import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.recycle.service.IPubService;
+import com.mbyte.easy.util.PayUtil;
 import com.mbyte.easy.vo.WeChatAppLoginReq;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -216,6 +217,11 @@ public class PubController extends BaseController {
 
     /**
      * 回收订单查询
+     *
+     *
+     *
+     *
+     *
      */
     public AjaxResult getRecycleOrders(@RequestParam(required = false) Short status){
         QueryWrapper<WeixinUser> queryWrapper = new QueryWrapper<WeixinUser>();
@@ -231,11 +237,13 @@ public class PubController extends BaseController {
      * 支付接口
      */
     @RequestMapping("pay")
-    public AjaxResult pay(Model model){
+    public AjaxResult pay(Model model,Integer userId){
+        int rs = 0;
         ProductModel product = new ProductModel();
-        model.addAttribute("result",  pubService.wxPay(product));
-
-        return success(1);
+        product.setOrderId(PayUtil.getUniqueOrderId(userId));
+        rs = pubService.wxPay(product);
+        model.addAttribute("result",  1);
+        return success(rs);
     }
 
 

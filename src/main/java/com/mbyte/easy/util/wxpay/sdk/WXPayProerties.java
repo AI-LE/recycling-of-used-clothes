@@ -1,18 +1,23 @@
 package com.mbyte.easy.util.wxpay.sdk;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author kevinlyz
- * @ClassName WXPayProerties
- * @Description 微信支付配置类
- * @Date 2019-07-20 16:18
+ * @ClassName: WXPayProerties
+ * @Description: 微信支付配置类
+ * @Author: lxt
+ * @Date: 2019-02-25 16:47
+ * @Version 1.0
  **/
-public class WXPayProerties extends WXPayConfig{
+@Component
+@ConfigurationProperties(prefix = "pay.wxpay")
+    public class WXPayProerties extends WXPayConfig {
     /**
      * 应用授权ID
      */
@@ -46,25 +51,14 @@ public class WXPayProerties extends WXPayConfig{
      * 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
      */
     private String notifyUrl;
-//    @Override
-//    public String getAppId() {
-//        return appId;
-//    }
-//    @Override
-//    public String getMchId() {
-//        return mchId;
-//    }
-
     @Override
-    String getAppID() {
-        return null;
+    public String getAppID() {
+        return appId;
     }
-
     @Override
-    String getMchID() {
-        return null;
+    public String getMchID() {
+        return mchId;
     }
-
     @Override
     public String getKey() {
         return key;
