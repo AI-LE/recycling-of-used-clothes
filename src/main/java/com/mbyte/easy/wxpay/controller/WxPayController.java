@@ -8,15 +8,13 @@ import com.mbyte.easy.wxpay.util.PayUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Controller
+
+@RestController
 @RequestMapping("/wxpay")
 public class WxPayController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(PayUtil.class);
@@ -33,14 +31,26 @@ public class WxPayController extends BaseController {
         JSONObject json = PayUtil.wxPay(request,openId,totalFee);
         return this.success(json);
     }
+
     /**
-     * 回调函数
+     * 检验是否支付成功接口
+     */
+    @RequestMapping("/getPayStatus")
+    public AjaxResult getPayStatus(){
+
+        return this.success();
+    }
+
+    /**
+     * 小程序支付API回调函数
      * @return
      */
     @RequestMapping("/wxNotify")
-    public static void wxNotify(HttpServletRequest request, HttpServletResponse response){
+    public void wxNotify(HttpServletRequest request, HttpServletResponse response){
            try {
+               System.out.println("************************执行回调函数");
                PayUtil.wxNotify(request, response);
+               System.out.println("************************完成回调函数");
            }catch (Exception e){
                logger.info(e.getMessage());
            }
