@@ -151,8 +151,15 @@ public class RestRecycleOrderController extends BaseController  {
         return toAjax(recycleOrderService.save(recycleOrder));
     }
 
+    /**
+     * 根据条件查询订单
+     * @param status
+     * @param userId
+     * @param courierId
+     * @return
+     */
     @RequestMapping("select")
-    public AjaxResult select(@RequestParam("status")Integer status, @RequestParam(value = "userId",required = false) Long userId, @RequestParam(value = "courierId",required = false) Long courierId){
+    public AjaxResult select(@RequestParam(value = "status", required = false)Integer status, @RequestParam(value = "userId",required = false) Long userId, @RequestParam(value = "courierId",required = false) Long courierId){
 
         QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<>();
         if(userId != null){
@@ -161,7 +168,9 @@ public class RestRecycleOrderController extends BaseController  {
         if(courierId != null){
             queryWrapper = queryWrapper.eq("courier_id",courierId);
         }
-        queryWrapper = queryWrapper.eq("status",status);
+        if(status != null){
+            queryWrapper = queryWrapper.eq("status",status);
+        }
         List<RecycleOrder> recycleOrder = recycleOrderService.list(queryWrapper);
         Map<String,List<RecycleOrder>> map = new HashMap<>();
         map.put("recycleOrder",recycleOrder);
