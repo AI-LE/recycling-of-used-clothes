@@ -1,12 +1,15 @@
+
 package com.mbyte.easy.recycle.service.impl;
 
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.mapper.WeixinUserMapper;
-import com.mbyte.easy.recycle.service.IWeixinUserService;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mbyte.easy.recycle.service.IWeixinUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * <p>
@@ -25,6 +28,9 @@ public class WeixinUserServiceImpl extends ServiceImpl<WeixinUserMapper, WeixinU
     @Override
     @Transactional
     public Long insertWeixinUser(WeixinUser weixinUser) {
-        return weixinUserMapper.insertWeixinUser(weixinUser.getOpenId());
+        String s = weixinUserMapper.insertWeixinUser(weixinUser.getOpenId());
+        System.out.println(">>>>>>>>>>>>>>"+s);
+        return 1L;
     }
 }
+

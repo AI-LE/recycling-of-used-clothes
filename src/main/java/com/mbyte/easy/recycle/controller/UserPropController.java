@@ -3,8 +3,8 @@ package com.mbyte.easy.recycle.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mbyte.easy.recycle.entity.ClothesType;
-import com.mbyte.easy.recycle.service.IClothesTypeService;
+import com.mbyte.easy.recycle.entity.UserProp;
+import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.util.PageInfo;
@@ -26,13 +26,13 @@ import java.time.LocalDateTime;
 * @since 2019-03-11
 */
 @Controller
-@RequestMapping("/recycle/clothesType")
-public class ClothesTypeController extends BaseController  {
+@RequestMapping("/recycle/userProp")
+public class UserPropController extends BaseController  {
 
-    private String prefix = "recycle/clothesType/";
+    private String prefix = "recycle/userProp/";
 
     @Autowired
-    private IClothesTypeService clothesTypeService;
+    private IUserPropService userPropService;
 
     /**
     * 查询列表
@@ -40,24 +40,30 @@ public class ClothesTypeController extends BaseController  {
     * @param model
     * @param pageNo
     * @param pageSize
-    * @param clothesType
+    * @param userProp
     * @return
     */
     @RequestMapping
-    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, ClothesType clothesType) {
-        Page<ClothesType> page = new Page<ClothesType>(pageNo, pageSize);
-        QueryWrapper<ClothesType> queryWrapper = new QueryWrapper<ClothesType>();
-        if(!ObjectUtils.isEmpty(clothesType.getType())) {
-            queryWrapper = queryWrapper.like("type",clothesType.getType());
+    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, UserProp userProp) {
+        Page<UserProp> page = new Page<UserProp>(pageNo, pageSize);
+        QueryWrapper<UserProp> queryWrapper = new QueryWrapper<UserProp>();
+        if(!ObjectUtils.isEmpty(userProp.getUserId())) {
+            queryWrapper = queryWrapper.like("user_id",userProp.getUserId());
          }
-        if(!ObjectUtils.isEmpty(clothesType.getPic())) {
-            queryWrapper = queryWrapper.like("pic",clothesType.getPic());
+        if(!ObjectUtils.isEmpty(userProp.getUserName())) {
+            queryWrapper = queryWrapper.like("user_name",userProp.getUserName());
          }
-        if(!ObjectUtils.isEmpty(clothesType.getIsDel())) {
-            queryWrapper = queryWrapper.like("is_del",clothesType.getIsDel());
+        if(!ObjectUtils.isEmpty(userProp.getPhone())) {
+            queryWrapper = queryWrapper.like("phone",userProp.getPhone());
          }
-        IPage<ClothesType> pageInfo = clothesTypeService.page(page, queryWrapper);
-        model.addAttribute("searchInfo", clothesType);
+        if(!ObjectUtils.isEmpty(userProp.getAddress())) {
+            queryWrapper = queryWrapper.like("address",userProp.getAddress());
+         }
+        if(!ObjectUtils.isEmpty(userProp.getIsDel())) {
+            queryWrapper = queryWrapper.like("is_del",userProp.getIsDel());
+         }
+        IPage<UserProp> pageInfo = userPropService.page(page, queryWrapper);
+        model.addAttribute("searchInfo", userProp);
         model.addAttribute("pageInfo", new PageInfo(pageInfo));
         return prefix+"list";
     }
@@ -72,13 +78,13 @@ public class ClothesTypeController extends BaseController  {
     }
     /**
     * 添加
-    * @param clothesType
+    * @param userProp
     * @return
     */
     @PostMapping("add")
     @ResponseBody
-    public AjaxResult add(ClothesType clothesType){
-        return toAjax(clothesTypeService.save(clothesType));
+    public AjaxResult add(UserProp userProp){
+        return toAjax(userPropService.save(userProp));
     }
     /**
     * 添加跳转页面
@@ -86,18 +92,18 @@ public class ClothesTypeController extends BaseController  {
     */
     @GetMapping("editBefore/{id}")
     public String editBefore(Model model,@PathVariable("id")Long id){
-        model.addAttribute("clothesType",clothesTypeService.getById(id));
+        model.addAttribute("userProp",userPropService.getById(id));
         return prefix+"edit";
     }
     /**
     * 添加
-    * @param clothesType
+    * @param userProp
     * @return
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(ClothesType clothesType){
-        return toAjax(clothesTypeService.updateById(clothesType));
+    public AjaxResult edit(UserProp userProp){
+        return toAjax(userPropService.updateById(userProp));
     }
     /**
     * 删除
@@ -107,7 +113,7 @@ public class ClothesTypeController extends BaseController  {
     @GetMapping("delete/{id}")
     @ResponseBody
     public AjaxResult delete(@PathVariable("id") Long id){
-        return toAjax(clothesTypeService.removeById(id));
+        return toAjax(userPropService.removeById(id));
     }
     /**
     * 批量删除
@@ -117,7 +123,7 @@ public class ClothesTypeController extends BaseController  {
     @PostMapping("deleteAll")
     @ResponseBody
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
-        return toAjax(clothesTypeService.removeByIds(ids));
+        return toAjax(userPropService.removeByIds(ids));
     }
 
 }
