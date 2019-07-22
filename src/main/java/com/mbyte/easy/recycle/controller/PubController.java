@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.entity.ProductModel;
 import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.mapper.UserPropMapper;
@@ -12,7 +13,6 @@ import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.recycle.service.IPubService;
 import com.mbyte.easy.vo.WeChatAppLoginReq;
-import org.apache.catalina.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -22,12 +22,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,9 +61,9 @@ public class PubController extends BaseController {
     /**
      * 获得微信授权
      */
-    @RequestMapping(value = {"/getOpenId"})
+    @RequestMapping("/wechatuser")
     public AjaxResult getOpenId(@ModelAttribute WeChatAppLoginReq req) throws IOException {
-
+        System.out.println("______________Weixin authorized_________________");
         /**
          * TODO 小程序登录时获取的 code
          **/
@@ -84,7 +84,25 @@ public class PubController extends BaseController {
             JSONObject jsonObject = JSON.parseObject(result);
             Map<String, Object> map = new HashMap<String, Object>();
             String openId = jsonObject.getString("openid");
-            map.put("openId", openId);
+
+            //用户不存在，插入
+            QueryWrapper<WeixinUser> queryWrapper = new QueryWrapper<WeixinUser>();
+            queryWrapper = queryWrapper.eq("openId",openId);
+            WeixinUser weixinUser = weixinUserService.getOne(queryWrapper);
+            if(ObjectUtils.isEmpty(weixinUser)){
+                weixinUser = new WeixinUser();
+                weixinUser.setOpenId(openId);
+                weixinUserService.save(weixinUser);
+            }
+
+            //获取插入后的id
+            weixinUser = weixinUserService.getOne(queryWrapper);
+            Long id = weixinUser.getId();
+            System.out.println(id);
+            map.put("id", id);
+            //根据openId查id
+            //存在，返回id
+            //不存在，插入
             return success(map);
         }
 
@@ -95,18 +113,30 @@ public class PubController extends BaseController {
      * 绑定用户信息
      */
     @RequestMapping(value = {"/setInfo"})
-    public AjaxResult setInfo(WeixinUser weixinUser){
+    public AjaxResult setInfo(Long id,String nickName,Integer gender,String lang,String avatarUrl,String province,
+                              String city,String country){
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>setInfo");
         QueryWrapper<WeixinUser> queryWrapper = new QueryWrapper<WeixinUser>();
-        if (weixinUser.getOpenId() != null && !"".equals(weixinUser.getOpenId())) {
-                queryWrapper = queryWrapper.eq("openId", weixinUser.getOpenId());
-            }
-            WeixinUser oldUser = weixinUserService.getOne(queryWrapper);
-            if (oldUser != null) {
-                weixinUserService.update(weixinUser, queryWrapper);
-            } else {
-                weixinUserService.save(weixinUser);
-            }
-        return this.success();
+//        WeixinUser weixinUser = new WeixinUser();
+        WeixinUser oldUser = null;
+        if (!ObjectUtils.isEmpty(id)) {
+            queryWrapper= queryWrapper.eq("id",id);
+             oldUser = weixinUserService.getById(id);
+             oldUser.setCity(city);
+             oldUser.setAvatarUrl(avatarUrl);
+             oldUser.setLanguage(lang);
+             oldUser.setGender(gender);
+             oldUser.setProvince(province);
+             oldUser.setNickName(nickName);
+//             weixinUser.setOpenId(oldUser.getOpenId());
+//             weixinUser.setCity("保定");
+        }
+        if (oldUser != null) {
+            weixinUserService.update(oldUser,queryWrapper);
+        } else {
+            weixinUserService.save(oldUser);
+        }
+        return this.success(1);
     }
 
 
@@ -195,6 +225,17 @@ public class PubController extends BaseController {
 //        List<> shopOrderList = pubService.selectShopOrdersByStatus(queryWrapper);
 //        return super.success(shopOrderList);
         return success();
+    }
+
+    /**
+     * 支付接口
+     */
+    @RequestMapping("pay")
+    public AjaxResult pay(Model model){
+        ProductModel product = new ProductModel();
+        model.addAttribute("result",  pubService.wxPay(product));
+
+        return success(1);
     }
 
 
