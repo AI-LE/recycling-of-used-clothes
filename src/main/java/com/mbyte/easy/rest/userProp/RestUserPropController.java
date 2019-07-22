@@ -1,13 +1,16 @@
 package com.mbyte.easy.rest.userProp;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.rest.recycleOrder.RestRecycleOrderController;
 import com.mbyte.easy.util.PageInfo;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
 
 /**
 * <p>
@@ -30,6 +34,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("rest/userProp")
 public class RestUserPropController extends BaseController  {
+
+    private static final Logger logger = LoggerFactory.getLogger(RestUserPropController.class);
 
     @Autowired
     private IUserPropService userPropService;
@@ -109,8 +115,19 @@ public class RestUserPropController extends BaseController  {
         userProp.setUserId(userId);
         userProp.setPhone(phone);
         userProp.setUserName(userName);
-        Map<String,Integer> map = new HashMap<>();
-        map.put("id",userPropService.insert(userProp));
+        Map<String,Long> map = new HashMap<>();
+        QueryWrapper<UserProp> queryWrapper = new QueryWrapper<>();
+        queryWrapper = queryWrapper.eq("user_id",userId);
+        if(userPropService.getOne(queryWrapper) != null){
+            UpdateWrapper<UserProp> updateWrapper = new UpdateWrapper<>();
+            updateWrapper = updateWrapper.eq("user_id",userId);
+            userPropService.update(userProp,updateWrapper);
+        }
+        else {
+            userPropService.insertUserProp(userProp);
+        }
+        map.put("id",userProp.getId());
+        logger.info(userProp.getId() + "");
         return this.success(map);
     }
 
