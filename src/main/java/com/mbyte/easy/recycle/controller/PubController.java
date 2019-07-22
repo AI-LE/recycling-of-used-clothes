@@ -231,15 +231,13 @@ public class PubController extends BaseController {
     /**
      * 支付接口
      */
-    @RequestMapping("pay")
-    public AjaxResult pay(Model model,Integer userId){
-        int rs = 0;
-        ProductModel product = new ProductModel();
-        product.setOrderId(PayUtil.getUniqueOrderId(userId));
-        rs = pubService.wxPay(product);
-        model.addAttribute("result",  1);
-        return success(rs);
-    }
+//    @RequestMapping("pay")
+//    public AjaxResult pay(Model model){
+//        ProductModel product = new ProductModel();
+//        model.addAttribute("result",  pubService.wxPay(product));
+//
+//        return success(1);
+//    }
 
 
 }

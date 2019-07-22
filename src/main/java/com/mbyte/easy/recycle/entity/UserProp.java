@@ -40,5 +40,10 @@ public class UserProp extends BaseEntity {
      */
     private Integer isDel;
 
+    /**
+     * 用户姓名
+     */
+    private String userName;
+
 
 }

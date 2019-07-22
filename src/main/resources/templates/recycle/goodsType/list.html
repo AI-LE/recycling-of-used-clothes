@@ -40,7 +40,6 @@
                                             <option value="1">已删除</option>
                                             <option value="2">正常</option>
                                         </select>
-
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
                                         class="Hui-iconfont">&#xe665;</i> 搜索
@@ -55,7 +54,11 @@
                             <th width="25">序号</th>
                                 <th width="40">旧衣类型</th>
                                 <th width="40">图片地址</th>
+<<<<<<< HEAD
+                                <th width="40">状态（1：已删除；2：正常）</th>
+=======
                                 <th width="40">状态</th>
+>>>>>>> da9e25d41b15f84e3e687d73733bc207aa4c6954
                             <th width="100">操作</th>
                         </tr>
                         </thead>
@@ -68,8 +71,13 @@
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
                                         <td th:text="${goodsType.type}"></td>
+<<<<<<< HEAD
+                                        <td th:text="${goodsType.pic}"></td>
+                                        <td th:text="${goodsType.isDel}"></td>
+=======
                             <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${goodsType.pic})}" /></td>
                                         <td th:text="${goodsType.isDel eq 1 ? '已删除':'正常'}"></td>
+>>>>>>> da9e25d41b15f84e3e687d73733bc207aa4c6954
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"
                                    th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'goodsType'+'/editBefore/'+${goodsType.id}+'\',900,500)'"
