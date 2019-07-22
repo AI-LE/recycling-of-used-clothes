@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
                 .antMatchers("/kaptcha/getKaptchaImage", "/druid/**", "/rest/**").permitAll()
 				.antMatchers("/pub/**").permitAll()
+				.antMatchers("/wxpay/**").permitAll()
 				.anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/").permitAll()
                 .authenticationDetailsSource(authenticationDetailsSource)
