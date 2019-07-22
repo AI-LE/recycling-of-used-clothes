@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/goods","/recycle/goods/**","/kaptcha/getKaptchaImage", "/druid/**", "/rest/**").permitAll()
                 .antMatchers("/kaptcha/getKaptchaImage", "/druid/**", "/rest/**").permitAll()
 				.antMatchers("/pub/**").permitAll()
+				.antMatchers("/wxpay/**").permitAll()
 				.anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/").permitAll()
                 .authenticationDetailsSource(authenticationDetailsSource)
