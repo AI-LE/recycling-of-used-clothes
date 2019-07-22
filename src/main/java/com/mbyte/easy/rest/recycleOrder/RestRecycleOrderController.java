@@ -144,7 +144,7 @@ public class RestRecycleOrderController extends BaseController  {
         recycleOrder.setPrice(price);
         recycleOrder.setCreatetime(time);
         recycleOrder.setUpdatetime(time);
-        recycleOrder.setOrderNo(time.toString().replaceAll("[-:.]",""));   //随机生成订单号
+        recycleOrder.setOrderNo(time.toString().replaceAll("[-:.T]",""));   //随机生成订单号
         recycleOrder.setIsDel(2);
         recycleOrder.setIsShow(2);
         recycleOrder.setStatus(1);
