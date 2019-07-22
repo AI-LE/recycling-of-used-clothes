@@ -153,10 +153,16 @@ public class RestRecycleOrderController extends BaseController  {
     }
 
     @RequestMapping("select")
-    public AjaxResult select(@RequestParam("status")Integer status, @RequestParam("userId") Long userId){
+    public AjaxResult select(@RequestParam("status")Integer status, @RequestParam(value = "userId",required = false) Long userId, @RequestParam(value = "courierId",required = false) Long courierId){
 
         QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("status",status).eq("user_id",userId);
+        if(userId != null){
+            queryWrapper = queryWrapper.eq("user_id",userId);
+        }
+        if(courierId != null){
+            queryWrapper = queryWrapper.eq("courier_id",courierId);
+        }
+        queryWrapper = queryWrapper.eq("status",status);
         List<RecycleOrder> recycleOrder = recycleOrderService.list(queryWrapper);
         Map<String,List<RecycleOrder>> map = new HashMap<>();
         map.put("recycleOrder",recycleOrder);
