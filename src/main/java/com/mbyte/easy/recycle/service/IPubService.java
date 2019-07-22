@@ -1,7 +1,6 @@
 package com.mbyte.easy.recycle.service;
 
-import com.mbyte.easy.recycle.entity.WeixinUser;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mbyte.easy.recycle.entity.ProductModel;
 
 /**
  * <p>
@@ -13,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPubService  {
 
+    int wxPay(ProductModel product);
 }
