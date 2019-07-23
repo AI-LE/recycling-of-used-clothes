@@ -20,7 +20,7 @@
         from user_prop
         where user_id = #{userId,jdbcType=BIGINT} and is_del = 2
     </select>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.mbyte.easy.recycle.entity.UserProp">
+    <insert id="insertUserProp" useGeneratedKeys="true" keyProperty="id" parameterType="com.mbyte.easy.recycle.entity.UserProp">
         insert into user_prop (user_id, phone, address, user_name,is_del)
         values (
              #{userId,jdbcType=BIGINT},
