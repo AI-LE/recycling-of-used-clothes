@@ -11,18 +11,23 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 回收订单表
+ * 商品订单
  * </p>
  *
  * @author 艾乐
- * @since 2019-07-18
+ * @since 2019-07-22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class RecycleOrder extends BaseEntity {
+public class ShopOrder extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 订单状态（1：待付款 2：代发货 3：待收货 4：待评价）
+     */
+    private Integer status;
 
     /**
      * 订单号
@@ -30,16 +35,14 @@ public class RecycleOrder extends BaseEntity {
     private String orderNo;
 
     /**
-     * 用户id
+     * 买家id
      */
     private Long userId;
 
-    private Long courierId;
     /**
-     * 取货员名字
+     * 下单时间
      */
-    @TableField(exist = false)
-    private String nickName;
+    private LocalDateTime createtime;
 
     /**
      * 价格
@@ -47,36 +50,28 @@ public class RecycleOrder extends BaseEntity {
     private BigDecimal price;
 
     /**
-     * 预约取货时间 
-     */
-    private LocalDateTime appointment;
-
-    /**
-     * 取货地址
+     * 用户地址id
      */
     private Long addressId;
     /**
-     * 取货地址
+     * 用户地址
      */
     @TableField(exist = false)
     private String address;
-
+    /**
+     * 用户电话号码
+     */
     private String phone;
 
     /**
-     * 取货码
+     * 快递单号
      */
-    private String pickCode;
+    private String express;
 
     /**
-     * 订单状态（1：待审核；2：未通过；3：待取货；4：交易完成）
+     * 订单是否展示（1：不展示；2：展示）
      */
-    private Integer status;
-
-    /**
-     * 订单创建时间
-     */
-    private LocalDateTime createtime;
+    private Integer isShow;
 
     /**
      * 订单更新时间
@@ -84,12 +79,7 @@ public class RecycleOrder extends BaseEntity {
     private LocalDateTime updatetime;
 
     /**
-     * 是否删除（1：）
-     */
-    private Integer isShow;
-
-    /**
-     * 状态（1：已删除；2：正常）
+     * 使否删除（1：删除；2：正常）
      */
     private Integer isDel;
 
