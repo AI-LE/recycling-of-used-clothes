@@ -1,23 +1,15 @@
-package com.mbyte.easy.recycle.entity;
+package com.mbyte.easy.vo;
 
 import com.mbyte.easy.common.entity.BaseEntity;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**
- * <p>
- * 评论表
- * </p>
- *
- * @author 魏皓
- * @since 2019-07-19
- */
+import java.time.LocalDateTime;
+
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class Comments extends BaseEntity {
+public class commentsWithUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,4 +44,8 @@ public class Comments extends BaseEntity {
      */
     private Integer score;
 
+    /**
+     * 昵称
+     */
+    private String nickName;
 }

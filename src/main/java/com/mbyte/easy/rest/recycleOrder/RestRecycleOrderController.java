@@ -4,12 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
+import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.service.IRecycleOrderService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.util.PageInfo;
 import org.hibernate.validator.constraints.pl.REGON;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,9 @@ public class RestRecycleOrderController extends BaseController  {
 
     @Autowired
     private IRecycleOrderService recycleOrderService;
+
+    @Autowired
+    private IWeixinUserService iWeixinUserService;
 
     /**
     * 查询列表
@@ -152,11 +156,26 @@ public class RestRecycleOrderController extends BaseController  {
         return toAjax(recycleOrderService.save(recycleOrder));
     }
 
+    /**
+     * 根据条件查询订单
+     * @param status
+     * @param userId
+     * @param courierId
+     * @return
+     */
     @RequestMapping("select")
-    public AjaxResult select(@RequestParam("status")Integer status, @RequestParam("userId") Long userId){
+    public AjaxResult select(@RequestParam(value = "status", required = false)Integer status, @RequestParam(value = "userId",required = false) Long userId, @RequestParam(value = "courierId",required = false) Long courierId){
 
         QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("status",status).eq("user_id",userId);
+        if(userId != null){
+            queryWrapper = queryWrapper.eq("user_id",userId);
+        }
+        if(courierId != null){
+            queryWrapper = queryWrapper.eq("courier_id",courierId);
+        }
+        if(status != null){
+            queryWrapper = queryWrapper.eq("status",status);
+        }
         List<RecycleOrder> recycleOrder = recycleOrderService.list(queryWrapper);
         Map<String,List<RecycleOrder>> map = new HashMap<>();
         map.put("recycleOrder",recycleOrder);
@@ -175,6 +194,19 @@ public class RestRecycleOrderController extends BaseController  {
         recycleOrder.setId(id);
         recycleOrder.setStatus(status);
         recycleOrder.setUpdatetime(LocalDateTime.now());
+        return toAjax(recycleOrderService.updateById(recycleOrder));
+    }
+
+    /**
+     * 取货员付款，订单完成
+     */
+    @RequestMapping("pickUp")
+    public AjaxResult pickUp(@PathParam("userId") Long userId, @PathParam("id") Long id, @RequestParam("price") BigDecimal balance){
+        RecycleOrder recycleOrder = new RecycleOrder();
+        recycleOrder.setId(id);
+        recycleOrder.setStatus(4);
+        recycleOrder.setUpdatetime(LocalDateTime.now());
+        iWeixinUserService.updateBalance(balance,userId);
         return toAjax(recycleOrderService.updateById(recycleOrder));
     }
 

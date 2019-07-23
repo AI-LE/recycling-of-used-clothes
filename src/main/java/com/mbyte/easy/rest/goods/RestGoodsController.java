@@ -9,13 +9,17 @@ import com.mbyte.easy.recycle.service.IGoodsService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.recycle.service.IGoodsTypeService;
+import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.util.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +42,9 @@ public class RestGoodsController extends BaseController  {
 
     @Autowired
     private IGoodsTypeService iGoodsTypeService;
+
+    @Autowired
+    private IShopOrderService ShopOrderService;
 
     /**
     * 查询列表
@@ -165,6 +172,31 @@ public class RestGoodsController extends BaseController  {
     @PostMapping("deleteAll")
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
         return toAjax(goodsService.removeByIds(ids));
+    }
+
+
+    /**
+     * 商城订单生成
+     */
+    @RequestMapping("addOrder")
+    public AjaxResult addOrder(String addressId, String[] goodsIds, BigDecimal totalPrice,String userId){
+
+        for (String temp:goodsIds
+             ) {
+            System.err.println(temp);
+        }
+        long[] goodsIdList=new long[goodsIds.length];
+        for(int i=0;i<goodsIds.length;i++)
+        {
+            goodsIdList[i]=Long.parseLong(goodsIds[i].replaceAll("\\[","").replaceAll("]",""));
+        }
+           if(StringUtils.isNotEmpty(userId)) {
+               Long result = ShopOrderService.addOrder(addressId, goodsIdList, totalPrice, userId);
+               return  this.success(result);
+           }else{
+               return  this.error();
+           }
+
     }
 
 }
