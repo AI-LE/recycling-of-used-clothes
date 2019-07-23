@@ -12,7 +12,6 @@ import com.mbyte.easy.recycle.mapper.UserPropMapper;
 import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.recycle.service.IPubService;
-import com.mbyte.easy.util.PayUtil;
 import com.mbyte.easy.vo.WeChatAppLoginReq;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -235,7 +234,6 @@ public class PubController extends BaseController {
 //    public AjaxResult pay(Model model){
 //        ProductModel product = new ProductModel();
 //        model.addAttribute("result",  pubService.wxPay(product));
-//
 //        return success(1);
 //    }
 
