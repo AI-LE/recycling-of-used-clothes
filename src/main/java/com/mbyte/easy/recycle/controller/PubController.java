@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,13 +231,15 @@ public class PubController extends BaseController {
     /**
      * 支付接口
      */
-//    @RequestMapping("pay")
-//    public AjaxResult pay(Model model){
-//        ProductModel product = new ProductModel();
-//        model.addAttribute("result",  pubService.wxPay(product));
-//
-//        return success(1);
-//    }
+    @RequestMapping("yuepay")
+    public AjaxResult yuepay(BigDecimal fee,String userId){
+        WeixinUser weixinUser = new WeixinUser();
+        weixinUser.setId(Long.parseLong(userId));
+        WeixinUser result = weixinUserService.getById(Long.parseLong(userId));
+        weixinUser.setAccount(result.getAccount().subtract(fee));
+        weixinUserService.updateById(weixinUser);
+        return this.success();
+    }
 
 
 }

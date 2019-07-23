@@ -4,7 +4,11 @@ package com.mbyte.easy.wxpay.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.entity.OrderGoods;
+import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.entity.WeixinUser;
+import com.mbyte.easy.recycle.service.IOrderGoodsService;
+import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.wxpay.constant.WXConst;
 import com.mbyte.easy.wxpay.util.ClientCustomSSLUtil;
@@ -28,6 +32,11 @@ public class WxPayController extends BaseController {
     @Autowired
     private IWeixinUserService weixinUserService;
 
+    @Autowired
+    private IShopOrderService shopOrderService;
+    @Autowired
+    private IOrderGoodsService orderGoodsService;
+
     /**
      * 微信统一下单
      * @param request
@@ -39,6 +48,10 @@ public class WxPayController extends BaseController {
     public AjaxResult topay(HttpServletRequest request, String userId, String totalFee){
         WeixinUser weixinUser = weixinUserService.getById(userId);
         String openId = weixinUser.getOpenId();
+
+
+
+
         JSONObject json = PayUtil.wxPay(request,openId,totalFee);
         return this.success(json);
     }
@@ -47,7 +60,7 @@ public class WxPayController extends BaseController {
      * 检验是否支付成功接口
      */
     @RequestMapping("/getPayStatus")
-    public AjaxResult getPayStatus(String outTradeNo){
+    public AjaxResult getPayStatus(String outTradeNo,String orderId){
         try {
             //生成的随机字符串
             String nonce_str = Util.getRandomStringByLength(32);
@@ -76,8 +89,11 @@ public class WxPayController extends BaseController {
             String return_code = (String) map.get("return_code");//返回状态码
             Map<String, Object> response = new HashMap<String, Object>();
             if ( "SUCCESS".equals(return_code)) {
-                //TODO 更新订单状态
-                System.out.println("*******更新订单状态");
+                //支付完成修改订单状态
+                ShopOrder shopOrder = new ShopOrder();
+                shopOrder.setId(Long.parseLong(orderId));
+                shopOrder.setStatus(2);
+                shopOrderService.updateById(shopOrder);
             }
             response.put("returnCode",return_code);
             return  this.success(response);

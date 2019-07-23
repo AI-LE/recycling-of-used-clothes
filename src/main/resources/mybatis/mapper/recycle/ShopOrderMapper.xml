@@ -20,6 +20,91 @@
               id,
       status, order_no, user_id, createtime, price, address_id, phone, express, is_show, updatetime, id_del
   </sql>
+    <insert id="addOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
+        insert into shop_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="status != null">
+                status,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="express != null">
+                express,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+            <if test="idDel != null">
+                id_del,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+
+            <if test="createtime != null">
+                 #{createtime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="price != null">
+                 #{price,jdbcType=DECIMAL},
+            </if>
+
+            <if test="addressId != null">
+               #{addressId,jdbcType=BIGINT},
+            </if>
+
+            <if test="phone != null">
+                 #{phone,jdbcType=VARCHAR},
+            </if>
+
+            <if test="express != null">
+                #{express,jdbcType=VARCHAR},
+            </if>
+
+            <if test="isShow != null">
+                #{isShow,jdbcType=SMALLINT},
+            </if>
+
+            <if test="updatetime != null">
+                 #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="idDel != null">
+                #{idDel,jdbcType=SMALLINT},
+            </if>
+
+        </trim>
+    </insert>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
 <!--
