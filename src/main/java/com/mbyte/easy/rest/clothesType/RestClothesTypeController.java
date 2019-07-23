@@ -80,6 +80,7 @@ public class RestClothesTypeController extends BaseController  {
     */
     @PostMapping("add")
     public AjaxResult add(ClothesType clothesType){
+        clothesType.setIsDel(2);
         return toAjax(clothesTypeService.save(clothesType));
     }
 
