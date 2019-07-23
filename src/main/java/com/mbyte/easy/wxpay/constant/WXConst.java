@@ -32,4 +32,13 @@ public class WXConst {
     //微信查询订单接口地址
     public static final String find_order = "https://api.mch.weixin.qq.com/pay/orderquery";
 
+    public static final String transfer_url = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
+    public static final String  apiclient_url = "third/apiclient_cert.p12";
+    public static final String  getTransfer_url = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo";
+    //校验用户姓名选项
+    public static final String check_name = "NO_CHECK";
+//    public static final String check_name = "FORCE_CHECK";
+    //付款描述
+    public static final String desc = "用户提现";
+
 }
