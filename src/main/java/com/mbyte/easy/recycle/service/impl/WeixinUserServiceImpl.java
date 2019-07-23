@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 
 /**
  * <p>
@@ -31,6 +33,10 @@ public class WeixinUserServiceImpl extends ServiceImpl<WeixinUserMapper, WeixinU
         String s = weixinUserMapper.insertWeixinUser(weixinUser.getOpenId());
         System.out.println(">>>>>>>>>>>>>>"+s);
         return 1L;
+    }
+
+    public Integer updateBalance(BigDecimal balance, Long userId){
+        return weixinUserMapper.updateBalance(balance,userId);
     }
 }
 
