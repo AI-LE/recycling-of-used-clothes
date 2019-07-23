@@ -2,6 +2,9 @@ package com.mbyte.easy.recycle.service;
 
 import com.mbyte.easy.recycle.entity.Comments;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mbyte.easy.vo.commentsWithUser;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-07-19
  */
 public interface ICommentsService extends IService<Comments> {
-
+    List<commentsWithUser> selectLeftJoinWeixinUser(Integer goodsId);
 }

@@ -8,6 +8,7 @@ import com.mbyte.easy.recycle.service.ICommentsService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.util.PageInfo;
+import com.mbyte.easy.vo.commentsWithUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +44,7 @@ public class RestCommentsController extends BaseController  {
     * @return
     */
     @RequestMapping
-    public AjaxResult index(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String createtimeSpace, Comments comments) {
+    public AjaxResult index(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "1000") Integer pageSize, String createtimeSpace, Comments comments) {
         Page<Comments> page = new Page<Comments>(pageNo, pageSize);
         QueryWrapper<Comments> queryWrapper = new QueryWrapper<Comments>();
 
@@ -80,6 +81,15 @@ public class RestCommentsController extends BaseController  {
         return this.success(map);
     }
 
+    /**
+     * 查询所有带User的评论
+     */
+    @GetMapping("select")
+    public AjaxResult select(@RequestParam("goodsid")Integer goodsId)
+    {
+        List<commentsWithUser> commentsWithUserLists=commentsService.selectLeftJoinWeixinUser(goodsId);
+        return this.success(commentsWithUserLists);
+    }
 
     /**
     * 添加
