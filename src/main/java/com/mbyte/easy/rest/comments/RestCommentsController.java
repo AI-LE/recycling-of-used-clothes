@@ -103,7 +103,8 @@ public class RestCommentsController extends BaseController  {
     * @return
     */
     @RequestMapping("add")
-    public AjaxResult add(Comments comments ,Boolean hideUsername){
+    public AjaxResult add(Comments comments ,Boolean hideUsername,String comment_tag){
+        System.err.println(comment_tag);
         if(!hideUsername)
         {
             comments.setCreatetime(LocalDateTime.now());

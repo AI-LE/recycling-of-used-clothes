@@ -37,6 +37,7 @@ public interface ShopOrderMapper extends BaseMapper<ShopOrder> {
      */
     List<Goods> selectGoodsOrder(Long id);
 
+    long addOrder(ShopOrder shopOrder);
 }
 
 

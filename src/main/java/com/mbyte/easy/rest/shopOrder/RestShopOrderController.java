@@ -158,7 +158,7 @@ public class RestShopOrderController extends BaseController  {
                 goodsList.add(goodsService.getOne(queryWrapper3));
             }
             shoporder.setGoodsList(goodsList);
-            shoporder.setPic(goodsList.get(0).getPic());
+            //shoporder.setPic(goodsList.get(0).getPic());
 
         }
 
