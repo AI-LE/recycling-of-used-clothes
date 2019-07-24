@@ -62,7 +62,10 @@ public class RecycleOrder extends BaseEntity {
     private String address;
 
     private String phone;
-
+    /**
+     * 旧衣服图片
+     */
+    private String imageUrl;
     /**
      * 取货码
      */
