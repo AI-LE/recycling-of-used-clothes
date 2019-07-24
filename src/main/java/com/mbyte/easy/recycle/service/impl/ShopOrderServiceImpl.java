@@ -1,4 +1,3 @@
-
 package com.mbyte.easy.recycle.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -38,7 +38,10 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderMapper, ShopOrder
 
     }
 
+    @Override
+    public Long addOrder(String addressId, long[] goodsIds, BigDecimal totalPrice, String userId) {
+        return null;
+    }
 
 
 }
-

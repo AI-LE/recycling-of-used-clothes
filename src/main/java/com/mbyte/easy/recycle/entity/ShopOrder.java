@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.mbyte.easy.common.entity.BaseEntity;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,8 +17,8 @@ import lombok.experimental.Accessors;
  * 商品订单
  * </p>
  *
- * @author 艾乐
- * @since 2019-07-22
+ * @author 魏皓
+ * @since 2019-07-19
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -54,11 +56,7 @@ public class ShopOrder extends BaseEntity {
      * 用户地址id
      */
     private Long addressId;
-    /**
-     * 用户地址
-     */
-    @TableField(exist = false)
-    private String address;
+
     /**
      * 用户电话号码
      */
@@ -84,6 +82,23 @@ public class ShopOrder extends BaseEntity {
      */
     private Integer isDel;
 
+    /**
+     * 订单中第一个货物的缩略图
+     */
+    @TableField(exist = false)
+    private String pic;
+
+    /**
+     * 订单的地址
+     */
+    @TableField(exist = false)
+    private String address;
+
+    /**
+     * 订单中所有的货物
+     */
+    @TableField(exist = false)
+    private List<Goods> goodsList;
 
 }
 

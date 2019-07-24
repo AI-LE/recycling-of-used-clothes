@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.math.BigDecimal;
+
 /**
  * <p>
  * 商品订单 服务类
@@ -16,6 +18,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IShopOrderService extends IService<ShopOrder> {
     IPage<ShopOrder> selectAllShopOrder(Page<ShopOrder> page, String createTime, ShopOrder shopOrders);
+
+    Long addOrder(String addressId, long[] goodsIds, BigDecimal totalPrice, String userId);
 
 }
 
