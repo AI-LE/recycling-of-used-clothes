@@ -91,13 +91,29 @@ public class RestCommentsController extends BaseController  {
         return this.success(commentsWithUserLists);
     }
 
+
     /**
-    * 添加
+     * 添加评论
+     */
+//    public AjaxResult
+
+    /**
+     * 添加
     * @param comments
     * @return
     */
-    @PostMapping("add")
-    public AjaxResult add(Comments comments){
+    @RequestMapping("add")
+    public AjaxResult add(Comments comments ,Boolean hideUsername){
+        if(!hideUsername)
+        {
+            comments.setCreatetime(LocalDateTime.now());
+            //comments.setUserId(new Long(0));
+        }
+        else
+        {
+            comments.setCreatetime(LocalDateTime.now());
+            comments.setUserId(new Long(99999));
+        }
         return toAjax(commentsService.save(comments));
     }
 

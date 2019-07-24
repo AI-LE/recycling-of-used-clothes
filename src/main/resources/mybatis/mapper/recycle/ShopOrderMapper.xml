@@ -53,8 +53,8 @@
             <if test="updatetime != null">
                 updatetime,
             </if>
-            <if test="idDel != null">
-                id_del,
+            <if test="isDel != null">
+                is_del,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -99,8 +99,8 @@
                  #{updatetime,jdbcType=TIMESTAMP},
             </if>
 
-            <if test="idDel != null">
-                #{idDel,jdbcType=SMALLINT},
+            <if test="isDel != null">
+                #{isDel,jdbcType=SMALLINT},
             </if>
 
         </trim>

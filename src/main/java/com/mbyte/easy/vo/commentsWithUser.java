@@ -47,5 +47,5 @@ public class commentsWithUser extends BaseEntity {
     /**
      * 昵称
      */
-    private String nickName;
+    private String nickName="匿名用户";
 }
