@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.recycle.entity.ProductModel;
+import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.mapper.UserPropMapper;
+import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.recycle.service.IPubService;
@@ -20,6 +22,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
@@ -38,6 +42,7 @@ import java.util.Map;
 @RequestMapping("/pub")
 public class PubController extends BaseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PubController.class);
 
     @Autowired
     IPubService pubService;
@@ -47,6 +52,9 @@ public class PubController extends BaseController {
     private IUserPropService userPropService;
     @Resource
     private UserPropMapper userPropMapper;
+
+    @Autowired
+    private IShopOrderService shopOrderService;
     /**
      * TODO 小程序appid
      **/
@@ -232,12 +240,16 @@ public class PubController extends BaseController {
      * 支付接口
      */
     @RequestMapping("yuepay")
-    public AjaxResult yuepay(BigDecimal fee,String userId){
+    public AjaxResult yuepay(BigDecimal fee,String userId,long orderId){
         WeixinUser weixinUser = new WeixinUser();
         weixinUser.setId(Long.parseLong(userId));
         WeixinUser result = weixinUserService.getById(Long.parseLong(userId));
         weixinUser.setAccount(result.getAccount().subtract(fee));
         weixinUserService.updateById(weixinUser);
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(2);
+        shopOrder.setId(orderId);
+        shopOrderService.updateById(shopOrder);
         return this.success();
     }
 

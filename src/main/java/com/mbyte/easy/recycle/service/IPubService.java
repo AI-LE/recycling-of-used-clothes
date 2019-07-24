@@ -1,6 +1,6 @@
 package com.mbyte.easy.recycle.service;
 
-import com.mbyte.easy.recycle.entity.ProductModel;
+
 
 /**
  * <p>
@@ -12,5 +12,5 @@ import com.mbyte.easy.recycle.entity.ProductModel;
  */
 public interface IPubService  {
 
-    int wxPay(ProductModel product);
+
 }

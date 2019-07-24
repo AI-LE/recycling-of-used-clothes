@@ -1,5 +1,8 @@
 package com.mbyte.easy.recycle.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.OrderGoods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.mapper.OrderGoodsMapper;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -28,11 +32,25 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderMapper, ShopOrder
     @Resource
     private OrderGoodsMapper orderGoodsMapper;
 
+
+
     @Override
-    public Long addOrder(String addressId, long[] goodsIds, BigDecimal totalPrice, String userId){
+    public IPage<ShopOrder> selectAllShopOrder(Page<ShopOrder> page, String createTime, ShopOrder shopOrders) {
+        String beginTime = null;
+        String endTime = null;
+
+        if(createTime != null && !"".equals(createTime)){
+            beginTime = createTime.split(" - ")[0];
+            endTime = createTime.split(" - ")[1];
+        }
+        return shopOrderMapper.selectAllShopOrder(page,beginTime,endTime,shopOrders);
+
+    }
+    @Override
+    public Long addOrder(String addressId, long[] goodsIds, BigDecimal totalPrice, String userId) {
         //商户订单号(时间戳+随机数)
         int r = (int) ((Math.random() * 9 + 1) * 100000);
-        String orderNo  = System.currentTimeMillis()+String.valueOf(r);
+        String orderNo = System.currentTimeMillis() + String.valueOf(r);
         ShopOrder shopOrder = new ShopOrder();
         shopOrder.setCreatetime(LocalDateTime.now());
         shopOrder.setUpdatetime(LocalDateTime.now());
@@ -42,11 +60,21 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderMapper, ShopOrder
         shopOrder.setOrderNo(orderNo);
         shopOrderMapper.addOrder(shopOrder);
 
-        for (long goodsId:goodsIds) {
-            orderGoodsMapper.addGoods(shopOrder.getId(),goodsId);
+        for (long goodsId : goodsIds) {
+            orderGoodsMapper.addGoods(shopOrder.getId(), goodsId);
         }
-        return  shopOrder.getId();
+        return shopOrder.getId();
 
 
+    }
+    /**
+     * 查询商城订单货物
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Goods> selectGoodsOrder(Long id) {
+
+        return shopOrderMapper.selectGoodsOrder(id);
     }
 }

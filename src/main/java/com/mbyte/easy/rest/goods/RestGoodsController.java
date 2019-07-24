@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.GoodsType;
+import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.service.IGoodsService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.recycle.service.IGoodsTypeService;
 import com.mbyte.easy.recycle.service.IShopOrderService;
+import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.util.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class RestGoodsController extends BaseController  {
 
     @Autowired
     private IShopOrderService ShopOrderService;
+
+    @Autowired
+    private IUserPropService userPropService;
 
     /**
     * 查询列表
@@ -179,8 +184,12 @@ public class RestGoodsController extends BaseController  {
      * 商城订单生成
      */
     @RequestMapping("addOrder")
-    public AjaxResult addOrder(String addressId, String[] goodsIds, BigDecimal totalPrice,String userId){
-
+    public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId){
+        UserProp userProp=new UserProp();
+        userProp.setAddress(address);
+        userProp.setUserName(userName);
+        userProp.setPhone(phone);
+        userPropService.insertUserProp(userProp);
         for (String temp:goodsIds
              ) {
             System.err.println(temp);
@@ -191,12 +200,11 @@ public class RestGoodsController extends BaseController  {
             goodsIdList[i]=Long.parseLong(goodsIds[i].replaceAll("\\[","").replaceAll("]",""));
         }
            if(StringUtils.isNotEmpty(userId)) {
-               Long result = ShopOrderService.addOrder(addressId, goodsIdList, totalPrice, userId);
+               Long result = ShopOrderService.addOrder(new Long(userProp.getId()).toString(), goodsIdList, totalPrice, userId);
                return  this.success(result);
            }else{
                return  this.error();
            }
-
     }
 
 }
