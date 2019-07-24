@@ -20,6 +20,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
@@ -38,6 +40,7 @@ import java.util.Map;
 @RequestMapping("/pub")
 public class PubController extends BaseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PubController.class);
 
     @Autowired
     IPubService pubService;

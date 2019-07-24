@@ -77,6 +77,11 @@ public class RecycleOrder extends BaseEntity {
     private Integer status;
 
     /**
+     * 旧衣图片地址
+     */
+    private String imageUrl;
+
+    /**
      * 订单创建时间
      */
     private LocalDateTime createtime;
