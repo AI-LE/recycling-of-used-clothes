@@ -3,6 +3,7 @@ package com.mbyte.easy.recycle.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.common.controller.BaseController;
@@ -94,6 +95,8 @@ public class ShopOrderController extends BaseController  {
         return prefix+"list";
     }
 
+
+
     /**
     * 添加跳转页面
     * @return
@@ -121,6 +124,21 @@ public class ShopOrderController extends BaseController  {
         model.addAttribute("shopOrder",shopOrderService.getById(id));
         return prefix+"edit";
     }
+
+    /**
+     * 添加跳转页面(商品订单详情)
+     * @return
+     */
+    @GetMapping("detailBefore/{id}")
+    public String detailBefore(Model model,@PathVariable("id")Long id){
+        ShopOrder byId = shopOrderService.getById(id);
+        model.addAttribute("shopOrder",byId);
+        List<Goods> goods = shopOrderService.selectGoodsOrder(id);
+        model.addAttribute("goods",goods);
+        return prefix+"detail";
+    }
+
+
     /**
     * 添加
     * @param shopOrder

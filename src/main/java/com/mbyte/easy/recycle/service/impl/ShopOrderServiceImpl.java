@@ -2,6 +2,7 @@ package com.mbyte.easy.recycle.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.mapper.ShopOrderMapper;
 import com.mbyte.easy.recycle.service.IShopOrderService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -41,6 +43,17 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderMapper, ShopOrder
     @Override
     public Long addOrder(String addressId, long[] goodsIds, BigDecimal totalPrice, String userId) {
         return null;
+    }
+
+    /**
+     * 查询商城订单货物
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Goods> selectGoodsOrder(Long id) {
+
+        return shopOrderMapper.selectGoodsOrder(id);
     }
 
 

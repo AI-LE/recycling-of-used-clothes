@@ -64,7 +64,6 @@
                         <tr class="text-c">
                             <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
-
                             <th width="40">订单状态</th>
                             <th width="40">订单号</th>
                             <th width="40">下单时间</th>
@@ -73,7 +72,6 @@
                             <th width="40">用户地址</th>
                             <th width="40">用户电话号码</th>
                             <th width="40">快递单号</th>
-
                             <th width="100">操作</th>
                         </tr>
                         </thead>
@@ -85,8 +83,6 @@
                             <td><input type="checkbox" value="1" th:value="${shopOrder.id}"
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
-
-                            <!--                                        <td th:text="${shopOrder.status}"></td>-->
                             <td th:text="${shopOrder.status == 1 ?'代付款' : (shopOrder.status == 2 ? '代发货':(shopOrder.status == 3 ? '待收货' :'待评价'))}"></td>
                             <td th:text="${shopOrder.orderNo}"></td>
                             <td th:text="${#temporals.format(shopOrder.createtime, 'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -95,10 +91,10 @@
                             <td th:text="${shopOrder.address}"></td>
                             <td th:text="${shopOrder.phone}"></td>
                             <td th:text="${shopOrder.express}"></td>
-                            <!--                                        <td th:text="${shopOrder.isShow}"></td>-->
-                            <!--                                    <td th:text="${#temporals.format(shopOrder.updatetime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
-                            <!--                                        <td th:text="${shopOrder.idDel}"></td>-->
                             <td class="td-manage">
+                                <a title="详情" href="javascript:;"
+                                   th:onclick="'javascript:layer_show(\'详情\',\'/recycle/'+'shopOrder'+'/detailBefore/'+${shopOrder.id}+'\',900,500)'"
+                                   class="ml-5" style="text-decoration:none"><input  class="btn btn-danger radius" type="button" th:value="详情"/></a>
                                 <a title="编辑" href="javascript:;"
                                    th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'shopOrder'+'/editBefore/'+${shopOrder.id}+'\',900,500)'"
                                    class="ml-5" style="text-decoration:none"><input  class="btn btn-primary radius" type="button" th:value="修改订单"/></a>

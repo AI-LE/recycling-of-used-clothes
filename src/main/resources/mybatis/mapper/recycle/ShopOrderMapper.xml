@@ -133,6 +133,9 @@
             and createtime between #{beginTime} and #{endTime}
         </if>
     </select>
+    <select id="selectGoodsOrder" resultType="com.mbyte.easy.recycle.entity.Goods">
+        select * from order_goods left join goods on order_goods.goodsid = goods.id where order_goods.order_id = #{shop_order.id}
+    </select>
 
 
 
