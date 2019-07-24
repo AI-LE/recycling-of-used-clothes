@@ -166,6 +166,19 @@ public class RestShopOrderController extends BaseController  {
     }
 
     /**
+     * 取消订单
+     */
+    @RequestMapping("cancel")
+    public AjaxResult cancel(@RequestParam("id") Long id)
+    {
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(6);
+        shopOrder.setId(id);
+        shopOrderService.updateById(shopOrder);
+        return this.success();
+    }
+
+    /**
     * 添加
     * @param shopOrder
     * @return

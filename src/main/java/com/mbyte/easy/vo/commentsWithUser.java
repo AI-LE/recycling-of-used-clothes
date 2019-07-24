@@ -48,4 +48,14 @@ public class commentsWithUser extends BaseEntity {
      * 昵称
      */
     private String nickName="匿名用户";
+
+    /**
+     * 图片URL
+     */
+    private String imgUrl;
+
+    /**
+     * 头像图片
+     */
+    private String headPic="https://wx.qlogo.cn/mmopen/vi_32/jWUEA4p8Dnicic2eVX9pGm81nkAJYauiaso1bkG8pxKUg6KP6xpqSyLLkrBLibZ1AY8fhz5ZeUqjH2SxtJNE0cfHjQ/132";
 }
