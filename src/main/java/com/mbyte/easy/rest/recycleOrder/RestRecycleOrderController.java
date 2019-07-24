@@ -12,6 +12,7 @@ import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
+import com.mbyte.easy.util.FileUtil;
 import com.mbyte.easy.util.PageInfo;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
@@ -138,6 +140,14 @@ public class RestRecycleOrderController extends BaseController  {
     }
 
 
+    @RequestMapping("uploadImage")
+    public AjaxResult uploadImage(@RequestParam("file") MultipartFile multipartFile){
+        String fileName = multipartFile.getOriginalFilename();
+        Map<String,String> map = new HashMap<>();
+        map.put("imageUrl","../images/" + FileUtil.uploadFile(multipartFile));
+        return success(map);
+    }
+
     /**
     * 添加订单
     * @return
@@ -145,7 +155,8 @@ public class RestRecycleOrderController extends BaseController  {
     @RequestMapping("add")
     public AjaxResult add(@RequestParam("price") BigDecimal price, @RequestParam("appointment") LocalDateTime appointment,
                           @RequestParam("phone") String phone,  @RequestParam("userId") Long userId,
-                          @RequestParam("userName") String userName, @RequestParam("address") String address){
+                          @RequestParam("userName") String userName, @RequestParam("address") String address,
+                          @RequestParam("imageUrl") String imageUrl){
 
         UserProp userProp = new UserProp();
         userProp.setUserName(userName);
@@ -160,6 +171,7 @@ public class RestRecycleOrderController extends BaseController  {
         recycleOrder.setAddressId(userProp.getId());
         recycleOrder.setPhone(phone);
         recycleOrder.setPrice(price);
+        recycleOrder.setImageUrl(imageUrl);
         recycleOrder.setCreatetime(time);
         recycleOrder.setUpdatetime(time);
         recycleOrder.setOrderNo(time.toString().replaceAll("[-:.T]",""));   //随机生成订单号
