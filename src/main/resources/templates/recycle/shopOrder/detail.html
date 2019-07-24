@@ -23,13 +23,10 @@
                 </thead>
                 <tbody>
                 <tr class="text-c" th:each="g,count:${goods}">
-<!--                    <td><input type="checkbox" value="1" th:value="${shopOrder.id}" name="id"/></td>-->
                     <td th:text="${g.name}"></td>
                     <td th:text="${g.price}"></td>
                     <td th:text="${g.sales}"></td>
                     <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${g.pic})}" /></td>
-
-
                 </tr>
                 </tbody>
             </table>

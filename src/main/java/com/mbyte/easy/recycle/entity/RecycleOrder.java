@@ -62,7 +62,7 @@ public class RecycleOrder extends BaseEntity {
     private String address;
 
     private String phone;
-
+ 
     /**
      * 取货码
      */
@@ -72,6 +72,11 @@ public class RecycleOrder extends BaseEntity {
      * 订单状态（1：待审核；2：未通过；3：待取货；4：交易完成）
      */
     private Integer status;
+
+    /**
+     * 旧衣图片地址
+     */
+    private String imageUrl;
 
     /**
      * 订单创建时间
