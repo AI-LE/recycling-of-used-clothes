@@ -1,3 +1,4 @@
+
 package com.mbyte.easy.recycle.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -18,3 +19,4 @@ public interface ShopOrderMapper extends BaseMapper<ShopOrder> {
     IPage<ShopOrder> selectAllShopOrder(Page<ShopOrder> page,String beginTime,String endTime, ShopOrder shopOrders);
 
 }
+

@@ -134,9 +134,11 @@ public class GoodsController extends BaseController  {
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(Goods goods){
+    public AjaxResult edit(Goods goods ,@PathParam("file") MultipartFile file){
         goods.setUpdatetime(LocalDateTime.now());
         goods.setCreatetime(LocalDateTime.now());
+        String fileName = file.getOriginalFilename();
+        goods.setPic("../images/" + FileUtil.uploadFile(file)  );
         return toAjax(goodsService.updateById(goods));
     }
     /**

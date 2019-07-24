@@ -17,4 +17,6 @@ public interface UserPropMapper extends BaseMapper<UserProp> {
 
    List<UserProp> getAddressList(Long userId);
 
+   int insertUserProp(UserProp userProp);
+
 }

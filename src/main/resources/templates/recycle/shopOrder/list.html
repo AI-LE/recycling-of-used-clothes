@@ -4,6 +4,7 @@
     <title>列表</title>
 
 
+
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>商品订单管理<span
@@ -11,6 +12,7 @@
                                               style="line-height:1.6em;margin-top:3px"
                                               href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
+
 <div class="page-container">
     <form action="#" th:action="@{/recycle/shopOrder}" method="post">
         <div class="layui-body">
@@ -32,6 +34,7 @@
 
                     <div class="cl pd-5 bg-1 bk-gray ">
                         <div class="searchByField">
+
                             <!--                                         <input type="input-text" class="input-text" th:value="${searchInfo.status}" name="status" placeholder="搜索订单状态" id="status"/>-->
 
                             <select class="input-text" ”placeholder="按状态搜索" th:value="${searchInfo.status}" id="status" name="status"
@@ -51,6 +54,7 @@
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
                                     class="Hui-iconfont">&#xe665;</i> 搜索
+
                             </button>
                         </div>
                     </div>
@@ -60,6 +64,7 @@
                         <tr class="text-c">
                             <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
+
                             <th width="40">订单状态</th>
                             <th width="40">订单号</th>
                             <th width="40">下单时间</th>
@@ -68,7 +73,7 @@
                             <th width="40">用户地址</th>
                             <th width="40">用户电话号码</th>
                             <th width="40">快递单号</th>
-                            <!--                                <th width="40">订单更新时间</th>-->
+
                             <th width="100">操作</th>
                         </tr>
                         </thead>
@@ -80,6 +85,7 @@
                             <td><input type="checkbox" value="1" th:value="${shopOrder.id}"
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
+
                             <!--                                        <td th:text="${shopOrder.status}"></td>-->
                             <td th:text="${shopOrder.status == 1 ?'代付款' : (shopOrder.status == 2 ? '代发货':(shopOrder.status == 3 ? '待收货' :'待评价'))}"></td>
                             <td th:text="${shopOrder.orderNo}"></td>
@@ -121,7 +127,9 @@
     lay('.timeSpace').each(function(){
         laydate.render({
             elem: this
+
             ,type: 'date'
+
             ,range: true //或 range: '~' 来自定义分割字符
         });
     });

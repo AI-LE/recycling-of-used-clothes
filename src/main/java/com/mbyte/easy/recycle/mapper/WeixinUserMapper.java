@@ -4,6 +4,9 @@ package com.mbyte.easy.recycle.mapper;
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
+
 
 /**
  * <p>
@@ -16,5 +19,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface WeixinUserMapper extends BaseMapper<WeixinUser> {
 
     String insertWeixinUser( String openId);
+
+    Integer updateBalance(@PathParam("balance") BigDecimal balance, @PathParam("userId") Long userId);
 }
 

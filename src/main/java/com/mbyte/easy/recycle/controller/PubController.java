@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.entity.ProductModel;
 import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.mapper.UserPropMapper;
@@ -21,6 +22,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -228,10 +230,13 @@ public class PubController extends BaseController {
     /**
      * 支付接口
      */
-    @RequestMapping("pay")
-    public void pay(){
-        return;
-    }
+//    @RequestMapping("pay")
+//    public AjaxResult pay(Model model){
+//        ProductModel product = new ProductModel();
+//        model.addAttribute("result",  pubService.wxPay(product));
+//
+//        return success(1);
+//    }
 
 
 }

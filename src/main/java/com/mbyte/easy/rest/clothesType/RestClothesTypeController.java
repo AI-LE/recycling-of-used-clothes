@@ -8,6 +8,8 @@ import com.mbyte.easy.recycle.service.IClothesTypeService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.util.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +32,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("rest/clothesType")
 public class RestClothesTypeController extends BaseController  {
+
+    private static final Logger logger = LoggerFactory.getLogger(RestClothesTypeController.class);
 
     @Autowired
     private IClothesTypeService clothesTypeService;
@@ -57,9 +61,7 @@ public class RestClothesTypeController extends BaseController  {
          }
 
 
-        if(clothesType.getIsDel() != null  && !"".equals(clothesType.getIsDel() + "")) {
-            queryWrapper = queryWrapper.eq("is_del",clothesType.getIsDel());
-         }
+        queryWrapper = queryWrapper.eq("is_del","1");
 
         IPage<ClothesType> pageInfo = clothesTypeService.page(page, queryWrapper);
 
@@ -78,6 +80,7 @@ public class RestClothesTypeController extends BaseController  {
     */
     @PostMapping("add")
     public AjaxResult add(ClothesType clothesType){
+        clothesType.setIsDel(2);
         return toAjax(clothesTypeService.save(clothesType));
     }
 

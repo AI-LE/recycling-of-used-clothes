@@ -4,21 +4,30 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
+import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.service.IRecycleOrderService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.util.PageInfo;
+import org.hibernate.validator.constraints.pl.REGON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
 * <p>
@@ -31,8 +40,13 @@ import java.util.Map;
 @RequestMapping("rest/recycleOrder")
 public class RestRecycleOrderController extends BaseController  {
 
+    private static final Logger logger = LoggerFactory.getLogger(RestRecycleOrderController.class);
+
     @Autowired
     private IRecycleOrderService recycleOrderService;
+
+    @Autowired
+    private IWeixinUserService iWeixinUserService;
 
     /**
     * 查询列表
@@ -102,14 +116,10 @@ public class RestRecycleOrderController extends BaseController  {
          }
 
 
-        if(recycleOrder.getIsShow() != null  && !"".equals(recycleOrder.getIsShow() + "")) {
-            queryWrapper = queryWrapper.like("is_show",recycleOrder.getIsShow());
-         }
+        queryWrapper = queryWrapper.eq("is_show",1);
 
 
-        if(recycleOrder.getIsDel() != null  && !"".equals(recycleOrder.getIsDel() + "")) {
-            queryWrapper = queryWrapper.like("is_del",recycleOrder.getIsDel());
-         }
+        queryWrapper = queryWrapper.eq("is_del",1);
 
         IPage<RecycleOrder> pageInfo = recycleOrderService.page(page, queryWrapper);
 
@@ -123,25 +133,80 @@ public class RestRecycleOrderController extends BaseController  {
 
     /**
     * 添加订单
-    * @param recycleOrder
     * @return
     */
-    @PostMapping("add")
-    public AjaxResult add(RecycleOrder recycleOrder){
+    @RequestMapping("add")
+    public AjaxResult add(@RequestParam("price") BigDecimal price, @RequestParam("appointment") LocalDateTime appointment,
+                          @RequestParam("phone") String phone, @RequestParam("addressId") Long addressId,
+                          @RequestParam("userId") Long userId){
         LocalDateTime time = LocalDateTime.now();
+        RecycleOrder recycleOrder = new RecycleOrder();
+        recycleOrder.setAppointment(appointment);
+        recycleOrder.setUserId(userId);
+        recycleOrder.setAddressId(addressId);
+        recycleOrder.setPhone(phone);
+        recycleOrder.setPrice(price);
         recycleOrder.setCreatetime(time);
         recycleOrder.setUpdatetime(time);
+        recycleOrder.setOrderNo(time.toString().replaceAll("[-:.T]",""));   //随机生成订单号
+        recycleOrder.setIsDel(2);
+        recycleOrder.setIsShow(2);
+        recycleOrder.setStatus(1);
+        recycleOrder.setPickCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0,11));
         return toAjax(recycleOrderService.save(recycleOrder));
     }
 
     /**
-    * 编辑，对订单的审核，状态的变化
-    * @param recycleOrder
-    * @return
-    */
-    @PostMapping("edit")
-    public AjaxResult edit(RecycleOrder recycleOrder){
+     * 根据条件查询订单
+     * @param status
+     * @param userId
+     * @param courierId
+     * @return
+     */
+    @RequestMapping("select")
+    public AjaxResult select(@RequestParam(value = "status", required = false)Integer status, @RequestParam(value = "userId",required = false) Long userId, @RequestParam(value = "courierId",required = false) Long courierId){
+
+        QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<>();
+        if(userId != null){
+            queryWrapper = queryWrapper.eq("user_id",userId);
+        }
+        if(courierId != null){
+            queryWrapper = queryWrapper.eq("courier_id",courierId);
+        }
+        if(status != null){
+            queryWrapper = queryWrapper.eq("status",status);
+        }
+        List<RecycleOrder> recycleOrder = recycleOrderService.list(queryWrapper);
+        Map<String,List<RecycleOrder>> map = new HashMap<>();
+        map.put("recycleOrder",recycleOrder);
+        return this.success(map);
+    }
+
+    /**
+     * 编辑，对订单的审核，状态的变化
+     * @param id
+     * @param status
+     * @return
+     */
+    @RequestMapping("edit")
+    public AjaxResult edit(@PathParam("id") Long id, @PathParam("status") Integer status){
+        RecycleOrder recycleOrder = new RecycleOrder();
+        recycleOrder.setId(id);
+        recycleOrder.setStatus(status);
         recycleOrder.setUpdatetime(LocalDateTime.now());
+        return toAjax(recycleOrderService.updateById(recycleOrder));
+    }
+
+    /**
+     * 取货员付款，订单完成
+     */
+    @RequestMapping("pickUp")
+    public AjaxResult pickUp(@PathParam("userId") Long userId, @PathParam("id") Long id, @RequestParam("price") BigDecimal balance){
+        RecycleOrder recycleOrder = new RecycleOrder();
+        recycleOrder.setId(id);
+        recycleOrder.setStatus(4);
+        recycleOrder.setUpdatetime(LocalDateTime.now());
+        iWeixinUserService.updateBalance(balance,userId);
         return toAjax(recycleOrderService.updateById(recycleOrder));
     }
 
@@ -150,7 +215,7 @@ public class RestRecycleOrderController extends BaseController  {
     * @param id
     * @return
     */
-    @GetMapping("delete/{id}")
+    @RequestMapping("delete/{id}")
     public AjaxResult delete(@PathVariable("id") Long id){
         return toAjax(recycleOrderService.removeById(id));
     }
@@ -159,7 +224,7 @@ public class RestRecycleOrderController extends BaseController  {
     * @param ids
     * @return
     */
-    @PostMapping("deleteAll")
+    @RequestMapping("deleteAll")
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
         return toAjax(recycleOrderService.removeByIds(ids));
     }

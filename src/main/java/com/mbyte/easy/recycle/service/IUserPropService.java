@@ -13,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserPropService extends IService<UserProp> {
 
-
+    int insertUserProp(UserProp userProp);
 
 }

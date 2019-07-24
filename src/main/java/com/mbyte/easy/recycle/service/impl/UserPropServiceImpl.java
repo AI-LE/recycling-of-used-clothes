@@ -20,4 +20,8 @@ public class UserPropServiceImpl extends ServiceImpl<UserPropMapper, UserProp> i
     @Autowired
     private  UserPropMapper userPropMapper;
 
+    public int insertUserProp(UserProp userProp){
+        return userPropMapper.insertUserProp(userProp);
+    }
+
 }

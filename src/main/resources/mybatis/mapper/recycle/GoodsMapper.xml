@@ -49,10 +49,16 @@
        where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.Goods">
+<<<<<<< HEAD
+    insert into goods (name, pic, price, info, goods_type_id, createtime, updatetime, is_del)
+    values (
+         name = #{name,jdbcType=VARCHAR},
+=======
     insert into goods (name, sales, pic, price, info, goods_type_id, createtime, updatetime, is_del)
     values (
          name = #{name,jdbcType=VARCHAR},
          sales = #{sales,jdbcType=INTEGER},
+>>>>>>> da9e25d41b15f84e3e687d73733bc207aa4c6954
          pic = #{pic,jdbcType=VARCHAR},
          price = #{price,jdbcType=DECIMAL},
          info = #{info,jdbcType=VARCHAR},
@@ -69,9 +75,12 @@
       <if test="name != null">
         name,
       </if>
+<<<<<<< HEAD
+=======
       <if test="sales != null">
         sales,
       </if>
+>>>>>>> da9e25d41b15f84e3e687d73733bc207aa4c6954
       <if test="pic != null">
         pic,
       </if>
@@ -100,10 +109,13 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
 
+<<<<<<< HEAD
+=======
       <if test="sales != null">
         sales = #{sales,jdbcType=INTEGER},
       </if>
 
+>>>>>>> da9e25d41b15f84e3e687d73733bc207aa4c6954
       <if test="pic != null">
         pic = #{pic,jdbcType=VARCHAR},
       </if>
@@ -140,9 +152,12 @@
        <if test="name != null">
          name = #{name,jdbcType=VARCHAR},
       </if>
+<<<<<<< HEAD
+=======
        <if test="sales != null">
          sales = #{sales,jdbcType=INTEGER},
       </if>
+>>>>>>> da9e25d41b15f84e3e687d73733bc207aa4c6954
        <if test="pic != null">
          pic = #{pic,jdbcType=VARCHAR},
       </if>
@@ -171,7 +186,10 @@
     update goods
     set
         name = #{name,jdbcType=VARCHAR},
+<<<<<<< HEAD
+=======
         sales = #{sales,jdbcType=INTEGER},
+>>>>>>> da9e25d41b15f84e3e687d73733bc207aa4c6954
         pic = #{pic,jdbcType=VARCHAR},
         price = #{price,jdbcType=DECIMAL},
         info = #{info,jdbcType=VARCHAR},
