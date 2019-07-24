@@ -11,6 +11,8 @@
     <groupId>com.mbyte</groupId>
     <artifactId>easy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <!--打成war包 -->
+    <packaging>war</packaging>
     <name>easy</name>
     <description>easy-byte</description>
 
