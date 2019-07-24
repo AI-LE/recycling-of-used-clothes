@@ -23,8 +23,7 @@
 						<a href="javascript:;"
                            onclick="deleteAll('/recycle/weixinUser/deleteAll')"
                            class="layui-btn  layui-btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-						<a href="javascript:;"
-                           onclick="layer_show('添加','/recycle/weixinUser/addBefore',1200,700)"
+						<a href="javascript:;" onclick="layer_show('添加','/recycle/weixinUser/addBefore',1200,700)"
                            class="layui-btn  layui-btn-normal radius"><i class="Hui-iconfont">&#xe600;</i> 添加</a>
 						</span>
                         <span class="r wei-height">共有数据：<strong th:text="${pageInfo.total}"></strong> 条</span>
@@ -38,8 +37,8 @@
                                             <select class="input-text" ”placeholder="搜索性别" th:value="${searchInfo.gender}" id="gender" name="gender"
                                                     style="width: 23.5%;margin-top: 5px">
                                                 <option value="">选择性别</option>
-                                                <option value="1">男</option>
-                                                <option value="2">女</option>
+                                                <option value="1" th:attr="selected=${searchInfo.gender == 1}">男</option>
+                                                <option value="2" th:attr="selected=${searchInfo.gender == 2}">女</option>
                                             </select>
 
 
@@ -49,10 +48,9 @@
                                             <select class="input-text"  placeholder="搜索性别" th:value="${searchInfo.type}" id="type" name="type"
                                                     style="width: 23.5%;margin-top: 5px">
                                                 <option value="">选择用户类型</option>
-                                                <option value="1">个人用户</option>
-                                                <option value="2">取货员</option>
+                                                <option value="1" th:attr="selected=${searchInfo.type == 1}">个人用户</option>
+                                                <option value="2" th:attr="selected=${searchInfo.type == 2}">取货员</option>
                                             </select>
-                                         <input type="input-text" class="input-text" th:value="${searchInfo.account}" name="account" placeholder="搜索账户余额" id="account"/>
                                          <input type="input-text" class="input-text" th:value="${searchInfo.phone}" name="phone" placeholder="搜索电话号码" id="phone"/>
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
@@ -72,7 +70,6 @@
                                 <th width="40">省份</th>
                                 <th width="40">城市</th>
                                 <th width="40">用户类型</th>
-                                <th width="40">账户余额</th>
                                 <th width="40">电话号码</th>
                             <th width="100">操作</th>
                         </tr>
@@ -91,7 +88,6 @@
                                         <td th:text="${weixinUser.province}"></td>
                                         <td th:text="${weixinUser.city}"></td>
                                         <td th:text="${weixinUser.type eq 1 ? '普通用户':'取货员'}"></td>
-                                        <td th:text="${weixinUser.account}"></td>
                                         <td th:text="${weixinUser.phone}"></td>
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"

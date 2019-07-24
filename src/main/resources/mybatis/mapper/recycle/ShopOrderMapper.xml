@@ -13,7 +13,8 @@
       <id column="express" jdbcType="VARCHAR" property="express" />
       <id column="is_show" jdbcType="SMALLINT" property="isShow" />
       <id column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
-      <id column="id_del" jdbcType="SMALLINT" property="idDel" />
+      <id column="is_del" jdbcType="SMALLINT" property="isDel" />
+
 
   </resultMap>
   <sql id="Base_Column_List">
@@ -105,177 +106,38 @@
 
         </trim>
     </insert>
+    <select id="selectAllShopOrder" resultType="com.mbyte.easy.recycle.entity.ShopOrder">
+        select shop_order.*, user_prop.address,shop_order.phone  from shop_order left JOIN user_prop on user_prop.id = shop_order.address_id where shop_order.is_del = 2
 
-<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
-<!--
- <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from shop_order
-       where id = #{id,jdbcType=BIGINT}
-  </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from  shop_order
-       where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
-    insert into shop_order (status, order_no, user_id, createtime, price, address_id, phone, express, is_show, updatetime, id_del)
-    values (
-         status = #{status,jdbcType=SMALLINT},
-         order_no = #{orderNo,jdbcType=VARCHAR},
-         user_id = #{userId,jdbcType=BIGINT},
-         createtime = #{createtime,jdbcType=TIMESTAMP},
-         price = #{price,jdbcType=DECIMAL},
-         address_id = #{addressId,jdbcType=BIGINT},
-         phone = #{phone,jdbcType=VARCHAR},
-         express = #{express,jdbcType=VARCHAR},
-         is_show = #{isShow,jdbcType=SMALLINT},
-         updatetime = #{updatetime,jdbcType=TIMESTAMP},
-         id_del = #{idDel,jdbcType=SMALLINT}
-    )
-  </insert>
+        <if test="shopOrders.status != null">
+            and shop_order.status = #{shopOrders.status}
+        </if>
+        <if test="shopOrders.orderNo != null">
+            and order_no = #{shopOrders.orderNo}
+        </if>
+        <if test="shopOrders.price != null">
+            and shop_order.price = #{shopOrders.price}
+        </if>
+        <if test="shopOrders.address != null">
 
-  <insert id="insertSelective" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
-    insert into shop_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="status != null">
-        status,
-      </if>
-      <if test="orderNo != null">
-        order_no,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="createtime != null">
-        createtime,
-      </if>
-      <if test="price != null">
-        price,
-      </if>
-      <if test="addressId != null">
-        address_id,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="express != null">
-        express,
-      </if>
-      <if test="isShow != null">
-        is_show,
-      </if>
-      <if test="updatetime != null">
-        updatetime,
-      </if>
-      <if test="idDel != null">
-        id_del,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
+            and address = #{shopOrders.address}
+        </if>
+        <if test="shopOrders.express != null">
+            and express = #{shopOrders.express}
+        </if>
+        <if test="shopOrders.phone != null ">
+            and shop_order.phone = #{shopOrders.phone}
+        </if>
+        <if test="beginTime != null">
+            and createtime between #{beginTime} and #{endTime}
+        </if>
+    </select>
+    <select id="selectGoodsOrder" resultType="com.mbyte.easy.recycle.entity.Goods">
+        select * from order_goods left join goods on order_goods.goodsid = goods.id where order_goods.order_id = #{shop_order.id}
+    </select>
 
-      <if test="status != null">
-        status = #{status,jdbcType=SMALLINT},
-      </if>
 
-      <if test="orderNo != null">
-        order_no = #{orderNo,jdbcType=VARCHAR},
-      </if>
 
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
 
-      <if test="createtime != null">
-        createtime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-
-      <if test="price != null">
-        price = #{price,jdbcType=DECIMAL},
-      </if>
-
-      <if test="addressId != null">
-        address_id = #{addressId,jdbcType=BIGINT},
-      </if>
-
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-
-      <if test="express != null">
-        express = #{express,jdbcType=VARCHAR},
-      </if>
-
-      <if test="isShow != null">
-        is_show = #{isShow,jdbcType=SMALLINT},
-      </if>
-
-      <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-
-      <if test="idDel != null">
-        id_del = #{idDel,jdbcType=SMALLINT},
-      </if>
-
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
-    update shop_order
-    <set>
-       <if test="status != null">
-         status = #{status,jdbcType=SMALLINT},
-      </if>
-       <if test="orderNo != null">
-         order_no = #{orderNo,jdbcType=VARCHAR},
-      </if>
-       <if test="userId != null">
-         user_id = #{userId,jdbcType=BIGINT},
-      </if>
-       <if test="createtime != null">
-         createtime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-       <if test="price != null">
-         price = #{price,jdbcType=DECIMAL},
-      </if>
-       <if test="addressId != null">
-         address_id = #{addressId,jdbcType=BIGINT},
-      </if>
-       <if test="phone != null">
-         phone = #{phone,jdbcType=VARCHAR},
-      </if>
-       <if test="express != null">
-         express = #{express,jdbcType=VARCHAR},
-      </if>
-       <if test="isShow != null">
-         is_show = #{isShow,jdbcType=SMALLINT},
-      </if>
-       <if test="updatetime != null">
-         updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-       <if test="idDel != null">
-         id_del = #{idDel,jdbcType=SMALLINT},
-      </if>
-    </set>
-       where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
-    update shop_order
-    set
-        status = #{status,jdbcType=SMALLINT},
-        order_no = #{orderNo,jdbcType=VARCHAR},
-        user_id = #{userId,jdbcType=BIGINT},
-        createtime = #{createtime,jdbcType=TIMESTAMP},
-        price = #{price,jdbcType=DECIMAL},
-        address_id = #{addressId,jdbcType=BIGINT},
-        phone = #{phone,jdbcType=VARCHAR},
-        express = #{express,jdbcType=VARCHAR},
-        is_show = #{isShow,jdbcType=SMALLINT},
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
-        id_del = #{idDel,jdbcType=SMALLINT},
-
-       where id = #{id,jdbcType=BIGINT}
-  </update>
--->
 </mapper>

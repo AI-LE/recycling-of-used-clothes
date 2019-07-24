@@ -159,6 +159,7 @@ public class RestShopOrderController extends BaseController  {
             }
             shoporder.setGoodsList(goodsList);
             shoporder.setPic(goodsList.get(0).getPic());
+
         }
 
         return this.success(shopOrders);

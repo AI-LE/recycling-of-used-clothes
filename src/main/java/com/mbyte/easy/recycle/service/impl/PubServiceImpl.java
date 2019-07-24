@@ -1,18 +1,17 @@
 package com.mbyte.easy.recycle.service.impl;
 
-import com.mbyte.easy.recycle.entity.WeixinUser;
-import com.mbyte.easy.recycle.mapper.WeixinUserMapper;
+
 import com.mbyte.easy.recycle.service.IPubService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import org.springframework.stereotype.Service;
 
+
 /**
- * <p>
- * 公共服务实现类
- * </p>
  *
- * @author Author
+ * 微信字符服务类
+ * @author KevinLyz 李曜铮
  * @since 2019-07-18
+ * @Version 1.0
  */
 @Service
 public class PubServiceImpl implements IPubService {

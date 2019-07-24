@@ -1,3 +1,4 @@
+
 package com.mbyte.easy.recycle.entity;
 
 import java.math.BigDecimal;
@@ -100,3 +101,4 @@ public class ShopOrder extends BaseEntity {
     private List<Goods> goodsList;
 
 }
+

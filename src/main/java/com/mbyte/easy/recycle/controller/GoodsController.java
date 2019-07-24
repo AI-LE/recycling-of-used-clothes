@@ -82,34 +82,7 @@ public class GoodsController extends BaseController  {
 
 
         Page<Goods> page = new Page<Goods>(pageNo, pageSize);
-//        QueryWrapper<Goods> queryWrapper = new QueryWrapper<Goods>();
-//        if(!ObjectUtils.isEmpty(goods.getName())) {
-//            queryWrapper = queryWrapper.like("name",goods.getName());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getSales())) {
-//            queryWrapper = queryWrapper.like("sales",goods.getSales());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getPic())) {
-//            queryWrapper = queryWrapper.like("pic",goods.getPic());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getPrice())) {
-//            queryWrapper = queryWrapper.like("price",goods.getPrice());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getInfo())) {
-//            queryWrapper = queryWrapper.like("info",goods.getInfo());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getGoodsTypeId())) {
-//            queryWrapper = queryWrapper.like("goods_type_id",goods.getGoodsTypeId());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getCreatetime())) {
-//            queryWrapper = queryWrapper.like("createtime",goods.getCreatetime());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getUpdatetime())) {
-//            queryWrapper = queryWrapper.like("updatetime",goods.getUpdatetime());
-//         }
-//        if(!ObjectUtils.isEmpty(goods.getIsDel())) {
-//            queryWrapper = queryWrapper.like("is_del",goods.getIsDel());
-//         }
+
 
         IPage<Goods> pageInfo = goodsService.selectAll(page,createtimeSpace,good);
         model.addAttribute("createtimeSpace", createtimeSpace);
@@ -161,9 +134,11 @@ public class GoodsController extends BaseController  {
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(Goods goods){
+    public AjaxResult edit(Goods goods ,@PathParam("file") MultipartFile file){
         goods.setUpdatetime(LocalDateTime.now());
         goods.setCreatetime(LocalDateTime.now());
+        String fileName = file.getOriginalFilename();
+        goods.setPic("../images/" + FileUtil.uploadFile(file)  );
         return toAjax(goodsService.updateById(goods));
     }
     /**
@@ -195,11 +170,6 @@ public class GoodsController extends BaseController  {
     @ResponseBody
     public AjaxResult selectType(){
         List<GoodsType> goodsTypes = goodsTypeService.selectType();
-//        JSONArray jsonArray = new JSONArray();
-//
-//        for (Object object : goodsTypes) {
-//            jsonArray.add(object);
-//        }
         System.out.println(goodsTypes);
         return success(goodsTypes);
 
