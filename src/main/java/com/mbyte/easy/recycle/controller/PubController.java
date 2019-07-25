@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.recycle.entity.ProductModel;
+import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.mapper.UserPropMapper;
+import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.recycle.service.IPubService;
@@ -50,6 +52,9 @@ public class PubController extends BaseController {
     private IUserPropService userPropService;
     @Resource
     private UserPropMapper userPropMapper;
+
+    @Autowired
+    private IShopOrderService shopOrderService;
     /**
      * TODO 小程序appid
      **/
@@ -235,12 +240,16 @@ public class PubController extends BaseController {
      * 支付接口
      */
     @RequestMapping("yuepay")
-    public AjaxResult yuepay(BigDecimal fee,String userId){
+    public AjaxResult yuepay(BigDecimal fee,String userId,long orderId){
         WeixinUser weixinUser = new WeixinUser();
         weixinUser.setId(Long.parseLong(userId));
         WeixinUser result = weixinUserService.getById(Long.parseLong(userId));
         weixinUser.setAccount(result.getAccount().subtract(fee));
         weixinUserService.updateById(weixinUser);
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(2);
+        shopOrder.setId(orderId);
+        shopOrderService.updateById(shopOrder);
         return this.success();
     }
 

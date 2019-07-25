@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.GoodsType;
+import com.mbyte.easy.recycle.mapper.GoodsMapper;
 import com.mbyte.easy.recycle.service.IGoodsService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,7 +46,8 @@ public class GoodsController extends BaseController  {
 
     @Autowired
     private IGoodsTypeService goodsTypeService;
-
+    @Resource
+    private GoodsMapper goodsMapper;
 
 
     /**
@@ -124,7 +127,8 @@ public class GoodsController extends BaseController  {
     public String editBefore(Model model,@PathVariable("id")Long id){
         List<GoodsType> type = goodsTypeService.selectType();
         model.addAttribute("type",type);
-        model.addAttribute("goods",goodsService.getById(id));
+
+        model.addAttribute("goods",goodsMapper.selectType(id));
         return prefix+"edit";
     }
     /**
@@ -137,8 +141,10 @@ public class GoodsController extends BaseController  {
     public AjaxResult edit(Goods goods ,@PathParam("file") MultipartFile file){
         goods.setUpdatetime(LocalDateTime.now());
         goods.setCreatetime(LocalDateTime.now());
-        String fileName = file.getOriginalFilename();
-        goods.setPic("../images/" + FileUtil.uploadFile(file)  );
+//        if(goods.getPic() == null) {
+//            String fileName = file.getOriginalFilename();
+//        }
+        goods.setPic("../images/" + FileUtil.uploadFile(file));
         return toAjax(goodsService.updateById(goods));
     }
     /**

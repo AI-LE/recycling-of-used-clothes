@@ -8,6 +8,8 @@
     <form class="form form-horizontal" id="form-shopOrder-edit" action="#"
           th:action="@{/recycle/shopOrder/edit}" th:object="${shopOrder}" enctype="multipart/form-data">
         <input type="hidden" name="id" th:value="${shopOrder.id}"/>
+        <input type="hidden" name="addressId" th:value="${shopOrder.addressId}"/>
+
 
 
         <div class="row cl">
@@ -31,14 +33,23 @@
             </div>
         </div>
         </div>
-<!--        <div class="row cl">-->
-<!--            <label class="form-label col-xs-2 col-sm-2"><span-->
-<!--                    class="c-red">*</span>用户地址：</label>-->
-<!--            <div class="formControls col-xs-10 col-sm-10">-->
-<!--                <input type="input-text" class="input-text" th:value="${shopOrder.address}" name="address"  placeholder="修改用户地址" id="address"/>-->
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red">*</span>用户地址：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" th:value="${shopOrder.address}" name="address"  placeholder="修改用户地址" id="address"/>
 
-<!--            </div>-->
-<!--        </div>-->
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red">*</span>用户姓名：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" th:value="${shopOrder.userName}" name="userName"  placeholder="修改姓名" id="address"/>
+
+            </div>
+        </div>
+
 
         <div class="row cl">
             <label class="form-label col-xs-2 col-sm-2"><span

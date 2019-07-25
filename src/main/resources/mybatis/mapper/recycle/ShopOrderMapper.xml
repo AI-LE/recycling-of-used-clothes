@@ -107,7 +107,10 @@
         </trim>
     </insert>
     <select id="selectAllShopOrder" resultType="com.mbyte.easy.recycle.entity.ShopOrder">
-        select shop_order.*, user_prop.address,shop_order.phone  from shop_order left JOIN user_prop on user_prop.id = shop_order.address_id where shop_order.is_del = 2
+        select shop_order.id,shop_order.`status`,shop_order.order_no,shop_order.user_id,shop_order.createtime,shop_order.price,shop_order.address_id,shop_order.express,shop_order.updatetime,
+        user_prop.address,user_prop.phone,user_prop.user_name   from shop_order
+        left JOIN user_prop on user_prop.id = shop_order.address_id
+        where shop_order.is_del = 2
 
 
         <if test="shopOrders.status != null">

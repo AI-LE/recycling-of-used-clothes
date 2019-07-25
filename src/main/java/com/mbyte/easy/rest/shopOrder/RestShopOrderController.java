@@ -142,8 +142,7 @@ public class RestShopOrderController extends BaseController  {
 //        QueryWrapper queryWrapper3 = new QueryWrapper();
         //queryWrapper1.eq("user_id",userId);
         List<ShopOrder> shopOrders=shopOrderService.list(queryWrapper);
-        for (ShopOrder shoporder:shopOrders
-             ) {
+        for (ShopOrder shoporder:shopOrders) {
             QueryWrapper queryWrapper1 = new QueryWrapper();
             queryWrapper1.eq("id",shoporder.getAddressId());
             shoporder.setAddress(userPropService.getOne(queryWrapper1).getAddress());
@@ -158,11 +157,24 @@ public class RestShopOrderController extends BaseController  {
                 goodsList.add(goodsService.getOne(queryWrapper3));
             }
             shoporder.setGoodsList(goodsList);
-            shoporder.setPic(goodsList.get(0).getPic());
+            //shoporder.setPic(goodsList.get(0).getPic());
 
         }
 
         return this.success(shopOrders);
+    }
+
+    /**
+     * 取消订单
+     */
+    @RequestMapping("cancel")
+    public AjaxResult cancel(@RequestParam("id") Long id)
+    {
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(6);
+        shopOrder.setId(id);
+        shopOrderService.updateById(shopOrder);
+        return this.success();
     }
 
     /**
@@ -202,6 +214,30 @@ public class RestShopOrderController extends BaseController  {
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
         return toAjax(shopOrderService.removeByIds(ids));
     }
+
+    /**
+     * 确认收货
+     */
+    @RequestMapping("confirm")
+    public AjaxResult confirm(long orderId){
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(4);
+        shopOrder.setId(orderId);
+        shopOrderService.updateById(shopOrder);
+        return this.success();
+    }
+
+    /**
+     * 查看物流
+     */
+    @RequestMapping("viewExpress")
+    public AjaxResult viewExpress(long orderId){
+        ShopOrder shopOrder=new ShopOrder();
+        QueryWrapper queryWrapper1 = new QueryWrapper();
+        queryWrapper1.eq("id",orderId);
+        return this.success(shopOrderService.getOne(queryWrapper1));
+    }
+
 
 }
 
