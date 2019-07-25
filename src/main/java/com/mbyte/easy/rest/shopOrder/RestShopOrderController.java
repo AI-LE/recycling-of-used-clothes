@@ -215,5 +215,29 @@ public class RestShopOrderController extends BaseController  {
         return toAjax(shopOrderService.removeByIds(ids));
     }
 
+    /**
+     * 确认收货
+     */
+    @RequestMapping("confirm")
+    public AjaxResult confirm(long orderId){
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(4);
+        shopOrder.setId(orderId);
+        shopOrderService.updateById(shopOrder);
+        return this.success();
+    }
+
+    /**
+     * 查看物流
+     */
+    @RequestMapping("viewExpress")
+    public AjaxResult viewExpress(long orderId){
+        ShopOrder shopOrder=new ShopOrder();
+        QueryWrapper queryWrapper1 = new QueryWrapper();
+        queryWrapper1.eq("id",orderId);
+        return this.success(shopOrderService.getOne(queryWrapper1));
+    }
+
+
 }
 

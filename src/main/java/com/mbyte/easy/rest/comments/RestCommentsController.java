@@ -116,14 +116,7 @@ public class RestCommentsController extends BaseController  {
     public AjaxResult add(Comments comments ,Boolean hideUsername,@RequestParam("imageUrl") String imageUrl,@RequestParam("orderId") long orderId){
 
         System.err.println(imageUrl);
-        CommentImg commentImg= new CommentImg();
-        commentImg.setCommentid(comments.getGoodsId());
-        commentImg.setPicUrl(imageUrl);
-        commentImgService.save(commentImg);
-        ShopOrder shopOrder=new ShopOrder();
-        shopOrder.setStatus(5);
-        shopOrder.setId(orderId);
-        shopOrderService.updateById(shopOrder);
+        comments.setCreatetime(LocalDateTime.now());
         if(!hideUsername)
         {
             comments.setCreatetime(LocalDateTime.now());
@@ -134,7 +127,16 @@ public class RestCommentsController extends BaseController  {
             comments.setCreatetime(LocalDateTime.now());
             comments.setUserId(new Long(99999));
         }
-        return toAjax(commentsService.save(comments));
+        commentsService.save(comments);
+        CommentImg commentImg= new CommentImg();
+        commentImg.setCommentid(comments.getId());
+        commentImg.setPicUrl(imageUrl);
+        commentImgService.save(commentImg);
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(5);
+        shopOrder.setId(orderId);
+        shopOrderService.updateById(shopOrder);
+        return success();
     }
 
     /**
