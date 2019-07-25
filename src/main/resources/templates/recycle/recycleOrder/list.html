@@ -82,7 +82,7 @@
                                     <td th:text="${#temporals.format(recycleOrder.appointment, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                         <td th:text="${recycleOrder.address}"></td>
                                         <td th:text="${recycleOrder.phone}"></td>
-                                        <th th:text="${recycleOrder.nickName}"></th>
+                                        <td th:text="${recycleOrder.nickName}"></td>
                                         <td th:text="${recycleOrder.status == 1 ?'待审核' : (recycleOrder.status == 2 ? '未通过':(recycleOrder.status == 3 ? '待取货' :'交易完成'))}"></td>
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"

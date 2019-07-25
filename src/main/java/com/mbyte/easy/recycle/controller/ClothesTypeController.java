@@ -102,9 +102,15 @@ public class ClothesTypeController extends BaseController  {
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(ClothesType clothesType,@PathParam("file") MultipartFile file){
-        String fileName = file.getOriginalFilename();
-        clothesType.setPic("../images/" + FileUtil.uploadFile(file) );
+    public AjaxResult edit(String type,Long id,@PathParam("file") MultipartFile file){
+        ClothesType clothesType = new ClothesType();
+        clothesType.setType(type);
+        clothesType.setId(id);
+        if(file != null) {
+
+            String fileName = file.getOriginalFilename();
+            clothesType.setPic("../images/" + FileUtil.uploadFile(file));
+        }
         return toAjax(clothesTypeService.updateById(clothesType));
     }
     /**

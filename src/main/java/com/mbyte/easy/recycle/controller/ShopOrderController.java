@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
+import com.mbyte.easy.recycle.entity.UserProp;
+import com.mbyte.easy.recycle.mapper.UserPropMapper;
 import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
@@ -36,6 +38,10 @@ public class ShopOrderController extends BaseController  {
 
     @Autowired
     private IShopOrderService shopOrderService;
+
+    @Autowired
+    private UserPropMapper userPropMapper;
+
 
     /**
     * 查询列表
@@ -121,6 +127,8 @@ public class ShopOrderController extends BaseController  {
     */
     @GetMapping("editBefore/{id}")
     public String editBefore(Model model,@PathVariable("id")Long id){
+
+
         model.addAttribute("shopOrder",shopOrderService.getById(id));
         return prefix+"edit";
     }
@@ -147,6 +155,14 @@ public class ShopOrderController extends BaseController  {
     @PostMapping("edit")
     @ResponseBody
     public AjaxResult edit(ShopOrder shopOrder){
+        UserProp userProp = new UserProp();
+        if(StringUtils.isNoneBlank(shopOrder.getAddress()) || StringUtils.isNoneBlank(shopOrder.getPhone())|| StringUtils.isNoneBlank(shopOrder.getUserName())){
+            userProp.setId(shopOrder.getAddressId());
+            userProp.setAddress(shopOrder.getAddress());
+            userProp.setPhone(shopOrder.getPhone());
+            userProp.setUserName(shopOrder.getUserName());
+            userPropMapper.updateById(userProp);
+        }
         shopOrder.setUpdatetime(LocalDateTime.now());
         return toAjax(shopOrderService.updateById(shopOrder));
     }

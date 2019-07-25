@@ -95,6 +95,13 @@ public class ShopOrder extends BaseEntity {
     private String address;
 
     /**
+     * 用户姓名
+     */
+    @TableField(exist = false)
+    private String userName;
+
+
+    /**
      * 订单中所有的货物
      */
     @TableField(exist = false)

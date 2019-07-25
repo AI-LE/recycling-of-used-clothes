@@ -100,7 +100,9 @@ public class RecycleOrderController extends BaseController  {
     public String editBefore(Model model,@PathVariable("id")Long id){
         List<WeixinUser> nickName = recycleOrderService.selectCouier();
         model.addAttribute("nickName",nickName);
-        model.addAttribute("recycleOrder",recycleOrderService.getById(id));
+
+        RecycleOrder recycleOrder = recycleOrderService.getById(id);
+        model.addAttribute("recycleOrder",recycleOrder);
         return prefix+"edit";
     }
     /**
@@ -110,8 +112,7 @@ public class RecycleOrderController extends BaseController  {
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(RecycleOrder recycleOrder)
-    {
+    public AjaxResult edit(RecycleOrder recycleOrder) {
         return toAjax(recycleOrderService.updateById(recycleOrder));
     }
     /**

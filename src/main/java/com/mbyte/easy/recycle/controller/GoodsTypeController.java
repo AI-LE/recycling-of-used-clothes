@@ -81,9 +81,8 @@ public class GoodsTypeController extends BaseController  {
     */
     @PostMapping("add")
     @ResponseBody
-    public AjaxResult add(GoodsType goodsType,@PathParam("file") MultipartFile file){
-        String fileName = file.getOriginalFilename();
-        goodsType.setPic("../images/" + FileUtil.uploadFile(file)  );
+    public AjaxResult add(GoodsType goodsType){
+
         return toAjax(goodsTypeService.save(goodsType));
     }
     /**
@@ -102,9 +101,8 @@ public class GoodsTypeController extends BaseController  {
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(GoodsType goodsType,@PathParam("file") MultipartFile file){
-        String fileName = file.getOriginalFilename();
-        goodsType.setPic("../images/" + FileUtil.uploadFile(file)  );
+    public AjaxResult edit(GoodsType goodsType){
+
         return toAjax(goodsTypeService.updateById(goodsType));
     }
     /**

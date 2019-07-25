@@ -23,11 +23,11 @@
       order_no, user_id, courier_id, price, appointment, address_id, phone, pick_code, status, createtime, updatetime, is_show, is_del
   </sql>
     <select id="selectCouier" resultType="com.mbyte.easy.recycle.entity.WeixinUser">
-        SELECT  weixin_user.nickname,weixin_user.id  FROM weixin_user left join recycle_order on weixin_user.id = recycle_order.courier_id where weixin_user.type = 2
+        SELECT   weixin_user.nickname, weixin_user.id  FROM weixin_user where weixin_user.type = 2
     </select>
     <select id="selectAll" resultType="com.mbyte.easy.recycle.entity.RecycleOrder">
         select recycle_order.*,user_prop.address,  weixin_user.nickname as nickName  from recycle_order
-        left JOIN weixin_user on weixin_user.id = recycle_order.user_id
+        left JOIN weixin_user on weixin_user.id = recycle_order.courier_id
         left join user_prop on user_prop.id = recycle_order.address_id
         where recycle_order.is_del = 2
 
