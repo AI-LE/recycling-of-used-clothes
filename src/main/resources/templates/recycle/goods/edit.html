@@ -86,20 +86,10 @@
 <script>
     $(function () {
         $("#form-goods-edit").validate({
-            rules: {
 
-    },
-        onkeyup:false,
-            debug
-    :
-        true,
-            success
-    :
-        "valid",
-            submitHandler
-    :
 
-        function (form) {
+            submitHandler:
+                function (form) {
             $(form).ajaxSubmit({
                 type: 'POST',
                 url: "/recycle/goods/edit",

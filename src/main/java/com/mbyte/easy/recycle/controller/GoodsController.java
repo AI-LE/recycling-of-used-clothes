@@ -137,8 +137,10 @@ public class GoodsController extends BaseController  {
     public AjaxResult edit(Goods goods ,@PathParam("file") MultipartFile file){
         goods.setUpdatetime(LocalDateTime.now());
         goods.setCreatetime(LocalDateTime.now());
-        String fileName = file.getOriginalFilename();
-        goods.setPic("../images/" + FileUtil.uploadFile(file)  );
+//        if(goods.getPic() == null) {
+//            String fileName = file.getOriginalFilename();
+//        }
+        goods.setPic("../images/" + FileUtil.uploadFile(file));
         return toAjax(goodsService.updateById(goods));
     }
     /**
