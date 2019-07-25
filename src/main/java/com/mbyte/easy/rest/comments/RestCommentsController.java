@@ -3,10 +3,14 @@ package com.mbyte.easy.rest.comments;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.CommentImg;
 import com.mbyte.easy.recycle.entity.Comments;
+import com.mbyte.easy.recycle.entity.ShopOrder;
+import com.mbyte.easy.recycle.service.ICommentImgService;
 import com.mbyte.easy.recycle.service.ICommentsService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.util.PageInfo;
 import com.mbyte.easy.vo.commentsWithUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,12 @@ public class RestCommentsController extends BaseController  {
 
     @Autowired
     private ICommentsService commentsService;
+
+    @Autowired
+    private ICommentImgService commentImgService;
+
+    @Autowired
+    private IShopOrderService shopOrderService;
 
     /**
     * 查询列表
@@ -103,7 +113,17 @@ public class RestCommentsController extends BaseController  {
     * @return
     */
     @RequestMapping("add")
-    public AjaxResult add(Comments comments ,Boolean hideUsername){
+    public AjaxResult add(Comments comments ,Boolean hideUsername,@RequestParam("imageUrl") String imageUrl,@RequestParam("orderId") long orderId){
+
+        System.err.println(imageUrl);
+        CommentImg commentImg= new CommentImg();
+        commentImg.setCommentid(comments.getGoodsId());
+        commentImg.setPicUrl(imageUrl);
+        commentImgService.save(commentImg);
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(5);
+        shopOrder.setId(orderId);
+        shopOrderService.updateById(shopOrder);
         if(!hideUsername)
         {
             comments.setCreatetime(LocalDateTime.now());

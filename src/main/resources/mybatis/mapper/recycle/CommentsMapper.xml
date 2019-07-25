@@ -28,10 +28,12 @@
 
     <select id="selectLeftJoinWeixinUser"  parameterType="java.lang.Integer" resultMap="commentsWithUser">
         select
-        comments.id,comments.goods_id,comments.user_id,comments.`comment`,comments.createtime,comments.score,comments.createtime,weixin_user.id,weixin_user.nickName
+        comments.id,comments.goods_id,comments.user_id,comments.`comment`,comments.createtime,comments.score,comments.createtime,weixin_user.id,weixin_user.nickName,weixin_user.avatarUrl as headPic,commentImg.picUrl as imgUrl
         from comments
         LEFT JOIN weixin_user
         on comments.user_id=weixin_user.id
+        Left JOIN commentImg
+        on comments.id=commentImg.commentid
         where comments.goods_id=#{goodsId,jdbcType=BIGINT}
     </select>
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->

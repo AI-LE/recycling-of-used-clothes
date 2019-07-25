@@ -14,9 +14,7 @@ public class TestEmpty extends TestCase {
 
     @Test
     public void test(){
-        boolean flag = ObjectUtils.isEmpty(0);
-        flag = ObjectUtils.isEmpty(" ");
-        System.out.println(flag);
+
     }
 
 

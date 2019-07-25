@@ -5,51 +5,36 @@
 </head>
 <body>
 <article class="page-container">
-    <form class="form form-horizontal" id="form-recycleOrder-edit" action="#"
-          th:action="@{/recycle/recycleOrder/edit}" th:object="${recycleOrder}" enctype="multipart/form-data">
-        <input type="hidden" name="id" th:value="${recycleOrder.id}"/>
+    <form class="form form-horizontal" id="form-goodsImg-edit" action="#"
+          th:action="@{/recycle/goodsImg/edit}" th:object="${goodsImg}" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${goodsImg.id}"/>
                 <div class="row cl">
                     <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red">*</span>价格：</label>
+                                class="c-red">*</span>对应商品id：</label>
                             <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${recycleOrder.price}" name="price"  placeholder="修改价格" id="price"/>
+                                <input type="input-text" class="input-text" th:value="${goodsImg.goodsId}" name="goodsId"  placeholder="修改对应商品id" id="goodsId"/>
 
                             </div>
                     </div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red">*</span>电话：</label>
+                                class="c-red">*</span>商品图片url：</label>
                             <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${recycleOrder.phone}" name="phone"  placeholder="修改电话" id="phone"/>
+                                <input type="input-text" class="input-text" th:value="${goodsImg.pic}" name="pic"  placeholder="修改商品图片url" id="pic"/>
 
                             </div>
                     </div>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>分配取货员：</label>
-                    <div class="formControls col-xs-10 col-sm-10">
+                    <label class="form-label col-xs-2 col-sm-2"><span
+                                class="c-red">*</span>状态（1：已删除；2：正常）：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input type="input-text" class="input-text" th:value="${goodsImg.isDel}" name="isDel"  placeholder="修改状态（1：已删除；2：正常）" id="isDel"/>
 
-                        <select id="mySelect" type="input-text" class="input-text" name="courierId">
-                            <option th:each="recycleOrder:${nickName}" th:value="${recycleOrder.id}"><span th:text="${recycleOrder.nickName}"></span></option>
-                        </select>
-
+                            </div>
                     </div>
                 </div>
-
-
-                <div class="row cl">
-                    <label style="margin-top: 6px;" class="form-label col-xs-2 col-sm-2"><span class="c-red" >*</span>状态：</label>
-                    <select class="input-text"  placeholder="状态"  id="status" name="status"
-                            style="width: 23.5%;margin-left: 15px">
-                        <option value="1">待审核</option>
-                        <option value="2">未通过</option>
-                        <option value="3">待取货</option>
-                        <option value="4">交易完成</option>
-
-                    </select>
-                </div>
-
         <div class="row cl">
             <div class="col-xs-3 col-sm-3 col-xs-offset-4 col-sm-offset-3">
                 <input class="btn btn-primary radius" id="subbtn" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>
@@ -65,9 +50,20 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script>
     $(function () {
-        $("#form-recycleOrder-edit").validate({
+        $("#form-goodsImg-edit").validate({
             rules: {
-
+        goodsId:
+        {
+            required: true,
+        },
+        pic:
+        {
+            required: true,
+        },
+        isDel:
+        {
+            required: true,
+        },
     },
         onkeyup:false,
             debug
@@ -82,7 +78,7 @@
         function (form) {
             $(form).ajaxSubmit({
                 type: 'POST',
-                url: "/recycle/recycleOrder/edit",
+                url: "/recycle/goodsImg/edit",
                 success: function (data) {
                     if (data.code == "1") {
                         layer.designMsg('编辑成功!', 1, function () {
