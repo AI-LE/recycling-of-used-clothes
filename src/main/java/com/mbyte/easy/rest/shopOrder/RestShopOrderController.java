@@ -142,8 +142,7 @@ public class RestShopOrderController extends BaseController  {
 //        QueryWrapper queryWrapper3 = new QueryWrapper();
         //queryWrapper1.eq("user_id",userId);
         List<ShopOrder> shopOrders=shopOrderService.list(queryWrapper);
-        for (ShopOrder shoporder:shopOrders
-             ) {
+        for (ShopOrder shoporder:shopOrders) {
             QueryWrapper queryWrapper1 = new QueryWrapper();
             queryWrapper1.eq("id",shoporder.getAddressId());
             shoporder.setAddress(userPropService.getOne(queryWrapper1).getAddress());
