@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-07-23
  */
 public interface OrderGoodsMapper extends BaseMapper<OrderGoods> {
-    Integer addGoods(long orderId,long goodsid);
+    Integer addGoods(long orderId,long goodsid,long buynum);
 }

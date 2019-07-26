@@ -154,7 +154,9 @@ public class RestShopOrderController extends BaseController  {
                  ) {
                 QueryWrapper queryWrapper3 = new QueryWrapper();
                 queryWrapper3.eq("id",orderGoods.getGoodsid());
-                goodsList.add(goodsService.getOne(queryWrapper3));
+                Goods goods=goodsService.getOne(queryWrapper3);
+                goods.setBuyNum(orderGoods.getBuynum().toString());
+                goodsList.add(goods);
             }
             shoporder.setGoodsList(goodsList);
             //shoporder.setPic(goodsList.get(0).getPic());
