@@ -8,33 +8,19 @@
     <form class="form form-horizontal" id="form-goodsImg-edit" action="#"
           th:action="@{/recycle/goodsImg/edit}" th:object="${goodsImg}" enctype="multipart/form-data">
         <input type="hidden" name="id" th:value="${goodsImg.id}"/>
-                <div class="row cl">
-                    <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red">*</span>对应商品id：</label>
-                            <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${goodsImg.goodsId}" name="goodsId"  placeholder="修改对应商品id" id="goodsId"/>
 
-                            </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>修改图片：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input class="input-text upload-url" type="text" name="pic"  readonly="" style="width:400px">
+                        <a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont"></i> 浏览文件</a>
+                        <input type="file" accept="image/*" style="width:100%; height:100%"  name="file"   id="pic" class="input-file valid">
                     </div>
                 </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red">*</span>商品图片url：</label>
-                            <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${goodsImg.pic}" name="pic"  placeholder="修改商品图片url" id="pic"/>
 
-                            </div>
-                    </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red">*</span>状态（1：已删除；2：正常）：</label>
-                            <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${goodsImg.isDel}" name="isDel"  placeholder="修改状态（1：已删除；2：正常）" id="isDel"/>
 
-                            </div>
-                    </div>
-                </div>
+
         <div class="row cl">
             <div class="col-xs-3 col-sm-3 col-xs-offset-4 col-sm-offset-3">
                 <input class="btn btn-primary radius" id="subbtn" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>

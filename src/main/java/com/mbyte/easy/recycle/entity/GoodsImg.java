@@ -1,5 +1,6 @@
 package com.mbyte.easy.recycle.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.mbyte.easy.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,11 @@ public class GoodsImg extends BaseEntity {
      * 对应商品id
      */
     private Long goodsId;
+    /**
+     * 商品名字
+     */
+    @TableField(exist = false)
+    private String goodsName;
 
     /**
      * 商品图片url
