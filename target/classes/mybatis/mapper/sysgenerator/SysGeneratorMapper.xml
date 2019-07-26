@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbyte.easy.generator.mapper.SysGeneratorMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.generator.entity.SysGenerator">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="moduleName" jdbcType="VARCHAR" property="moduleName" />
+      <id column="tableName" jdbcType="VARCHAR" property="tableName" />
+      <id column="ignoreFlag" jdbcType="INTEGER" property="ignoreFlag" />
+      <id column="ignorePrefix" jdbcType="VARCHAR" property="ignorePrefix" />
+      <id column="createRest" jdbcType="INTEGER" property="createRest" />
+      <id column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      moduleName, tableName, ignoreFlag, ignorePrefix, createRest, updateTime, createTime
+  </sql>
+
+    <select id="getTables"  resultType="java.lang.String">
+       show tables
+    </select>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_generator
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  sys_generator
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mbyte.easy.generator.entity.SysGenerator">
+    insert into sys_generator (moduleName, tableName, ignoreFlag, ignorePrefix, createRest, updateTime, createTime)
+    values (
+         moduleName = #{moduleName,jdbcType=VARCHAR},
+         tableName = #{tableName,jdbcType=VARCHAR},
+         ignoreFlag = #{ignoreFlag,jdbcType=INTEGER},
+         ignorePrefix = #{ignorePrefix,jdbcType=VARCHAR},
+         createRest = #{createRest,jdbcType=INTEGER},
+         updateTime = #{updateTime,jdbcType=TIMESTAMP},
+         createTime = #{createTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.mbyte.easy.generator.entity.SysGenerator">
+    insert into sys_generator
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="moduleName != null">
+        moduleName,
+      </if>
+      <if test="tableName != null">
+        tableName,
+      </if>
+      <if test="ignoreFlag != null">
+        ignoreFlag,
+      </if>
+      <if test="ignorePrefix != null">
+        ignorePrefix,
+      </if>
+      <if test="createRest != null">
+        createRest,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="moduleName != null">
+        moduleName = #{moduleName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="tableName != null">
+        tableName = #{tableName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="ignoreFlag != null">
+        ignoreFlag = #{ignoreFlag,jdbcType=INTEGER},
+      </if>
+
+      <if test="ignorePrefix != null">
+        ignorePrefix = #{ignorePrefix,jdbcType=VARCHAR},
+      </if>
+
+      <if test="createRest != null">
+        createRest = #{createRest,jdbcType=INTEGER},
+      </if>
+
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.generator.entity.SysGenerator">
+    update sys_generator
+    <set>
+       <if test="moduleName != null">
+         moduleName = #{moduleName,jdbcType=VARCHAR},
+      </if>
+       <if test="tableName != null">
+         tableName = #{tableName,jdbcType=VARCHAR},
+      </if>
+       <if test="ignoreFlag != null">
+         ignoreFlag = #{ignoreFlag,jdbcType=INTEGER},
+      </if>
+       <if test="ignorePrefix != null">
+         ignorePrefix = #{ignorePrefix,jdbcType=VARCHAR},
+      </if>
+       <if test="createRest != null">
+         createRest = #{createRest,jdbcType=INTEGER},
+      </if>
+       <if test="updateTime != null">
+         updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.generator.entity.SysGenerator">
+    update sys_generator
+    set
+        moduleName = #{moduleName,jdbcType=VARCHAR},
+        tableName = #{tableName,jdbcType=VARCHAR},
+        ignoreFlag = #{ignoreFlag,jdbcType=INTEGER},
+        ignorePrefix = #{ignorePrefix,jdbcType=VARCHAR},
+        createRest = #{createRest,jdbcType=INTEGER},
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

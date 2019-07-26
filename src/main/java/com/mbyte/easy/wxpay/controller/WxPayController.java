@@ -131,7 +131,7 @@ public class WxPayController extends BaseController {
      * @return
      */
     @RequestMapping("/transfers")
-    public AjaxResult transfers(HttpServletRequest request, String userId, String amount){
+    public AjaxResult transfers(HttpServletRequest request, String userId, BigDecimal amount){
         try {
             //获得比率
             List<Rate> rate = rateService.list();
@@ -146,14 +146,14 @@ public class WxPayController extends BaseController {
             //商户订单号(时间戳+随机数)
             int r = (int) ((Math.random() * 9 + 1) * 100000);
             String orderNo  = System.currentTimeMillis()+String.valueOf(r);
+
             //按比例换算提现金额,单位：分，这边需要转成字符串类型，否则后面的签名会失败
-            BigDecimal fee = new BigDecimal(amount);
-            String money = (fee.multiply(new BigDecimal("100")).multiply(transferRate)).toString();
+            String money = (amount.multiply(new BigDecimal("100")).multiply(transferRate)).toString();
 
             //生成订单
             TransferDetail transferDetail = new TransferDetail();
             transferDetail.setCreatetime(LocalDateTime.now());
-            transferDetail.setPrice(fee.multiply(new BigDecimal("100")).multiply(transferRate));
+            transferDetail.setPrice(amount.multiply(new BigDecimal("100")).multiply(transferRate));
             transferDetail.setUserId(Long.parseLong(userId));
             transferDetail.setTransferNo(orderNo);
             transferDetailService.save(transferDetail);

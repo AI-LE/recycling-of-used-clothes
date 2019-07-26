@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="_meta :: header">
+    <title>编辑</title>
+</head>
+<body>
+<article class="page-container">
+    <form class="form form-horizontal" id="form-shopOrder-detail" action="#"
+          th:action="@{/recycle/shopOrder/detail}" th:object="${shopOrder}" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${shopOrder.id}"/>
+
+        <div>
+            <table class="layui-table text-c">
+                <thead>
+                <tr class="text-c">
+
+                    <th width="40">商品名字</th>
+                    <th width="40">商品价格</th>
+                    <th width="40">数量</th>
+                    <th width="40">图片</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-c" th:each="g,count:${goods}">
+                    <td th:text="${g.name}"></td>
+                    <td th:text="${g.price}"></td>
+                    <td th:text="${g.sales}"></td>
+                    <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${g.pic})}" /></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+
+    </form>
+</article>
+<!--_footer 作为公共模版分离出去-->
+<div th:replace="_footer :: footerjs"></div>
+<div th:replace="_ueditor :: ueditor"></div>
+<!--/_footer 作为公共模版分离出去-->
+
+</body>
+</html>

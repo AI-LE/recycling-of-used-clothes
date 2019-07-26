@@ -30,5 +30,10 @@ public class OrderGoods extends BaseEntity {
      */
     private Long goodsid;
 
+    /**
+     * 货物数量
+     */
+    private Long buynum;
+
 
 }
