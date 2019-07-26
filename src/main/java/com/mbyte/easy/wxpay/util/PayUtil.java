@@ -38,7 +38,7 @@ public class PayUtil {
 
 //                BigDecimal fee = new BigDecimal(totalFee);
                 BigDecimal fee = new BigDecimal(0.01);
-            String money = fee.multiply(new BigDecimal("100")).toString() ;//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
+            String money = fee.multiply(new BigDecimal("100")).toString().substring(0,fee.multiply(new BigDecimal("100")).toString().indexOf("."));//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("appid", WXConst.appId);
             packageParams.put("mch_id", WXConst.mch_id);
