@@ -228,15 +228,9 @@ public class PubController extends BaseController {
     }
 
     /**
-     * 支付接口
+     * 生成商品订单接口
      */
-//    @RequestMapping("pay")
-//    public AjaxResult pay(Model model){
-//        ProductModel product = new ProductModel();
-//        model.addAttribute("result",  pubService.wxPay(product));
-//
-//        return success(1);
-//    }
+
 
 
 }
