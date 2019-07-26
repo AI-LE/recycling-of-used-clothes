@@ -177,8 +177,8 @@ public class WxPayController extends BaseController {
             String return_code = (String) map.get("return_code");//返回状态码
             Map<String, Object> response = new HashMap<String, Object>();
             if ( "SUCCESS".equals(return_code)) {
-                //TODO 更新用户余额
-                System.out.println("*******更新余额");
+                //TODO 更新用户积分
+                System.out.println("*******更新积分");
             }
             response.put("returnCode",return_code);
             response.put("partnerTradeNo",orderNo);
