@@ -184,7 +184,7 @@ public class RestGoodsController extends BaseController  {
      * 商城订单生成
      */
     @RequestMapping("addOrder")
-    public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId,String[] buyNums){
+    public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId,String[] buyNums,String payStyle){
         UserProp userProp=new UserProp();
         userProp.setAddress(address);
         userProp.setUserName(userName);
@@ -202,7 +202,7 @@ public class RestGoodsController extends BaseController  {
             buyNumList[i]=Long.parseLong(buyNums[i].replaceAll("\\[","").replaceAll("]",""));
         }
            if(StringUtils.isNotEmpty(userId)) {
-               Long result = ShopOrderService.addOrder(new Long(userProp.getId()).toString(), goodsIdList,buyNumList,totalPrice, userId);
+               Long result = ShopOrderService.addOrder(new Long(userProp.getId()).toString(), goodsIdList,buyNumList,totalPrice, userId,payStyle);
                return  this.success(result);
            }else{
                return  this.error();

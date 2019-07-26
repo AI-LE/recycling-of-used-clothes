@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.GoodsImg;
+import com.mbyte.easy.recycle.entity.RecycleOrder;
 import com.mbyte.easy.recycle.service.IGoodsImgService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.util.FileUtil;
 import com.mbyte.easy.util.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,24 +45,27 @@ public class GoodsImgController extends BaseController  {
     * @param model
     * @param pageNo
     * @param pageSize
-    * @param goodsImg
+    * @param
     * @return
     */
     @RequestMapping
-    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, GoodsImg goodsImg) {
+    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,
+                        @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                        @RequestParam(value = "goodsName", required = false, defaultValue = "") String goodsName
+
+                        ) {
+        GoodsImg goodImg = new GoodsImg();
+
+        if(StringUtils.isNoneBlank(goodsName)){
+            goodImg.setGoodsName(goodsName);
+        }
+
         Page<GoodsImg> page = new Page<GoodsImg>(pageNo, pageSize);
-        QueryWrapper<GoodsImg> queryWrapper = new QueryWrapper<GoodsImg>();
-        if(!ObjectUtils.isEmpty(goodsImg.getGoodsId())) {
-            queryWrapper = queryWrapper.like("goods_id",goodsImg.getGoodsId());
-         }
-        if(!ObjectUtils.isEmpty(goodsImg.getPic())) {
-            queryWrapper = queryWrapper.like("pic",goodsImg.getPic());
-         }
-        if(!ObjectUtils.isEmpty(goodsImg.getIsDel())) {
-            queryWrapper = queryWrapper.like("is_del",goodsImg.getIsDel());
-         }
-        IPage<GoodsImg> pageInfo = goodsImgService.page(page, queryWrapper);
-        model.addAttribute("searchInfo", goodsImg);
+
+        IPage<GoodsImg> pageInfo = goodsImgService.selectGoodName(goodImg,page);
+
+
+        model.addAttribute("searchInfo", goodImg);
         model.addAttribute("pageInfo", new PageInfo(pageInfo));
         return prefix+"list";
     }
@@ -67,7 +75,9 @@ public class GoodsImgController extends BaseController  {
     * @return
     */
     @GetMapping("addBefore")
-    public String addBefore(){
+    public String addBefore( Model model){
+        List<GoodsImg> goodsImgList = goodsImgService.selectGoodsName();
+        model.addAttribute("goodsImgList",goodsImgList);
         return prefix+"add";
     }
     /**
@@ -77,7 +87,9 @@ public class GoodsImgController extends BaseController  {
     */
     @PostMapping("add")
     @ResponseBody
-    public AjaxResult add(GoodsImg goodsImg){
+    public AjaxResult add(GoodsImg goodsImg,@PathParam("file") MultipartFile file){
+        String fileName = file.getOriginalFilename();
+        goodsImg.setPic("../images/" + FileUtil.uploadFile(file));
         return toAjax(goodsImgService.save(goodsImg));
     }
     /**
@@ -96,7 +108,9 @@ public class GoodsImgController extends BaseController  {
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(GoodsImg goodsImg){
+    public AjaxResult edit(GoodsImg goodsImg,@PathParam("file") MultipartFile file){
+        String fileName = file.getOriginalFilename();
+        goodsImg.setPic("../images/" + FileUtil.uploadFile(file));
         return toAjax(goodsImgService.updateById(goodsImg));
     }
     /**
