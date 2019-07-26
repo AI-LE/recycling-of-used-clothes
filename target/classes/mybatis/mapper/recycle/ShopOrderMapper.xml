@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbyte.easy.recycle.mapper.ShopOrderMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.recycle.entity.ShopOrder">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="status" jdbcType="SMALLINT" property="status" />
+      <id column="order_no" jdbcType="VARCHAR" property="orderNo" />
+      <id column="user_id" jdbcType="BIGINT" property="userId" />
+      <id column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+      <id column="price" jdbcType="DECIMAL" property="price" />
+      <id column="address_id" jdbcType="BIGINT" property="addressId" />
+      <id column="phone" jdbcType="VARCHAR" property="phone" />
+      <id column="express" jdbcType="VARCHAR" property="express" />
+      <id column="is_show" jdbcType="SMALLINT" property="isShow" />
+      <id column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+      <id column="is_del" jdbcType="SMALLINT" property="isDel" />
+
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      status, order_no, user_id, createtime, price, address_id, phone, express, is_show, updatetime, id_del
+  </sql>
+    <insert id="addOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
+        insert into shop_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="status != null">
+                status,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="express != null">
+                express,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+            <if test="isDel != null">
+                is_del,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+
+            <if test="createtime != null">
+                 #{createtime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="price != null">
+                 #{price,jdbcType=DECIMAL},
+            </if>
+
+            <if test="addressId != null">
+               #{addressId,jdbcType=BIGINT},
+            </if>
+
+            <if test="phone != null">
+                 #{phone,jdbcType=VARCHAR},
+            </if>
+
+            <if test="express != null">
+                #{express,jdbcType=VARCHAR},
+            </if>
+
+            <if test="isShow != null">
+                #{isShow,jdbcType=SMALLINT},
+            </if>
+
+            <if test="updatetime != null">
+                 #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="isDel != null">
+                #{isDel,jdbcType=SMALLINT},
+            </if>
+
+        </trim>
+    </insert>
+    <select id="selectAllShopOrder" resultType="com.mbyte.easy.recycle.entity.ShopOrder">
+        select shop_order.id,shop_order.`status`,shop_order.order_no,shop_order.user_id,shop_order.createtime,shop_order.price,shop_order.address_id,shop_order.express,shop_order.updatetime,
+        user_prop.address,user_prop.phone,user_prop.user_name   from shop_order
+        left JOIN user_prop on user_prop.id = shop_order.address_id
+        where shop_order.is_del = 2
+
+
+        <if test="shopOrders.status != null">
+            and shop_order.status = #{shopOrders.status}
+        </if>
+        <if test="shopOrders.orderNo != null">
+            and order_no = #{shopOrders.orderNo}
+        </if>
+        <if test="shopOrders.price != null">
+            and shop_order.price = #{shopOrders.price}
+        </if>
+        <if test="shopOrders.address != null">
+
+            and address = #{shopOrders.address}
+        </if>
+        <if test="shopOrders.express != null">
+            and express = #{shopOrders.express}
+        </if>
+        <if test="shopOrders.phone != null ">
+            and shop_order.phone = #{shopOrders.phone}
+        </if>
+        <if test="beginTime != null">
+            and createtime between #{beginTime} and #{endTime}
+        </if>
+    </select>
+    <select id="selectGoodsOrder" resultType="com.mbyte.easy.recycle.entity.Goods">
+        select * from order_goods left join goods on order_goods.goodsid = goods.id where order_goods.order_id = #{shop_order.id}
+    </select>
+
+
+
+
+</mapper>
