@@ -46,7 +46,32 @@ public class WxPayController extends BaseController {
     @Autowired
     private IRateService rateService;
 
-
+    /**
+     * 获得提现比率
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getTransferRate")
+    @ResponseBody
+    public AjaxResult getTransferRate(){
+        List<Rate> rate = rateService.list();
+        BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+        return this.success(transferRate);
+    }
+    /**
+     * 获得提现比率
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getPayRate")
+    @ResponseBody
+    public AjaxResult getPayRate(){
+        List<Rate> rate = rateService.list();
+        BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+        return this.success(transferRate);
+    }
 
     /**
      * 微信统一下单
