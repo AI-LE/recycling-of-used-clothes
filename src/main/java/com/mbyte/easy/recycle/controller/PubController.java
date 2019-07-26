@@ -237,8 +237,9 @@ public class PubController extends BaseController {
     }
 
     /**
-     * 支付接口
+     * 生成商品订单接口
      */
+
     @RequestMapping("yuepay")
     public AjaxResult yuepay(BigDecimal fee,String userId,long orderId){
         WeixinUser weixinUser = new WeixinUser();
@@ -252,6 +253,7 @@ public class PubController extends BaseController {
         shopOrderService.updateById(shopOrder);
         return this.success();
     }
+
 
 
 
