@@ -15,12 +15,14 @@
       <id column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
       <id column="is_del" jdbcType="SMALLINT" property="isDel" />
       <id column="pay_style" jdbcType="SMALLINT" property="payStyle" />
+      <id column="wx_money" jdbcType="DECIMAL" property="wxMoney" />
+      <id column="points" jdbcType="DECIMAL" property="points" />
 
 
   </resultMap>
   <sql id="Base_Column_List">
               id,
-      status, order_no, user_id, createtime, price, address_id, phone, express, is_show, updatetime, id_del,pay_style
+      status, order_no, user_id, createtime, price, address_id, phone, express, is_show, updatetime, id_del,pay_style,wx_money,points
   </sql>
     <insert id="addOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
         insert into shop_order
