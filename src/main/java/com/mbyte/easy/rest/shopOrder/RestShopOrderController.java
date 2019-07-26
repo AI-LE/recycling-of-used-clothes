@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.OrderGoods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
+import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.service.*;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
@@ -186,7 +187,10 @@ public class RestShopOrderController extends BaseController  {
         for (ShopOrder shoporder:shopOrders) {
             QueryWrapper queryWrapper1 = new QueryWrapper();
             queryWrapper1.eq("id",shoporder.getAddressId());
-            shoporder.setAddress(userPropService.getOne(queryWrapper1).getAddress());
+            UserProp userProp=userPropService.getOne(queryWrapper1);
+            shoporder.setUserName(userProp.getUserName());
+            shoporder.setAddress(userProp.getAddress());
+            shoporder.setPhone(userProp.getPhone());
             QueryWrapper queryWrapper2 = new QueryWrapper();
             queryWrapper2.eq("order_id",shoporder.getId());
             List<OrderGoods> orderGoodsList=orderGoodsService.list(queryWrapper2);

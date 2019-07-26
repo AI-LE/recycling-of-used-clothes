@@ -186,6 +186,7 @@ public class RestGoodsController extends BaseController  {
     @RequestMapping("addOrder")
     public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId,String[] buyNums,String payStyle){
         UserProp userProp=new UserProp();
+        userProp.setUserId(Long.parseLong(userId));
         userProp.setAddress(address);
         userProp.setUserName(userName);
         userProp.setPhone(phone);
