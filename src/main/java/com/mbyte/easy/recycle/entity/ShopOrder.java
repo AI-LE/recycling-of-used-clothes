@@ -107,5 +107,10 @@ public class ShopOrder extends BaseEntity {
     @TableField(exist = false)
     private List<Goods> goodsList;
 
+    /**
+     * 支付方式
+     */
+    private String payStyle;
+
 }
 
