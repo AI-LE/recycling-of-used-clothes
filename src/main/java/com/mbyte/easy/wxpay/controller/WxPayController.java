@@ -2,14 +2,14 @@ package com.mbyte.easy.wxpay.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
-import com.mbyte.easy.recycle.entity.OrderGoods;
+import com.mbyte.easy.recycle.entity.Rate;
 import com.mbyte.easy.recycle.entity.ShopOrder;
+import com.mbyte.easy.recycle.entity.TransferDetail;
 import com.mbyte.easy.recycle.entity.WeixinUser;
-import com.mbyte.easy.recycle.service.IOrderGoodsService;
-import com.mbyte.easy.recycle.service.IShopOrderService;
-import com.mbyte.easy.recycle.service.IWeixinUserService;
+import com.mbyte.easy.recycle.service.*;
 import com.mbyte.easy.wxpay.constant.WXConst;
 import com.mbyte.easy.wxpay.util.ClientCustomSSLUtil;
 import com.mbyte.easy.wxpay.util.PayUtil;
@@ -19,11 +19,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+
+/**
+ * 微信支付、提现及订单相关业务逻辑
+ * @author 秦策
+ */
 
 @RestController
 @RequestMapping("/wxpay")
@@ -34,8 +40,13 @@ public class WxPayController extends BaseController {
 
     @Autowired
     private IShopOrderService shopOrderService;
+
     @Autowired
-    private IOrderGoodsService orderGoodsService;
+    private ITransferDetailService transferDetailService;
+    @Autowired
+    private IRateService rateService;
+
+
 
     /**
      * 微信统一下单
@@ -48,10 +59,6 @@ public class WxPayController extends BaseController {
     public AjaxResult topay(HttpServletRequest request, String userId, String totalFee){
         WeixinUser weixinUser = weixinUserService.getById(userId);
         String openId = weixinUser.getOpenId();
-
-
-
-
         JSONObject json = PayUtil.wxPay(request,openId,totalFee);
         return this.success(json);
     }
@@ -126,6 +133,10 @@ public class WxPayController extends BaseController {
     @RequestMapping("/transfers")
     public AjaxResult transfers(HttpServletRequest request, String userId, String amount){
         try {
+            //获得比率
+            List<Rate> rate = rateService.list();
+            BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+            System.out.println("提现比率"+transferRate);
             WeixinUser weixinUser = weixinUserService.getById(userId);
             String openId = weixinUser.getOpenId();
             //生成的随机字符串
@@ -135,9 +146,18 @@ public class WxPayController extends BaseController {
             //商户订单号(时间戳+随机数)
             int r = (int) ((Math.random() * 9 + 1) * 100000);
             String orderNo  = System.currentTimeMillis()+String.valueOf(r);
-            //TODO 修改默认参数
-            BigDecimal fee = new BigDecimal(0.01);
-            String money = fee.multiply(new BigDecimal("100")).toString().substring(0,fee.multiply(new BigDecimal("100")).toString().indexOf(".")) ;//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
+            //按比例换算提现金额,单位：分，这边需要转成字符串类型，否则后面的签名会失败
+            BigDecimal fee = new BigDecimal(amount);
+            String money = (fee.multiply(new BigDecimal("100")).multiply(transferRate)).toString();
+
+            //生成订单
+            TransferDetail transferDetail = new TransferDetail();
+            transferDetail.setCreatetime(LocalDateTime.now());
+            transferDetail.setPrice(fee.multiply(new BigDecimal("100")).multiply(transferRate));
+            transferDetail.setUserId(Long.parseLong(userId));
+            transferDetail.setTransferNo(orderNo);
+            transferDetailService.save(transferDetail);
+
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("mch_appid", WXConst.appId);
             packageParams.put("mchid", WXConst.mch_id);
@@ -172,14 +192,9 @@ public class WxPayController extends BaseController {
             System.out.println("调试模式_统一下单接口 请求XML数据：" + xml);
             //调用企业支付接口，并接受返回的结果
             String result = ClientCustomSSLUtil.doRefund(WXConst.transfer_url,xml);
-
             Map map = PayUtil.doXMLParse(result);
             String return_code = (String) map.get("return_code");//返回状态码
             Map<String, Object> response = new HashMap<String, Object>();
-            if ( "SUCCESS".equals(return_code)) {
-                //TODO 更新用户积分
-                System.out.println("*******更新积分");
-            }
             response.put("returnCode",return_code);
             response.put("partnerTradeNo",orderNo);
             return  this.success(response);
@@ -224,8 +239,17 @@ public class WxPayController extends BaseController {
             String return_code = (String) map.get("return_code");//返回状态码
             Map<String, Object> response = new HashMap<String, Object>();
             if ( "SUCCESS".equals(return_code)) {
-                //TODO 更新用户余额
-                System.out.println("*******更新余额");
+                //业务逻辑
+                QueryWrapper queryWrapper = new QueryWrapper();
+                queryWrapper.eq("transfer_no",partnerTradeNo);
+                TransferDetail transferDetail = transferDetailService.getOne(queryWrapper);
+                weixinUserService.getById(transferDetail.getUserId());
+                WeixinUser weixinUser = new WeixinUser();
+                weixinUser.setId(transferDetail.getUserId());
+                weixinUser.setAccount(weixinUser.getAccount().subtract(transferDetail.getPrice()));
+                weixinUserService.updateById(weixinUser);
+                transferDetail.setStatus(2);
+                transferDetailService.updateById(transferDetail);
             }
             response.put("returnCode",return_code);
             return  this.success(response);
