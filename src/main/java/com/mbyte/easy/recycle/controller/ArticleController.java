@@ -92,6 +92,15 @@ public class ArticleController extends BaseController  {
         article.setPic("../images/" + FileUtil.uploadFile(file) );
         return toAjax(articleService.save(article));
     }
+
+    /**
+     * 查看详情跳转页面
+     */
+    @RequestMapping("detailsBefore/{id}")
+    public String detailsBefore(Model model,@PathVariable("id") Long id){
+        model.addAttribute(("content"),articleService.getById(id).getContent());
+        return prefix + "details";
+    }
     /**
     * 添加跳转页面
     * @return
@@ -134,6 +143,8 @@ public class ArticleController extends BaseController  {
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
         return toAjax(articleService.removeByIds(ids));
     }
+
+
 
 }
 
