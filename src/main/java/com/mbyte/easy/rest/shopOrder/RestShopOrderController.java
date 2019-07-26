@@ -166,6 +166,47 @@ public class RestShopOrderController extends BaseController  {
         return this.success(shopOrders);
     }
 
+
+    /**
+     * 订单详情
+     */
+    @RequestMapping("orderDetail")
+    public AjaxResult orderDetail(Long userId,Long orderId)
+    {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("id",orderId);
+        //QueryWrapper queryWrapper1 = new QueryWrapper();
+//        QueryWrapper queryWrapper2 = new QueryWrapper();
+//        QueryWrapper queryWrapper3 = new QueryWrapper();
+        //queryWrapper1.eq("user_id",userId);
+        List<ShopOrder> shopOrders=shopOrderService.list(queryWrapper);
+
+
+        for (ShopOrder shoporder:shopOrders) {
+            QueryWrapper queryWrapper1 = new QueryWrapper();
+            queryWrapper1.eq("id",shoporder.getAddressId());
+            shoporder.setAddress(userPropService.getOne(queryWrapper1).getAddress());
+            QueryWrapper queryWrapper2 = new QueryWrapper();
+            queryWrapper2.eq("order_id",shoporder.getId());
+            List<OrderGoods> orderGoodsList=orderGoodsService.list(queryWrapper2);
+            List<Goods>goodsList=new ArrayList<>();
+            for (OrderGoods orderGoods:orderGoodsList
+            ) {
+                QueryWrapper queryWrapper3 = new QueryWrapper();
+                queryWrapper3.eq("id",orderGoods.getGoodsid());
+                Goods goods=goodsService.getOne(queryWrapper3);
+                goods.setBuyNum(orderGoods.getBuynum().toString());
+                goodsList.add(goods);
+            }
+            shoporder.setGoodsList(goodsList);
+            //shoporder.setPic(goodsList.get(0).getPic());
+
+        }
+
+        return this.success(shopOrders);
+    }
+
     /**
      * 取消订单
      */
