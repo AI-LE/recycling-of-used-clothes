@@ -46,8 +46,9 @@
                     <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>分类：</label>
                     <div class="formControls col-xs-10 col-sm-10">
 
-                        <select id="mySelect" type="input-text" class="input-text" name="goodsTypeId"  >
-                            <option th:each="goods:${type}" th:value="${goods.id}"><span th:text="${goods.goodsType}"></span></option>
+                        <select id="mySelect" type="input-text" class="input-text" name="goodsTypeId" >
+
+                            <option th:each="good:${type}" th:value="${good.id}" th:attr="selected = ${good.id == goods.goodsTypeId}"><span th:text="${good.goodsType}"></span></option>
                         </select>
                     </div>
                 </div>
@@ -62,14 +63,7 @@
                     </div>
                 </div>
                 </div>
-                <div class="row cl">
-                    <label style="margin-top: 6px;" class="form-label col-xs-2 col-sm-2"><span class="c-red" >*</span>状态：</label>
-                    <select class="input-text"  placeholder="状态"  id="isDel" name="isDel"
-                            style="width: 23.5%; margin-left: 15px">
-                        <option value="2">正常</option>
-                        <option value="1">已删除</option>
-                    </select>
-                </div>
+
         <div class="row cl">
             <div class="col-xs-3 col-sm-3 col-xs-offset-4 col-sm-offset-3">
                 <input class="btn btn-primary radius" id="subbtn" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>
@@ -87,54 +81,13 @@
     $(function () {
         $("#form-goods-edit").validate({
             rules: {
-        name:
-        {
-            required: true,
-        },
-        sales:
-        {
-            required: true,
-        },
-        pic:
-        {
-            required: true,
-        },
-        price:
-        {
-            required: true,
-        },
-        info:
-        {
-            required: true,
-        },
-        goodsTypeId:
-        {
-            required: true,
-        },
-        createtime:
-        {
-            required: true,
-        },
-        updatetime:
-        {
-            required: true,
-        },
-        isDel:
-        {
-            required: true,
-        },
+
     },
         onkeyup:false,
-            debug
-    :
-        true,
-            success
-    :
-        "valid",
-            submitHandler
-    :
-
-        function (form) {
+            debug: true,
+            success: "valid",
+            submitHandler:
+                function (form) {
             $(form).ajaxSubmit({
                 type: 'POST',
                 url: "/recycle/goods/edit",

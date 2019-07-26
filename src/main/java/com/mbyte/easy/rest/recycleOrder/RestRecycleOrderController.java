@@ -4,11 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
+import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.entity.WeixinUser;
+import com.mbyte.easy.recycle.mapper.UserPropMapper;
 import com.mbyte.easy.recycle.service.IRecycleOrderService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.service.IUserPropService;
 import com.mbyte.easy.recycle.service.IWeixinUserService;
+import com.mbyte.easy.util.FileUtil;
 import com.mbyte.easy.util.PageInfo;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.slf4j.Logger;
@@ -19,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
 import java.math.BigDecimal;
 import java.util.List;
@@ -47,6 +53,9 @@ public class RestRecycleOrderController extends BaseController  {
 
     @Autowired
     private IWeixinUserService iWeixinUserService;
+
+    @Resource
+    private UserPropMapper userPropMapper;
 
     /**
     * 查询列表
@@ -131,21 +140,38 @@ public class RestRecycleOrderController extends BaseController  {
     }
 
 
+    @RequestMapping("uploadImage")
+    public AjaxResult uploadImage(@RequestParam("file") MultipartFile multipartFile){
+        String fileName = multipartFile.getOriginalFilename();
+        Map<String,String> map = new HashMap<>();
+        map.put("imageUrl","../images/" + FileUtil.uploadFile(multipartFile));
+        return success(map);
+    }
+
     /**
     * 添加订单
     * @return
     */
     @RequestMapping("add")
     public AjaxResult add(@RequestParam("price") BigDecimal price, @RequestParam("appointment") LocalDateTime appointment,
-                          @RequestParam("phone") String phone, @RequestParam("addressId") Long addressId,
-                          @RequestParam("userId") Long userId){
+                          @RequestParam("phone") String phone,  @RequestParam("userId") Long userId,
+                          @RequestParam("userName") String userName, @RequestParam("address") String address,
+                          @RequestParam("imageUrl") String imageUrl){
+
+        UserProp userProp = new UserProp();
+        userProp.setUserName(userName);
+        userProp.setPhone(phone);
+        userProp.setAddress(address);
+        userProp.setUserId(userId);
+        userPropMapper.addAddress(userProp);
         LocalDateTime time = LocalDateTime.now();
         RecycleOrder recycleOrder = new RecycleOrder();
         recycleOrder.setAppointment(appointment);
         recycleOrder.setUserId(userId);
-        recycleOrder.setAddressId(addressId);
+        recycleOrder.setAddressId(userProp.getId());
         recycleOrder.setPhone(phone);
         recycleOrder.setPrice(price);
+        recycleOrder.setImageUrl(imageUrl);
         recycleOrder.setCreatetime(time);
         recycleOrder.setUpdatetime(time);
         recycleOrder.setOrderNo(time.toString().replaceAll("[-:.T]",""));   //随机生成订单号
@@ -207,7 +233,7 @@ public class RestRecycleOrderController extends BaseController  {
         recycleOrder.setStatus(4);
         recycleOrder.setUpdatetime(LocalDateTime.now());
         iWeixinUserService.updateBalance(balance,userId);
-        return toAjax(recycleOrderService.updateById(recycleOrder));
+         return toAjax(recycleOrderService.updateById(recycleOrder));
     }
 
     /**

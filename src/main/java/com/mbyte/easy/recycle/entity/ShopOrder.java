@@ -1,8 +1,13 @@
+
 package com.mbyte.easy.recycle.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.mbyte.easy.common.entity.BaseEntity;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -75,7 +80,32 @@ public class ShopOrder extends BaseEntity {
     /**
      * 使否删除（1：删除；2：正常）
      */
-    private Integer idDel;
+    private Integer isDel;
 
+    /**
+     * 订单中第一个货物的缩略图
+     */
+    @TableField(exist = false)
+    private String pic;
+
+    /**
+     * 订单的地址
+     */
+    @TableField(exist = false)
+    private String address;
+
+    /**
+     * 用户姓名
+     */
+    @TableField(exist = false)
+    private String userName;
+
+
+    /**
+     * 订单中所有的货物
+     */
+    @TableField(exist = false)
+    private List<Goods> goodsList;
 
 }
+

@@ -22,6 +22,26 @@
               id,
       order_no, user_id, courier_id, price, appointment, address_id, phone, pick_code, status, createtime, updatetime, is_show, is_del
   </sql>
+    <select id="selectCouier" resultType="com.mbyte.easy.recycle.entity.WeixinUser">
+        SELECT   weixin_user.nickname, weixin_user.id  FROM weixin_user where weixin_user.type = 2
+    </select>
+    <select id="selectAll" resultType="com.mbyte.easy.recycle.entity.RecycleOrder">
+        select recycle_order.*,user_prop.address,  weixin_user.nickname as nickName  from recycle_order
+        left JOIN weixin_user on weixin_user.id = recycle_order.courier_id
+        left join user_prop on user_prop.id = recycle_order.address_id
+        where recycle_order.is_del = 2
+
+        <if test="recycleOrder.status != null">
+            and status = #{recycleOrder.status}
+        </if>
+        <if test="recycleOrder.orderNo != null">
+            and order_no = #{recycleOrder.orderNo}
+        </if>
+        <if test="recycleOrder.phone != null">
+            and recycle_order.phone = #{recycleOrder.phone}
+        </if>
+
+    </select>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
 <!--

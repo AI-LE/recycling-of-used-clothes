@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
+import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.service.IRecycleOrderService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
@@ -40,56 +41,34 @@ public class RecycleOrderController extends BaseController  {
     * @param model
     * @param pageNo
     * @param pageSize
-    * @param recycleOrder
+    * @param
     * @return
     */
     @RequestMapping
-    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String appointmentSpace, String createtimeSpace, String updatetimeSpace, RecycleOrder recycleOrder) {
+    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,
+                                    @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                                    @RequestParam(value = "status", required = false) Integer status,
+                                    @RequestParam(value = "orderNo", required = false) String orderNo,
+                                    @RequestParam(value = "phone", required = false) String phone
+
+                                    ) {
+
+        RecycleOrder recycleOrder = new RecycleOrder();
+
+        if(status != null){
+            recycleOrder.setStatus(status);
+        }
+
+        if(StringUtils.isNoneBlank(orderNo)){
+            recycleOrder.setOrderNo(orderNo);
+        }
+        if(StringUtils.isNoneBlank(phone)) {
+            recycleOrder.setPhone(phone);
+        }
+
         Page<RecycleOrder> page = new Page<RecycleOrder>(pageNo, pageSize);
-        QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<RecycleOrder>();
-        if(!ObjectUtils.isEmpty(recycleOrder.getOrderNo())) {
-            queryWrapper = queryWrapper.like("order_no",recycleOrder.getOrderNo());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getUserId())) {
-            queryWrapper = queryWrapper.like("user_id",recycleOrder.getUserId());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getCourierId())) {
-            queryWrapper = queryWrapper.like("courier_id",recycleOrder.getCourierId());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getPrice())) {
-            queryWrapper = queryWrapper.like("price",recycleOrder.getPrice());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getAppointment())) {
-            queryWrapper = queryWrapper.like("appointment",recycleOrder.getAppointment());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getAddressId())) {
-            queryWrapper = queryWrapper.like("address_id",recycleOrder.getAddressId());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getPhone())) {
-            queryWrapper = queryWrapper.like("phone",recycleOrder.getPhone());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getPickCode())) {
-            queryWrapper = queryWrapper.like("pick_code",recycleOrder.getPickCode());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getStatus())) {
-            queryWrapper = queryWrapper.like("status",recycleOrder.getStatus());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getCreatetime())) {
-            queryWrapper = queryWrapper.like("createtime",recycleOrder.getCreatetime());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getUpdatetime())) {
-            queryWrapper = queryWrapper.like("updatetime",recycleOrder.getUpdatetime());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getIsShow())) {
-            queryWrapper = queryWrapper.like("is_show",recycleOrder.getIsShow());
-         }
-        if(!ObjectUtils.isEmpty(recycleOrder.getIsDel())) {
-            queryWrapper = queryWrapper.like("is_del",recycleOrder.getIsDel());
-         }
-        IPage<RecycleOrder> pageInfo = recycleOrderService.page(page, queryWrapper);
-        model.addAttribute("appointmentSpace", appointmentSpace);
-        model.addAttribute("createtimeSpace", createtimeSpace);
-        model.addAttribute("updatetimeSpace", updatetimeSpace);
+
+        IPage<RecycleOrder> pageInfo = recycleOrderService.selectAll(page,recycleOrder);
         model.addAttribute("searchInfo", recycleOrder);
         model.addAttribute("pageInfo", new PageInfo(pageInfo));
         return prefix+"list";
@@ -119,7 +98,11 @@ public class RecycleOrderController extends BaseController  {
     */
     @GetMapping("editBefore/{id}")
     public String editBefore(Model model,@PathVariable("id")Long id){
-        model.addAttribute("recycleOrder",recycleOrderService.getById(id));
+        List<WeixinUser> nickName = recycleOrderService.selectCouier();
+        model.addAttribute("nickName",nickName);
+
+        RecycleOrder recycleOrder = recycleOrderService.getById(id);
+        model.addAttribute("recycleOrder",recycleOrder);
         return prefix+"edit";
     }
     /**
@@ -129,7 +112,7 @@ public class RecycleOrderController extends BaseController  {
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(RecycleOrder recycleOrder){
+    public AjaxResult edit(RecycleOrder recycleOrder) {
         return toAjax(recycleOrderService.updateById(recycleOrder));
     }
     /**

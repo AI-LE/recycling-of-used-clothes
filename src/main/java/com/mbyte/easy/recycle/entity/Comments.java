@@ -29,7 +29,7 @@ public class Comments extends BaseEntity {
     /**
      * 父评论id
      */
-    private Long parentId;
+    private Long parentId=new Long(999);
 
     /**
      * 评论人的id

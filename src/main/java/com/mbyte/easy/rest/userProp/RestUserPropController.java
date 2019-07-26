@@ -87,10 +87,10 @@ public class RestUserPropController extends BaseController  {
     }
 
     @RequestMapping("select")
-    public AjaxResult select(@RequestParam("userId") Long userId){
+    public AjaxResult select(@RequestParam("id") Long id){
 
         QueryWrapper<UserProp> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("id",id);
         UserProp userProp = userPropService.getOne(queryWrapper);
         Map<String,UserProp> map = new HashMap<>();
         map.put("userProp",userProp);
@@ -110,22 +110,12 @@ public class RestUserPropController extends BaseController  {
     public AjaxResult add(@RequestParam("address") String address,@RequestParam("userId") Long userId,
                           @RequestParam("phone") String phone,@RequestParam("userName") String userName){
         UserProp userProp = new UserProp();
-        userProp.setIsDel(2);
         userProp.setAddress(address);
         userProp.setUserId(userId);
         userProp.setPhone(phone);
         userProp.setUserName(userName);
         Map<String,Long> map = new HashMap<>();
-        QueryWrapper<UserProp> queryWrapper = new QueryWrapper<>();
-        queryWrapper = queryWrapper.eq("user_id",userId);
-        if(userPropService.getOne(queryWrapper) != null){
-            UpdateWrapper<UserProp> updateWrapper = new UpdateWrapper<>();
-            updateWrapper = updateWrapper.eq("user_id",userId);
-            userPropService.update(userProp,updateWrapper);
-        }
-        else {
-            userPropService.insertUserProp(userProp);
-        }
+        userPropService.insertUserProp(userProp);
         map.put("id",userProp.getId());
         logger.info(userProp.getId() + "");
         return this.success(map);

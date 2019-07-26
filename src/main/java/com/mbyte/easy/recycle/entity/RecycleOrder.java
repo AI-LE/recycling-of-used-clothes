@@ -1,6 +1,8 @@
 package com.mbyte.easy.recycle.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.mbyte.easy.common.entity.BaseEntity;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -33,6 +35,11 @@ public class RecycleOrder extends BaseEntity {
     private Long userId;
 
     private Long courierId;
+    /**
+     * 取货员名字
+     */
+    @TableField(exist = false)
+    private String nickName;
 
     /**
      * 价格
@@ -48,6 +55,11 @@ public class RecycleOrder extends BaseEntity {
      * 取货地址
      */
     private Long addressId;
+    /**
+     * 取货地址
+     */
+    @TableField(exist = false)
+    private String address;
 
     private String phone;
 
@@ -60,6 +72,11 @@ public class RecycleOrder extends BaseEntity {
      * 订单状态（1：待审核；2：未通过；3：待取货；4：交易完成）
      */
     private Integer status;
+
+    /**
+     * 旧衣图片地址
+     */
+    private String imageUrl;
 
     /**
      * 订单创建时间

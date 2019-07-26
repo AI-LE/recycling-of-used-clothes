@@ -24,6 +24,13 @@ public interface GoodsMapper extends BaseMapper<Goods> {
      */
     IPage<Goods> selectAll(Page<Goods> page,String beginTime,String endTime, Goods goods);
 
+    /**
+     * 回显商品类别
+     * @param id
+     * @return
+     */
+    Goods selectType (Long id);
+
 
 
 }

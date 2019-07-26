@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {//.defaultSuccessUrl("/welcome")
 		http.authorizeRequests()
 
-                .antMatchers("/rest/goods","/recycle/goods/**","/kaptcha/getKaptchaImage", "/druid/**", "/rest/**").permitAll()
+                .antMatchers("/recycle/weixinUser","/rest/goods","/recycle/goods/**","/kaptcha/getKaptchaImage", "/druid/**", "/rest/**").permitAll()
                 .antMatchers("/kaptcha/getKaptchaImage", "/druid/**", "/rest/**").permitAll()
 				.antMatchers("/pub/**").permitAll()
 				.antMatchers("/wxpay/**").permitAll()

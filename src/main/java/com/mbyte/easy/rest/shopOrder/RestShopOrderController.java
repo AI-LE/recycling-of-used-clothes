@@ -3,8 +3,10 @@ package com.mbyte.easy.rest.shopOrder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.Goods;
+import com.mbyte.easy.recycle.entity.OrderGoods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
-import com.mbyte.easy.recycle.service.IShopOrderService;
+import com.mbyte.easy.recycle.service.*;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.util.PageInfo;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,6 +39,18 @@ public class RestShopOrderController extends BaseController  {
 
     @Autowired
     private IShopOrderService shopOrderService;
+
+    @Autowired
+    private IOrderGoodsService orderGoodsService;
+
+    @Autowired
+    private IWeixinUserService weixinUserService;
+
+    @Autowired
+    private IUserPropService userPropService;
+
+    @Autowired
+    private IGoodsService goodsService;
 
     /**
     * 查询列表
@@ -99,8 +115,8 @@ public class RestShopOrderController extends BaseController  {
          }
 
 
-        if(shopOrder.getIdDel() != null  && !"".equals(shopOrder.getIdDel() + "")) {
-            queryWrapper = queryWrapper.like("id_del",shopOrder.getIdDel());
+        if(shopOrder.getIsDel() != null  && !"".equals(shopOrder.getIsDel() + "")) {
+            queryWrapper = queryWrapper.like("id_del",shopOrder.getIsDel());
          }
 
         IPage<ShopOrder> pageInfo = shopOrderService.page(page, queryWrapper);
@@ -112,6 +128,54 @@ public class RestShopOrderController extends BaseController  {
         return this.success(map);
     }
 
+
+    /**
+     * 显示所有订单以及对应的所有的货物信息
+     */
+    @RequestMapping("viewAll")
+    public AjaxResult viewAll(Long userId)
+    {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id",userId);
+        //QueryWrapper queryWrapper1 = new QueryWrapper();
+//        QueryWrapper queryWrapper2 = new QueryWrapper();
+//        QueryWrapper queryWrapper3 = new QueryWrapper();
+        //queryWrapper1.eq("user_id",userId);
+        List<ShopOrder> shopOrders=shopOrderService.list(queryWrapper);
+        for (ShopOrder shoporder:shopOrders) {
+            QueryWrapper queryWrapper1 = new QueryWrapper();
+            queryWrapper1.eq("id",shoporder.getAddressId());
+            shoporder.setAddress(userPropService.getOne(queryWrapper1).getAddress());
+            QueryWrapper queryWrapper2 = new QueryWrapper();
+            queryWrapper2.eq("order_id",shoporder.getId());
+            List<OrderGoods> orderGoodsList=orderGoodsService.list(queryWrapper2);
+            List<Goods>goodsList=new ArrayList<>();
+            for (OrderGoods orderGoods:orderGoodsList
+                 ) {
+                QueryWrapper queryWrapper3 = new QueryWrapper();
+                queryWrapper3.eq("id",orderGoods.getGoodsid());
+                goodsList.add(goodsService.getOne(queryWrapper3));
+            }
+            shoporder.setGoodsList(goodsList);
+            //shoporder.setPic(goodsList.get(0).getPic());
+
+        }
+
+        return this.success(shopOrders);
+    }
+
+    /**
+     * 取消订单
+     */
+    @RequestMapping("cancel")
+    public AjaxResult cancel(@RequestParam("id") Long id)
+    {
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(6);
+        shopOrder.setId(id);
+        shopOrderService.updateById(shopOrder);
+        return this.success();
+    }
 
     /**
     * 添加
@@ -150,6 +214,30 @@ public class RestShopOrderController extends BaseController  {
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
         return toAjax(shopOrderService.removeByIds(ids));
     }
+
+    /**
+     * 确认收货
+     */
+    @RequestMapping("confirm")
+    public AjaxResult confirm(long orderId){
+        ShopOrder shopOrder=new ShopOrder();
+        shopOrder.setStatus(4);
+        shopOrder.setId(orderId);
+        shopOrderService.updateById(shopOrder);
+        return this.success();
+    }
+
+    /**
+     * 查看物流
+     */
+    @RequestMapping("viewExpress")
+    public AjaxResult viewExpress(long orderId){
+        ShopOrder shopOrder=new ShopOrder();
+        QueryWrapper queryWrapper1 = new QueryWrapper();
+        queryWrapper1.eq("id",orderId);
+        return this.success(shopOrderService.getOne(queryWrapper1));
+    }
+
 
 }
 
