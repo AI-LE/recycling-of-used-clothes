@@ -71,7 +71,7 @@ public class WxPayController extends BaseController {
     public AjaxResult getTransferMoney(BigDecimal amount){
         List<Rate> rate = rateService.list();
         BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
-        BigDecimal money = amount.multiply(transferRate).setScale(2);
+        BigDecimal money = amount.multiply(transferRate).setScale(2,BigDecimal.ROUND_HALF_UP);
         return this.success(money);
     }
 
@@ -91,6 +91,21 @@ public class WxPayController extends BaseController {
     }
 
     /**
+     * 获得支付比率
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getPoints")
+    @ResponseBody
+    public AjaxResult getPoints(BigDecimal fee){
+        List<Rate> rate = rateService.list();
+        BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
+        BigDecimal points = fee.divide(payRate).setScale(2,BigDecimal.ROUND_HALF_UP);
+        return this.success(points);
+    }
+
+    /**
      * 获得实际支付金额
      * @param
      * @param
@@ -101,7 +116,7 @@ public class WxPayController extends BaseController {
     public AjaxResult getPayMoney(BigDecimal price){
         List<Rate> rate = rateService.list();
         BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
-        BigDecimal money = price.multiply(payRate).setScale(2);
+        BigDecimal money = price.multiply(payRate).setScale(2,BigDecimal.ROUND_HALF_UP);
         return this.success(money);
     }
 
@@ -114,7 +129,7 @@ public class WxPayController extends BaseController {
      */
     @RequestMapping("/topay")
     @ResponseBody
-    public AjaxResult topay(HttpServletRequest request, String userId, String totalFee){
+    public AjaxResult topay(HttpServletRequest request, Long userId, String totalFee){
         WeixinUser weixinUser = weixinUserService.getById(userId);
         String openId = weixinUser.getOpenId();
         JSONObject json = PayUtil.wxPay(request,openId,totalFee);
@@ -125,8 +140,14 @@ public class WxPayController extends BaseController {
      * 检验是否支付成功接口
      */
     @RequestMapping("/getPayStatus")
-    public AjaxResult getPayStatus(String outTradeNo,String orderId){
+    public AjaxResult getPayStatus(String outTradeNo,String orderId,Long userId,BigDecimal payMoney,BigDecimal points){
         try {
+            BigDecimal totalPoints = new BigDecimal(0);
+            //判断是否为混合支付
+            if(points != null){
+                WeixinUser weixinUser = weixinUserService.getById(userId);
+                totalPoints = weixinUser.getAccount();
+            }
             //生成的随机字符串
             String nonce_str = Util.getRandomStringByLength(32);
             Map<String, String> packageParams = new HashMap<String, String>();
@@ -158,6 +179,8 @@ public class WxPayController extends BaseController {
                 ShopOrder shopOrder = new ShopOrder();
                 shopOrder.setId(Long.parseLong(orderId));
                 shopOrder.setStatus(2);
+                shopOrder.setPoints(totalPoints);
+                shopOrder.setWxMoney(payMoney);
                 shopOrderService.updateById(shopOrder);
             }
             response.put("returnCode",return_code);
@@ -212,7 +235,7 @@ public class WxPayController extends BaseController {
             //生成订单
             TransferDetail transferDetail = new TransferDetail();
             transferDetail.setCreatetime(LocalDateTime.now());
-            transferDetail.setPrice(new BigDecimal(money));
+            transferDetail.setPrice(amount);
             transferDetail.setUserId(userId);
             transferDetail.setTransferNo(orderNo);
             transferDetailService.save(transferDetail);
@@ -253,8 +276,10 @@ public class WxPayController extends BaseController {
             String result = ClientCustomSSLUtil.doRefund(WXConst.transfer_url,xml);
             Map map = PayUtil.doXMLParse(result);
             String return_code = (String) map.get("return_code");//返回状态码
+            String result_code = (String) map.get("result_code");
             Map<String, Object> response = new HashMap<String, Object>();
             response.put("returnCode",return_code);
+            response.put("resultCode",result_code);
             response.put("partnerTradeNo",orderNo);
             return  this.success(response);
         }catch (Exception e){
