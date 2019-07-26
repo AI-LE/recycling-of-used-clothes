@@ -124,7 +124,7 @@ public class WxPayController extends BaseController {
      * @return
      */
     @RequestMapping("/transfers")
-    public AjaxResult transfers(HttpServletRequest request, String userId, String amount){
+    public AjaxResult transfers(HttpServletRequest request, String userId, BigDecimal amount){
         try {
             WeixinUser weixinUser = weixinUserService.getById(userId);
             String openId = weixinUser.getOpenId();
@@ -136,8 +136,8 @@ public class WxPayController extends BaseController {
             int r = (int) ((Math.random() * 9 + 1) * 100000);
             String orderNo  = System.currentTimeMillis()+String.valueOf(r);
             //TODO 修改默认参数
-            BigDecimal fee = new BigDecimal(0.01);
-            String money = fee.multiply(new BigDecimal("100")).toString().substring(0,fee.multiply(new BigDecimal("100")).toString().indexOf(".")) ;//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
+
+            String money = amount.multiply(new BigDecimal("100")).toString() ;//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("mch_appid", WXConst.appId);
             packageParams.put("mchid", WXConst.mch_id);

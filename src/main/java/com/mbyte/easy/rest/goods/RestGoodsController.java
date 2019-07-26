@@ -184,7 +184,8 @@ public class RestGoodsController extends BaseController  {
      * 商城订单生成
      */
     @RequestMapping("addOrder")
-    public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId){
+    public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId,String[] buyNums){
+        System.out.println(buyNums);
         UserProp userProp=new UserProp();
         userProp.setAddress(address);
         userProp.setUserName(userName);
