@@ -76,4 +76,11 @@ public class Goods extends BaseEntity {
     private Integer isDel;
 
 
+    /**
+     * 商品类型
+     */
+    @TableField(exist = false)
+    private String buyNum;
+
+
 }
