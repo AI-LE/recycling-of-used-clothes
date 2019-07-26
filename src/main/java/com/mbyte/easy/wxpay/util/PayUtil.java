@@ -38,8 +38,7 @@ public class PayUtil {
 
 //                BigDecimal fee = new BigDecimal(totalFee);
                 BigDecimal fee = new BigDecimal(0.01);
-            String money = fee.multiply(new BigDecimal("100")).toString().substring(0,fee.multiply(new BigDecimal("100")).toString().indexOf(".")) ;//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
-
+            String money = fee.multiply(new BigDecimal("100")).toString().substring(0,fee.multiply(new BigDecimal("100")).toString().indexOf("."));//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("appid", WXConst.appId);
             packageParams.put("mch_id", WXConst.mch_id);
@@ -51,19 +50,12 @@ public class PayUtil {
             packageParams.put("notify_url", WXConst.notify_url);
             packageParams.put("trade_type", WXConst.TRADETYPE);
             packageParams.put("openid", openid);
-
-
              // 除去数组中的空值和签名参数
             packageParams = PayUtil.paraFilter(packageParams);
             String prestr = PayUtil.createLinkString(packageParams); // 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
-
-
              //MD5运算生成签名，这里是第一次签名，用于调用统一下单接口
-//                String mysign = "A6A3AFE5835AD0353C6A33DE77EAFCC0";
                 String mysign = PayUtil.sign(prestr, WXConst.key, "utf-8").toUpperCase();
                 logger.info("=======================第一次签名：" + mysign + "=====================");
-
-
              //拼接统一下单接口使用的xml数据，要将上一步生成的签名一起拼接进去
                 String xml = "<xml version='1.0' encoding='gbk'>" + "<appid>" + WXConst.appId + "</appid>"
                 +"<body><![CDATA[" + body + "]]></body>"
@@ -77,25 +69,13 @@ public class PayUtil {
                 +"<trade_type>" + WXConst.TRADETYPE + "</trade_type>"
                 +"<sign>" + mysign + "</sign>"
                 +"</xml>";
-
-
                 System.out.println("调试模式_统一下单接口 请求XML数据：" + xml);
-
-
                 //调用统一下单接口，并接受返回的结果
                 String result = PayUtil.httpRequest(WXConst.pay_url, "POST", xml);
-
-
                 System.out.println("调试模式_统一下单接口 返回XML数据：" + result);
-
-
                 // 将解析结果存储在HashMap中
                 Map map = PayUtil.doXMLParse(result);
-
-
                 String return_code = (String) map.get("return_code");//返回状态码
-
-
                  //返回给移动端需要的参数
                 Map<String, Object> response = new HashMap<String, Object>();
                 if ( "SUCCESS".equals(return_code)) {
@@ -112,26 +92,16 @@ public class PayUtil {
                           //再次签名，这个签名用于小程序端调用wx.requesetPayment方法
                          String paySign = PayUtil.sign(stringSignTemp, WXConst.key, "utf-8").toUpperCase();
                          logger.info("=======================第二次签名：" + paySign + "=====================");
-
-
                          response.put("paySign", paySign);
-
-
-                          //更新订单信息
-                          //业务逻辑代码
                 }
 
                 response.put("out_trade_no",orderNo);
                 response.put("appid", WXConst.appId);
                 json.put("errMsg", "OK");
-                 //json.setSuccess(true);
                 json.put("data", response);
-                 //json.setData(response);
                 } catch (Exception e) {
                 e.printStackTrace();
                 json.put("errMsg", "Failed");
-                 //json.setSuccess(false);
-                 //json.setMsg("发起失败");
                 }
                 return json;
           }

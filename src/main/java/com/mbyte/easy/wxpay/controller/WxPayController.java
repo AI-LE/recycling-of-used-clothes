@@ -46,6 +46,64 @@ public class WxPayController extends BaseController {
     @Autowired
     private IRateService rateService;
 
+    /**
+     * 获得提现比率
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getTransferRate")
+    @ResponseBody
+    public AjaxResult getTransferRate(){
+        List<Rate> rate = rateService.list();
+        BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+        return this.success(transferRate);
+    }
+
+    /**
+     * 获得实际提现金额
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getTransferMoney")
+    @ResponseBody
+    public AjaxResult getTransferMoney(BigDecimal amount){
+        List<Rate> rate = rateService.list();
+        BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+        BigDecimal money = amount.multiply(transferRate).setScale(2);
+        return this.success(money);
+    }
+
+
+    /**
+     * 获得支付比率
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getPayRate")
+    @ResponseBody
+    public AjaxResult getPayRate(){
+        List<Rate> rate = rateService.list();
+        BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
+        return this.success(payRate);
+    }
+
+    /**
+     * 获得实际支付金额
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getPayMoney")
+    @ResponseBody
+    public AjaxResult getPayMoney(BigDecimal price){
+        List<Rate> rate = rateService.list();
+        BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
+        BigDecimal money = price.multiply(payRate).setScale(2);
+        return this.success(money);
+    }
 
 
     /**
@@ -131,12 +189,13 @@ public class WxPayController extends BaseController {
      * @return
      */
     @RequestMapping("/transfers")
-    public AjaxResult transfers(HttpServletRequest request, String userId, BigDecimal amount){
+    public AjaxResult transfers(HttpServletRequest request, Long userId, BigDecimal amount){
         try {
-            //获得比率
-            List<Rate> rate = rateService.list();
-            BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
-            System.out.println("提现比率"+transferRate);
+
+//            //获得比率
+//            List<Rate> rate = rateService.list();
+//            BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+//            System.out.println("提现比率"+transferRate);
             WeixinUser weixinUser = weixinUserService.getById(userId);
             String openId = weixinUser.getOpenId();
             //生成的随机字符串
@@ -148,13 +207,13 @@ public class WxPayController extends BaseController {
             String orderNo  = System.currentTimeMillis()+String.valueOf(r);
 
             //按比例换算提现金额,单位：分，这边需要转成字符串类型，否则后面的签名会失败
-            String money = (amount.multiply(new BigDecimal("100")).multiply(transferRate)).toString();
+            String money = amount.multiply(new BigDecimal("100")).toString().substring(0,amount.multiply(new BigDecimal("100")).toString().indexOf("."));
 
             //生成订单
             TransferDetail transferDetail = new TransferDetail();
             transferDetail.setCreatetime(LocalDateTime.now());
-            transferDetail.setPrice(amount.multiply(new BigDecimal("100")).multiply(transferRate));
-            transferDetail.setUserId(Long.parseLong(userId));
+            transferDetail.setPrice(new BigDecimal(money));
+            transferDetail.setUserId(userId);
             transferDetail.setTransferNo(orderNo);
             transferDetailService.save(transferDetail);
 
