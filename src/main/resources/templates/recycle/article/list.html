@@ -65,9 +65,12 @@
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
                                         <td th:text="${article.title}"></td>
-                                        <td th:utext="${article.content}"></td>
-                                        <td th:text="${article.vicetitle}"></td>
-                                        <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${article.pic})}" /></td>
+                            <td class="td-manage">
+                                <a title="查看详情" href="javascript:;"
+                                  th:onclick="'javascript:layer_show(\'查看详情\',\'/recycle/'+'article'+'/detailsBefore/'+${article.id}+'\',900,500)'"
+                                   class="ml-5" style="text-decoration:none">查看详情</a></td>
+                            <td th:text="${article.vicetitle}"></td>
+                            <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${article.pic})}" /></td>
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"
                                    th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'article'+'/editBefore/'+${article.id}+'\',900,500)'"
