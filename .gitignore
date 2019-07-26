@@ -27,5 +27,5 @@ HELP.md
 /com/mbyte/easy/generator/CodeGenerator
 /*.properties/
 .idea
-
+/target/
 
