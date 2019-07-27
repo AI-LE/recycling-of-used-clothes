@@ -184,8 +184,9 @@ public class RestGoodsController extends BaseController  {
      * 商城订单生成
      */
     @RequestMapping("addOrder")
-    public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId){
+    public AjaxResult addOrder(String address,String userName,String phone, String[] goodsIds, BigDecimal totalPrice,String userId,String[] buyNums,String payStyle){
         UserProp userProp=new UserProp();
+        userProp.setUserId(Long.parseLong(userId));
         userProp.setAddress(address);
         userProp.setUserName(userName);
         userProp.setPhone(phone);
@@ -195,12 +196,14 @@ public class RestGoodsController extends BaseController  {
             System.err.println(temp);
         }
         long[] goodsIdList=new long[goodsIds.length];
+        long[] buyNumList=new long[buyNums.length];
         for(int i=0;i<goodsIds.length;i++)
         {
             goodsIdList[i]=Long.parseLong(goodsIds[i].replaceAll("\\[","").replaceAll("]",""));
+            buyNumList[i]=Long.parseLong(buyNums[i].replaceAll("\\[","").replaceAll("]",""));
         }
            if(StringUtils.isNotEmpty(userId)) {
-               Long result = ShopOrderService.addOrder(new Long(userProp.getId()).toString(), goodsIdList, totalPrice, userId);
+               Long result = ShopOrderService.addOrder(new Long(userProp.getId()).toString(), goodsIdList,buyNumList,totalPrice, userId,payStyle);
                return  this.success(result);
            }else{
                return  this.error();

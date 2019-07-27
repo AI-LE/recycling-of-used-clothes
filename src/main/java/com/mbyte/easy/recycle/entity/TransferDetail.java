@@ -1,6 +1,8 @@
 package com.mbyte.easy.recycle.entity;
 
+import java.math.BigDecimal;
 import com.mbyte.easy.common.entity.BaseEntity;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -11,29 +13,32 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Author
- * @since 2019-07-23
+ * @since 2019-07-26
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class OrderGoods extends BaseEntity {
+public class TransferDetail extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+    /**
+     * 用户id
+     */
+    private Long userId;
 
     /**
-     * 订单id
+     * 提现单号
      */
-    private Long orderId;
+    private String transferNo;
 
     /**
-     * 货物id
+     * 提现金额
      */
-    private Long goodsid;
+    private BigDecimal price;
 
-    /**
-     * 货物数量
-     */
-    private Long buynum;
+    private LocalDateTime createtime;
+
+    private  Integer status;
 
 
 }

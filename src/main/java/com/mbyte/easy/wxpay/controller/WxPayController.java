@@ -2,28 +2,35 @@ package com.mbyte.easy.wxpay.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
-import com.mbyte.easy.recycle.entity.OrderGoods;
+import com.mbyte.easy.recycle.entity.Rate;
 import com.mbyte.easy.recycle.entity.ShopOrder;
+import com.mbyte.easy.recycle.entity.TransferDetail;
 import com.mbyte.easy.recycle.entity.WeixinUser;
-import com.mbyte.easy.recycle.service.IOrderGoodsService;
-import com.mbyte.easy.recycle.service.IShopOrderService;
-import com.mbyte.easy.recycle.service.IWeixinUserService;
+import com.mbyte.easy.recycle.service.*;
 import com.mbyte.easy.wxpay.constant.WXConst;
 import com.mbyte.easy.wxpay.util.ClientCustomSSLUtil;
 import com.mbyte.easy.wxpay.util.PayUtil;
 import com.mbyte.easy.wxpay.util.Util;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+
+/**
+ * 微信支付、提现及订单相关业务逻辑
+ * @author 秦策
+ */
 
 @RestController
 @RequestMapping("/wxpay")
@@ -34,8 +41,89 @@ public class WxPayController extends BaseController {
 
     @Autowired
     private IShopOrderService shopOrderService;
+
     @Autowired
-    private IOrderGoodsService orderGoodsService;
+    private ITransferDetailService transferDetailService;
+    @Autowired
+    private IRateService rateService;
+
+    /**
+     * 获得提现比率
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getTransferRate")
+    @ResponseBody
+    public AjaxResult getTransferRate(){
+        List<Rate> rate = rateService.list();
+        BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+        return this.success(transferRate);
+    }
+
+    /**
+     * 获得实际提现金额
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getTransferMoney")
+    @ResponseBody
+    public AjaxResult getTransferMoney(BigDecimal amount){
+        List<Rate> rate = rateService.list();
+        BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+        BigDecimal money = amount.multiply(transferRate).setScale(2,BigDecimal.ROUND_HALF_UP);
+        return this.success(money);
+    }
+
+
+    /**
+     * 获得支付比率
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getPayRate")
+    @ResponseBody
+    public AjaxResult getPayRate(){
+        List<Rate> rate = rateService.list();
+        BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
+        return this.success(payRate);
+    }
+
+    /**
+     * 获得抵扣积分
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getPoints")
+    @ResponseBody
+    public AjaxResult getPoints(BigDecimal fee){
+        List<Rate> rate = rateService.list();
+        BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
+        BigDecimal points = fee.divide(payRate).setScale(2,BigDecimal.ROUND_HALF_UP);
+        return this.success(points);
+    }
+
+    /**
+     * 获得实际支付金额
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getPayMoney")
+    @ResponseBody
+    public AjaxResult getPayMoney(Long userId){
+       WeixinUser weixinUser = weixinUserService.getById(userId);
+        List<WeixinUser>weixinUserList=weixinUserService.list();
+        BigDecimal price = weixinUser.getAccount();
+        List<Rate> rate = rateService.list();
+        BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
+        BigDecimal money = price.multiply(payRate).setScale(2,BigDecimal.ROUND_HALF_UP);
+        return this.success(money);
+    }
+
 
     /**
      * 微信统一下单
@@ -45,13 +133,9 @@ public class WxPayController extends BaseController {
      */
     @RequestMapping("/topay")
     @ResponseBody
-    public AjaxResult topay(HttpServletRequest request, String userId, String totalFee){
+    public AjaxResult topay(HttpServletRequest request, Long userId, String totalFee){
         WeixinUser weixinUser = weixinUserService.getById(userId);
         String openId = weixinUser.getOpenId();
-
-
-
-
         JSONObject json = PayUtil.wxPay(request,openId,totalFee);
         return this.success(json);
     }
@@ -60,8 +144,14 @@ public class WxPayController extends BaseController {
      * 检验是否支付成功接口
      */
     @RequestMapping("/getPayStatus")
-    public AjaxResult getPayStatus(String outTradeNo,String orderId){
+    public AjaxResult getPayStatus(String outTradeNo,String orderId,Long userId,BigDecimal payMoney,String payStyle){
         try {
+            BigDecimal totalPoints = new BigDecimal(0);
+            //判断是否为混合支付
+            if(StringUtils.isNotEmpty(payStyle)){
+                WeixinUser weixinUser = weixinUserService.getById(userId);
+                totalPoints = weixinUser.getAccount();
+            }
             //生成的随机字符串
             String nonce_str = Util.getRandomStringByLength(32);
             Map<String, String> packageParams = new HashMap<String, String>();
@@ -93,7 +183,14 @@ public class WxPayController extends BaseController {
                 ShopOrder shopOrder = new ShopOrder();
                 shopOrder.setId(Long.parseLong(orderId));
                 shopOrder.setStatus(2);
+                shopOrder.setPoints(totalPoints);
+                shopOrder.setWxMoney(payMoney);
                 shopOrderService.updateById(shopOrder);
+                if(StringUtils.isNotEmpty(payStyle)) {
+                WeixinUser weixinUser = weixinUserService.getById(userId);
+                    weixinUser.setAccount(new BigDecimal(0.00));
+                    weixinUserService.updateById(weixinUser);
+                }
             }
             response.put("returnCode",return_code);
             return  this.success(response);
@@ -124,8 +221,13 @@ public class WxPayController extends BaseController {
      * @return
      */
     @RequestMapping("/transfers")
-    public AjaxResult transfers(HttpServletRequest request, String userId, String amount){
+    public AjaxResult transfers(HttpServletRequest request, Long userId, BigDecimal amount){
         try {
+
+//            //获得比率
+//            List<Rate> rate = rateService.list();
+//            BigDecimal transferRate = new BigDecimal(rate.get(0).getWithdrawalRate().toString());
+//            System.out.println("提现比率"+transferRate);
             WeixinUser weixinUser = weixinUserService.getById(userId);
             String openId = weixinUser.getOpenId();
             //生成的随机字符串
@@ -135,9 +237,18 @@ public class WxPayController extends BaseController {
             //商户订单号(时间戳+随机数)
             int r = (int) ((Math.random() * 9 + 1) * 100000);
             String orderNo  = System.currentTimeMillis()+String.valueOf(r);
-            //TODO 修改默认参数
-            BigDecimal fee = new BigDecimal(0.01);
-            String money = fee.multiply(new BigDecimal("100")).toString().substring(0,fee.multiply(new BigDecimal("100")).toString().indexOf(".")) ;//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
+
+            //按比例换算提现金额,单位：分，这边需要转成字符串类型，否则后面的签名会失败
+            String money = amount.multiply(new BigDecimal("100")).toString().substring(0,amount.multiply(new BigDecimal("100")).toString().indexOf("."));
+
+            //生成订单
+            TransferDetail transferDetail = new TransferDetail();
+            transferDetail.setCreatetime(LocalDateTime.now());
+            transferDetail.setPrice(amount);
+            transferDetail.setUserId(userId);
+            transferDetail.setTransferNo(orderNo);
+            transferDetailService.save(transferDetail);
+
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("mch_appid", WXConst.appId);
             packageParams.put("mchid", WXConst.mch_id);
@@ -172,15 +283,12 @@ public class WxPayController extends BaseController {
             System.out.println("调试模式_统一下单接口 请求XML数据：" + xml);
             //调用企业支付接口，并接受返回的结果
             String result = ClientCustomSSLUtil.doRefund(WXConst.transfer_url,xml);
-
             Map map = PayUtil.doXMLParse(result);
             String return_code = (String) map.get("return_code");//返回状态码
+            String result_code = (String) map.get("result_code");
             Map<String, Object> response = new HashMap<String, Object>();
-            if ( "SUCCESS".equals(return_code)) {
-                //TODO 更新用户余额
-                System.out.println("*******更新余额");
-            }
             response.put("returnCode",return_code);
+            response.put("resultCode",result_code);
             response.put("partnerTradeNo",orderNo);
             return  this.success(response);
         }catch (Exception e){
@@ -224,8 +332,17 @@ public class WxPayController extends BaseController {
             String return_code = (String) map.get("return_code");//返回状态码
             Map<String, Object> response = new HashMap<String, Object>();
             if ( "SUCCESS".equals(return_code)) {
-                //TODO 更新用户余额
-                System.out.println("*******更新余额");
+                //业务逻辑
+                QueryWrapper queryWrapper = new QueryWrapper();
+                queryWrapper.eq("transfer_no",partnerTradeNo);
+                TransferDetail transferDetail = transferDetailService.getOne(queryWrapper);
+                weixinUserService.getById(transferDetail.getUserId());
+                WeixinUser weixinUser = new WeixinUser();
+                weixinUser.setId(transferDetail.getUserId());
+                weixinUser.setAccount(weixinUser.getAccount().subtract(transferDetail.getPrice()));
+                weixinUserService.updateById(weixinUser);
+                transferDetail.setStatus(2);
+                transferDetailService.updateById(transferDetail);
             }
             response.put("returnCode",return_code);
             return  this.success(response);

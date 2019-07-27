@@ -47,7 +47,7 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderMapper, ShopOrder
 
     }
     @Override
-    public Long addOrder(String addressId, long[] goodsIds, BigDecimal totalPrice, String userId) {
+    public Long addOrder(String addressId, long[] goodsIds ,long[] buyNums, BigDecimal totalPrice, String userId,String payStyle) {
         //商户订单号(时间戳+随机数)
         int r = (int) ((Math.random() * 9 + 1) * 100000);
         String orderNo = System.currentTimeMillis() + String.valueOf(r);
@@ -58,11 +58,17 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderMapper, ShopOrder
         shopOrder.setUserId(Long.parseLong(userId));
         shopOrder.setPrice(totalPrice);
         shopOrder.setOrderNo(orderNo);
+        shopOrder.setPayStyle(payStyle);
         shopOrderMapper.addOrder(shopOrder);
 
-        for (long goodsId : goodsIds) {
-            orderGoodsMapper.addGoods(shopOrder.getId(), goodsId);
+        for(int i=0;i<goodsIds.length;i++)
+        {
+            orderGoodsMapper.addGoods(shopOrder.getId(),goodsIds[i],buyNums[i]);
         }
+
+//        for (long goodsId : goodsIds) {
+//            orderGoodsMapper.addGoods(shopOrder.getId(), goodsId);
+//        }
         return shopOrder.getId();
 
 

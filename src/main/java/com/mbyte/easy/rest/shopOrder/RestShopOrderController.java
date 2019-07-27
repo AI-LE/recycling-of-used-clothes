@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.OrderGoods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
+import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.service.*;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
@@ -154,7 +155,53 @@ public class RestShopOrderController extends BaseController  {
                  ) {
                 QueryWrapper queryWrapper3 = new QueryWrapper();
                 queryWrapper3.eq("id",orderGoods.getGoodsid());
-                goodsList.add(goodsService.getOne(queryWrapper3));
+                Goods goods=goodsService.getOne(queryWrapper3);
+                goods.setBuyNum(orderGoods.getBuynum().toString());
+                goodsList.add(goods);
+            }
+            shoporder.setGoodsList(goodsList);
+            //shoporder.setPic(goodsList.get(0).getPic());
+
+        }
+
+        return this.success(shopOrders);
+    }
+
+
+    /**
+     * 订单详情
+     */
+    @RequestMapping("orderDetail")
+    public AjaxResult orderDetail(Long userId,Long orderId)
+    {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("id",orderId);
+        //QueryWrapper queryWrapper1 = new QueryWrapper();
+//        QueryWrapper queryWrapper2 = new QueryWrapper();
+//        QueryWrapper queryWrapper3 = new QueryWrapper();
+        //queryWrapper1.eq("user_id",userId);
+        List<ShopOrder> shopOrders=shopOrderService.list(queryWrapper);
+
+
+        for (ShopOrder shoporder:shopOrders) {
+            QueryWrapper queryWrapper1 = new QueryWrapper();
+            queryWrapper1.eq("id",shoporder.getAddressId());
+            UserProp userProp=userPropService.getOne(queryWrapper1);
+            shoporder.setUserName(userProp.getUserName());
+            shoporder.setAddress(userProp.getAddress());
+            shoporder.setPhone(userProp.getPhone());
+            QueryWrapper queryWrapper2 = new QueryWrapper();
+            queryWrapper2.eq("order_id",shoporder.getId());
+            List<OrderGoods> orderGoodsList=orderGoodsService.list(queryWrapper2);
+            List<Goods>goodsList=new ArrayList<>();
+            for (OrderGoods orderGoods:orderGoodsList
+            ) {
+                QueryWrapper queryWrapper3 = new QueryWrapper();
+                queryWrapper3.eq("id",orderGoods.getGoodsid());
+                Goods goods=goodsService.getOne(queryWrapper3);
+                goods.setBuyNum(orderGoods.getBuynum().toString());
+                goodsList.add(goods);
             }
             shoporder.setGoodsList(goodsList);
             //shoporder.setPic(goodsList.get(0).getPic());

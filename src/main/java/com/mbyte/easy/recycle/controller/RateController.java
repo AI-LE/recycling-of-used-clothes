@@ -1,10 +1,10 @@
-package com.mbyte.easy.admin.controller;
+package com.mbyte.easy.recycle.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mbyte.easy.admin.entity.Person;
-import com.mbyte.easy.admin.service.IPersonService;
+import com.mbyte.easy.recycle.entity.Rate;
+import com.mbyte.easy.recycle.service.IRateService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
 import com.mbyte.easy.util.PageInfo;
@@ -14,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ObjectUtils;
-
-import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,17 +22,17 @@ import java.time.LocalDateTime;
 * <p>
 * 前端控制器
 * </p>
-* @author 会写代码的怪叔叔
+* @author Author
 * @since 2019-03-11
 */
 @Controller
-@RequestMapping("/admin/person")
-public class PersonController extends BaseController  {
+@RequestMapping("/recycle/rate")
+public class RateController extends BaseController  {
 
-    private String prefix = "admin/person/";
+    private String prefix = "recycle/rate/";
 
     @Autowired
-    private IPersonService personService;
+    private IRateService rateService;
 
     /**
     * 查询列表
@@ -42,28 +40,21 @@ public class PersonController extends BaseController  {
     * @param model
     * @param pageNo
     * @param pageSize
-    * @param person
+    * @param rate
     * @return
     */
     @RequestMapping
-    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String creTimeSpace, Person person) {
-        Page<Person> page = new Page<Person>(pageNo, pageSize);
-        QueryWrapper<Person> queryWrapper = new QueryWrapper<Person>();
-        if(!ObjectUtils.isEmpty(person.getName())) {
-            queryWrapper = queryWrapper.like("name",person.getName());
+    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, Rate rate) {
+        Page<Rate> page = new Page<Rate>(pageNo, pageSize);
+        QueryWrapper<Rate> queryWrapper = new QueryWrapper<Rate>();
+        if(!ObjectUtils.isEmpty(rate.getWithdrawalRate())) {
+            queryWrapper = queryWrapper.like("withdrawal_rate",rate.getWithdrawalRate());
          }
-        if(!ObjectUtils.isEmpty(person.getCreTime())) {
-            queryWrapper = queryWrapper.like("cre_time",person.getCreTime());
+        if(!ObjectUtils.isEmpty(rate.getPayRate())) {
+            queryWrapper = queryWrapper.like("pay_rate",rate.getPayRate());
          }
-        if(!ObjectUtils.isEmpty(person.getFilePath())) {
-            queryWrapper = queryWrapper.like("file_path",person.getFilePath());
-         }
-        if(!ObjectUtils.isEmpty(person.getDescrption())) {
-            queryWrapper = queryWrapper.like("descrption",person.getDescrption());
-         }
-        IPage<Person> pageInfo = personService.page(page, queryWrapper);
-        model.addAttribute("creTimeSpace", creTimeSpace);
-        model.addAttribute("searchInfo", person);
+        IPage<Rate> pageInfo = rateService.page(page, queryWrapper);
+        model.addAttribute("searchInfo", rate);
         model.addAttribute("pageInfo", new PageInfo(pageInfo));
         return prefix+"list";
     }
@@ -78,13 +69,13 @@ public class PersonController extends BaseController  {
     }
     /**
     * 添加
-    * @param person
+    * @param rate
     * @return
     */
     @PostMapping("add")
     @ResponseBody
-    public AjaxResult add(Person person){
-        return toAjax(personService.save(person));
+    public AjaxResult add(Rate rate){
+        return toAjax(rateService.save(rate));
     }
     /**
     * 添加跳转页面
@@ -92,18 +83,18 @@ public class PersonController extends BaseController  {
     */
     @GetMapping("editBefore/{id}")
     public String editBefore(Model model,@PathVariable("id")Long id){
-        model.addAttribute("person",personService.getById(id));
+        model.addAttribute("rate",rateService.getById(id));
         return prefix+"edit";
     }
     /**
     * 添加
-    * @param person
+    * @param rate
     * @return
     */
     @PostMapping("edit")
     @ResponseBody
-    public AjaxResult edit(Person person){
-        return toAjax(personService.updateById(person));
+    public AjaxResult edit(Rate rate){
+        return toAjax(rateService.updateById(rate));
     }
     /**
     * 删除
@@ -113,7 +104,7 @@ public class PersonController extends BaseController  {
     @GetMapping("delete/{id}")
     @ResponseBody
     public AjaxResult delete(@PathVariable("id") Long id){
-        return toAjax(personService.removeById(id));
+        return toAjax(rateService.removeById(id));
     }
     /**
     * 批量删除
@@ -123,9 +114,8 @@ public class PersonController extends BaseController  {
     @PostMapping("deleteAll")
     @ResponseBody
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
-        return toAjax(personService.removeByIds(ids));
+        return toAjax(rateService.removeByIds(ids));
     }
-
 
 }
 

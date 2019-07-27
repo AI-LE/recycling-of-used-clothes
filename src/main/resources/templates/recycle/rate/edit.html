@@ -5,22 +5,27 @@
 </head>
 <body>
 <article class="page-container">
-    <form class="form form-horizontal" id="form-goodsImg-edit" action="#"
-          th:action="@{/recycle/goodsImg/edit}" th:object="${goodsImg}" enctype="multipart/form-data">
-        <input type="hidden" name="id" th:value="${goodsImg.id}"/>
-
-
+    <form class="form form-horizontal" id="form-rate-edit" action="#"
+          th:action="@{/recycle/rate/edit}" th:object="${rate}" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${rate.id}"/>
                 <div class="row cl">
-                    <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>修改图片：</label>
-                    <div class="formControls col-xs-10 col-sm-10">
-                        <input class="input-text upload-url" type="text" name="pic"  readonly="" style="width:400px">
-                        <a href="javascript:void();" class="btn btn-primary upload-btn"><i class="Hui-iconfont"></i> 浏览文件</a>
-                        <input type="file" accept="image/*" style="width:100%; height:100%"  name="file"   id="pic" class="input-file valid">
+                    <label class="form-label col-xs-2 col-sm-2"><span
+                                class="c-red">*</span>：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input type="input-text" class="input-text" th:value="${rate.withdrawalRate}" name="withdrawalRate"  placeholder="修改" id="withdrawalRate"/>
+
+                            </div>
                     </div>
                 </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2"><span
+                                class="c-red">*</span>：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <input type="input-text" class="input-text" th:value="${rate.payRate}" name="payRate"  placeholder="修改" id="payRate"/>
 
-
-
+                            </div>
+                    </div>
+                </div>
         <div class="row cl">
             <div class="col-xs-3 col-sm-3 col-xs-offset-4 col-sm-offset-3">
                 <input class="btn btn-primary radius" id="subbtn" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>
@@ -36,17 +41,13 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script>
     $(function () {
-        $("#form-goodsImg-edit").validate({
+        $("#form-rate-edit").validate({
             rules: {
-        goodsId:
+        withdrawalRate:
         {
             required: true,
         },
-        pic:
-        {
-            required: true,
-        },
-        isDel:
+        payRate:
         {
             required: true,
         },
@@ -64,7 +65,7 @@
         function (form) {
             $(form).ajaxSubmit({
                 type: 'POST',
-                url: "/recycle/goodsImg/edit",
+                url: "/recycle/rate/edit",
                 success: function (data) {
                     if (data.code == "1") {
                         layer.designMsg('编辑成功!', 1, function () {
