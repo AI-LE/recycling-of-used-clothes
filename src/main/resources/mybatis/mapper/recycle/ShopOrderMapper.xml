@@ -109,7 +109,7 @@
             <if test="isDel != null">
                 #{isDel,jdbcType=SMALLINT},
             </if>
-            <if test="payStyle != null">
+            <if test="payStyle != null ">
                 #{payStyle,jdbcType=SMALLINT},
             </if>
 

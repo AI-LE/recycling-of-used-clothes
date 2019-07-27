@@ -70,7 +70,7 @@ public class RestTransferDetailController extends BaseController  {
         return this.success(map);
     }
 
-    @RequestMapping ("add")
+    @RequestMapping ("getTransferDetail")
     public AjaxResult getTransferDetail(Long userId){
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("user_id",userId);
