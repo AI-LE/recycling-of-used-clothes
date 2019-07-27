@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.entity.UserProp;
+import com.mbyte.easy.recycle.mapper.ShopOrderMapper;
 import com.mbyte.easy.recycle.mapper.UserPropMapper;
 import com.mbyte.easy.recycle.service.IShopOrderService;
 import com.mbyte.easy.common.controller.BaseController;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ObjectUtils;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDate;
@@ -39,8 +41,11 @@ public class ShopOrderController extends BaseController  {
     @Autowired
     private IShopOrderService shopOrderService;
 
-    @Autowired
+    @Resource
     private UserPropMapper userPropMapper;
+    @Resource
+    private ShopOrderMapper shopOrderMapper;
+
 
 
     /**
@@ -103,6 +108,7 @@ public class ShopOrderController extends BaseController  {
 
 
 
+
     /**
     * 添加跳转页面
     * @return
@@ -129,7 +135,13 @@ public class ShopOrderController extends BaseController  {
     public String editBefore(Model model,@PathVariable("id")Long id){
 
 
-        model.addAttribute("shopOrder",shopOrderService.getById(id));
+        ShopOrder shopOrder = shopOrderService.getById(id);
+        model.addAttribute("shopOrder",shopOrder);
+        Long orderAddressId = shopOrder.getAddressId();
+        UserProp userProp = shopOrderMapper.selectHuiXian(orderAddressId);
+//        UserProp userProp = userPropMapper.selectById(orderAddressId);
+        model.addAttribute("userProp",userProp);
+
         return prefix+"edit";
     }
 
