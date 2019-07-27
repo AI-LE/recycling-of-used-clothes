@@ -56,6 +56,10 @@ public class RestRateController extends BaseController  {
             queryWrapper = queryWrapper.like("pay_rate",rate.getPayRate());
          }
 
+        if(rate.getKgRate() != null  && !"".equals(rate.getKgRate() + "")) {
+            queryWrapper = queryWrapper.like("kg_rate",rate.getKgRate());
+        }
+
         IPage<Rate> pageInfo = rateService.page(page, queryWrapper);
 
         Map<String, Object> map = new HashMap<>();
