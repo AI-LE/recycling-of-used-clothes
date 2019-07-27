@@ -98,7 +98,10 @@ public class WxPayController extends BaseController {
      */
     @RequestMapping("/getPayMoney")
     @ResponseBody
-    public AjaxResult getPayMoney(BigDecimal price){
+    public AjaxResult getPayMoney(Long userId){
+       WeixinUser weixinUser = weixinUserService.getById(userId);
+        List<WeixinUser>weixinUserList=weixinUserService.list();
+        BigDecimal price = weixinUser.getAccount();
         List<Rate> rate = rateService.list();
         BigDecimal payRate = new BigDecimal(rate.get(0).getPayRate().toString());
         BigDecimal money = price.multiply(payRate).setScale(2);
