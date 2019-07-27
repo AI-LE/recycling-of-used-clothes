@@ -37,7 +37,7 @@ public class PayUtil {
                 String orderNo  = System.currentTimeMillis()+String.valueOf(r);
 
 //                BigDecimal fee = new BigDecimal(totalFee);
-                BigDecimal fee = new BigDecimal(0.01);
+                BigDecimal fee = new BigDecimal(totalFee);
             String money = fee.multiply(new BigDecimal("100")).toString().substring(0,fee.multiply(new BigDecimal("100")).toString().indexOf("."));//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("appid", WXConst.appId);

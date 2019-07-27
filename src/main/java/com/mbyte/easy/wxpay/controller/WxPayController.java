@@ -14,6 +14,7 @@ import com.mbyte.easy.wxpay.constant.WXConst;
 import com.mbyte.easy.wxpay.util.ClientCustomSSLUtil;
 import com.mbyte.easy.wxpay.util.PayUtil;
 import com.mbyte.easy.wxpay.util.Util;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,7 @@ public class WxPayController extends BaseController {
     }
 
     /**
-     * 获得支付比率
+     * 获得抵扣积分
      * @param
      * @param
      * @return
@@ -143,11 +144,11 @@ public class WxPayController extends BaseController {
      * 检验是否支付成功接口
      */
     @RequestMapping("/getPayStatus")
-    public AjaxResult getPayStatus(String outTradeNo,String orderId,Long userId,BigDecimal payMoney,BigDecimal points){
+    public AjaxResult getPayStatus(String outTradeNo,String orderId,Long userId,BigDecimal payMoney,String payStyle){
         try {
             BigDecimal totalPoints = new BigDecimal(0);
             //判断是否为混合支付
-            if(points != null){
+            if(StringUtils.isNotEmpty(payStyle)){
                 WeixinUser weixinUser = weixinUserService.getById(userId);
                 totalPoints = weixinUser.getAccount();
             }
@@ -185,6 +186,11 @@ public class WxPayController extends BaseController {
                 shopOrder.setPoints(totalPoints);
                 shopOrder.setWxMoney(payMoney);
                 shopOrderService.updateById(shopOrder);
+                if(StringUtils.isNotEmpty(payStyle)) {
+                WeixinUser weixinUser = weixinUserService.getById(userId);
+                    weixinUser.setAccount(new BigDecimal(0.00));
+                    weixinUserService.updateById(weixinUser);
+                }
             }
             response.put("returnCode",return_code);
             return  this.success(response);
