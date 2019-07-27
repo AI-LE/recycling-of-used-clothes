@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mbyte.easy.recycle.entity.UserProp;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -30,6 +31,13 @@ public interface IShopOrderService extends IService<ShopOrder> {
      * @return
      */
     List<Goods> selectGoodsOrder(Long id);
+//    /**
+//     * 回显
+//     * @param addressId
+//     * @return
+//     */
+//    List<UserProp> selectHuiXian (Long addressId);
+
 
 }
 

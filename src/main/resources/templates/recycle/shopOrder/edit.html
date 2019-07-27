@@ -6,9 +6,10 @@
 <body>
 <article class="page-container">
     <form class="form form-horizontal" id="form-shopOrder-edit" action="#"
-          th:action="@{/recycle/shopOrder/edit}" th:object="${shopOrder}" enctype="multipart/form-data">
+          th:action="@{/recycle/shopOrder/edit}"  enctype="multipart/form-data">
         <input type="hidden" name="id" th:value="${shopOrder.id}"/>
         <input type="hidden" name="addressId" th:value="${shopOrder.addressId}"/>
+
 
 
 
@@ -16,10 +17,10 @@
             <label style="margin-top: 6px;" class="form-label col-xs-2 col-sm-2"><span class="c-red" >*</span>状态：</label>
             <select class="input-text"  placeholder="状态"  id="status" name="status"
                     style="width: 23.5%;margin-left: 15px">
-                <option value="1">待付款</option>
-                <option value="2">待发货</option>
-                <option value="3">待收货</option>
-                <option value="4">待评价</option>
+                <option value="1" th:attr="selected=${shopOrder.status == 1}" >待付款</option>
+                <option value="2" th:attr="selected=${shopOrder.status == 2}" >待发货</option>
+                <option value="3" th:attr="selected=${shopOrder.status == 3}" >待收货</option>
+                <option value="4" th:attr="selected=${shopOrder.status == 4}" >待评价</option>
 
             </select>
         </div>
@@ -37,7 +38,7 @@
             <label class="form-label col-xs-2 col-sm-2"><span
                     class="c-red">*</span>用户地址：</label>
             <div class="formControls col-xs-10 col-sm-10">
-                <input type="input-text" class="input-text" th:value="${shopOrder.address}" name="address"  placeholder="修改用户地址" id="address"/>
+                <input type="input-text" class="input-text" th:value="${userProp.address}" name="address"  placeholder="修改用户地址" id="address"/>
 
             </div>
         </div>
@@ -45,7 +46,7 @@
             <label class="form-label col-xs-2 col-sm-2"><span
                     class="c-red">*</span>用户姓名：</label>
             <div class="formControls col-xs-10 col-sm-10">
-                <input type="input-text" class="input-text" th:value="${shopOrder.userName}" name="userName"  placeholder="修改姓名" id="address"/>
+                <input type="input-text" class="input-text" th:value="${userProp.userName}" name="userName"  placeholder="修改姓名" id="address"/>
 
             </div>
         </div>
@@ -55,7 +56,7 @@
             <label class="form-label col-xs-2 col-sm-2"><span
                     class="c-red">*</span>用户电话号码：</label>
             <div class="formControls col-xs-10 col-sm-10">
-                <input type="input-text" class="input-text" th:value="${shopOrder.phone}" name="phone"  placeholder="修改用户电话号码" id="phone"/>
+                <input type="input-text" class="input-text" th:value="${userProp.phone}" name="phone"  placeholder="修改用户电话号码" id="phone"/>
 
             </div>
         </div>

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mbyte.easy.recycle.entity.UserProp;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -38,6 +39,15 @@ public interface ShopOrderMapper extends BaseMapper<ShopOrder> {
     List<Goods> selectGoodsOrder(Long id);
 
     long addOrder(ShopOrder shopOrder);
+
+//    /**
+//     * 回显
+//     * @param addressId
+//     * @return
+//     */
+    UserProp selectHuiXian (Long orderAddressId);
+
+
 }
 
 

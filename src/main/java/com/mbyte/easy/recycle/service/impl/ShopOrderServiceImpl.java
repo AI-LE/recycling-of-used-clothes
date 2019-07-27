@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.OrderGoods;
 import com.mbyte.easy.recycle.entity.ShopOrder;
+import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.mapper.OrderGoodsMapper;
 import com.mbyte.easy.recycle.mapper.ShopOrderMapper;
 import com.mbyte.easy.recycle.service.IShopOrderService;
@@ -83,4 +84,15 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderMapper, ShopOrder
 
         return shopOrderMapper.selectGoodsOrder(id);
     }
+
+//    /**
+//     * 回显
+//     * @param
+//     * @return
+////     */
+//    @Override
+//    public List<UserProp> selectHuiXian(Long addressId) {
+//        return shopOrderMapper.selectHuiXian(addressId);
+//    }
+
 }

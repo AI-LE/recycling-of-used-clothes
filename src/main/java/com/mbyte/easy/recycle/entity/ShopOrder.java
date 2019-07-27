@@ -89,16 +89,21 @@ public class ShopOrder extends BaseEntity {
     private String pic;
 
     /**
-     * 订单的地址
+     * 收获地址
      */
     @TableField(exist = false)
     private String address;
 
     /**
-     * 用户姓名
+     * 收货人姓名
      */
     @TableField(exist = false)
     private String userName;
+    /**
+     *收货人电话
+     */
+    @TableField(exist = false)
+    private String userPhone;
 
 
     /**
