@@ -23,22 +23,14 @@
 						<a href="javascript:;"
                            onclick="deleteAll('/recycle/rate/deleteAll')"
                            class="layui-btn  layui-btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-						<a href="javascript:;"
-                           onclick="layer_show('添加','/recycle/rate/addBefore',900,500)"
-                           class="layui-btn  layui-btn-normal radius"><i class="Hui-iconfont">&#xe600;</i> 添加</a>
+
 						</span>
                         <span class="r wei-height">共有数据：<strong th:text="${pageInfo.total}"></strong> 条</span>
                     </div>
                     <hr>
 
                     <div class="cl pd-5 bg-1 bk-gray ">
-                        <div class="searchByField">
-                                         <input type="input-text" class="input-text" th:value="${searchInfo.withdrawalRate}" name="withdrawalRate" placeholder="搜索" id="withdrawalRate"/>
-                                         <input type="input-text" class="input-text" th:value="${searchInfo.payRate}" name="payRate" placeholder="搜索" id="payRate"/>
-                            <button type="submit"
-                                    class="layui-btn  layui-btn-success radius"><i
-                                        class="Hui-iconfont">&#xe665;</i> 搜索
-                            </button>
+
                         </div>
                     </div>
 
@@ -47,8 +39,8 @@
                         <tr class="text-c">
                             <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
-                                <th width="40"></th>
-                                <th width="40"></th>
+                                <th width="40">提现比例</th>
+                                <th width="40">购买商品比例</th>
                             <th width="100">操作</th>
                         </tr>
                         </thead>
@@ -65,10 +57,7 @@
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"
                                    th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'rate'+'/editBefore/'+${rate.id}+'\',900,500)'"
-                                   class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                                <a title="删除" href="javascript:;"
-                                   th:onclick="'javascript:deleteById(\'/recycle/'+'rate'+'/delete/'+${rate.id}+'\')'"
-                                   class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                                   class="ml-5" style="text-decoration:none"><input  class="btn btn-danger radius" type="button" th:value="修改"/></a>
                             </td>
                         </tr>
                         </tbody>

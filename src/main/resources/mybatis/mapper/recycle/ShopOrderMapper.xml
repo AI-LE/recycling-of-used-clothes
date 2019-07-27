@@ -109,7 +109,7 @@
             <if test="isDel != null">
                 #{isDel,jdbcType=SMALLINT},
             </if>
-            <if test="payStyle != null">
+            <if test="payStyle != null ">
                 #{payStyle,jdbcType=SMALLINT},
             </if>
 
@@ -151,6 +151,12 @@
     <select id="selectGoodsOrder" resultType="com.mbyte.easy.recycle.entity.Goods">
         select * from order_goods left join goods on order_goods.goodsid = goods.id where order_goods.order_id = #{shop_order.id}
     </select>
+    <select id="selectHuiXian" resultType="com.mbyte.easy.recycle.entity.UserProp">
+            select * from user_prop where  id = #{orderAddressId}
+        </select>
+<!--    <select id="selectShopOrder" resultType="com.mbyte.easy.recycle.entity.ShopOrder">-->
+<!--        SELECT shop_order.* ,user_prop.user_name,user_prop.phone,user_prop.address from shop_order left join user_prop on user_prop.address-->
+<!--    </select>-->
 
 
 

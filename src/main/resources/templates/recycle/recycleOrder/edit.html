@@ -31,7 +31,7 @@
                     <div class="formControls col-xs-10 col-sm-10">
 
                         <select id="mySelect" type="input-text" class="input-text" name="courierId">
-<!--                            <option value="">请选择取货员</option>-->
+                            <option value="">请选择取货员</option>
                             <option th:each="recycleOrder:${nickName}" th:value="${recycleOrder.id}"><span th:text="${recycleOrder.nickName}"></span></option>
                         </select>
 
@@ -43,10 +43,10 @@
                     <label style="margin-top: 6px;" class="form-label col-xs-2 col-sm-2"><span class="c-red" >*</span>状态：</label>
                     <select class="input-text"  placeholder="状态"  id="status" name="status"
                             style="width: 23.5%;margin-left: 15px">
-                        <option value="1">待审核</option>
-                        <option value="2">未通过</option>
-                        <option value="3">待取货</option>
-                        <option value="4">交易完成</option>
+                        <option value="1" th:attr="selected=${recycleOrder.status == 1}">待审核</option>
+                        <option value="2" th:attr="selected=${recycleOrder.status == 2}">未通过</option>
+                        <option value="3" th:attr="selected=${recycleOrder.status == 3}">待取货</option>
+                        <option value="4" th:attr="selected=${recycleOrder.status == 4}">交易完成</option>
 
                     </select>
                 </div>
