@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ObjectUtils;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -123,6 +125,7 @@ public class PersonController extends BaseController  {
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
         return toAjax(personService.removeByIds(ids));
     }
+
 
 }
 

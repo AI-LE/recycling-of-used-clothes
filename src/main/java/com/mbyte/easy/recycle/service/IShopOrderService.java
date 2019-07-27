@@ -23,7 +23,7 @@ public interface IShopOrderService extends IService<ShopOrder> {
 
     IPage<ShopOrder> selectAllShopOrder(Page<ShopOrder> page, String createTime, ShopOrder shopOrders);
 
-    Long addOrder(String addressId, long[] goodsIds, long[] buyNums,BigDecimal totalPrice, String userId);
+    Long addOrder(String addressId, long[] goodsIds, long[] buyNums,BigDecimal totalPrice, String userId,String payStyle);
 
     /**
      * 查询商城订单货物

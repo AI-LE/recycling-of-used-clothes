@@ -14,12 +14,15 @@
       <id column="is_show" jdbcType="SMALLINT" property="isShow" />
       <id column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
       <id column="is_del" jdbcType="SMALLINT" property="isDel" />
+      <id column="pay_style" jdbcType="SMALLINT" property="payStyle" />
+      <id column="wx_money" jdbcType="DECIMAL" property="wxMoney" />
+      <id column="points" jdbcType="DECIMAL" property="points" />
 
 
   </resultMap>
   <sql id="Base_Column_List">
               id,
-      status, order_no, user_id, createtime, price, address_id, phone, express, is_show, updatetime, id_del
+      status, order_no, user_id, createtime, price, address_id, phone, express, is_show, updatetime, id_del,pay_style,wx_money,points
   </sql>
     <insert id="addOrder" useGeneratedKeys="true" keyProperty="id" parameterType="com.mbyte.easy.recycle.entity.ShopOrder">
         insert into shop_order
@@ -56,6 +59,9 @@
             </if>
             <if test="isDel != null">
                 is_del,
+            </if>
+            <if test="payStyle != null">
+                pay_style,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -103,11 +109,14 @@
             <if test="isDel != null">
                 #{isDel,jdbcType=SMALLINT},
             </if>
+            <if test="payStyle != null">
+                #{payStyle,jdbcType=SMALLINT},
+            </if>
 
         </trim>
     </insert>
     <select id="selectAllShopOrder" resultType="com.mbyte.easy.recycle.entity.ShopOrder">
-        select shop_order.id,shop_order.`status`,shop_order.order_no,shop_order.user_id,shop_order.createtime,shop_order.price,shop_order.address_id,shop_order.express,shop_order.updatetime,
+        select shop_order.id,shop_order.`status`,shop_order.order_no,shop_order.user_id,shop_order.createtime,shop_order.price,shop_order.address_id,shop_order.express,shop_order.updatetime,shop_order.pay_style,
         user_prop.address,user_prop.phone,user_prop.user_name   from shop_order
         left JOIN user_prop on user_prop.id = shop_order.address_id
         where shop_order.is_del = 2
@@ -134,6 +143,9 @@
         </if>
         <if test="beginTime != null">
             and createtime between #{beginTime} and #{endTime}
+        </if>
+        <if test="shopOrders.payStyle != null ">
+            and shop_order.paystyle = #{shopOrders.payStyle}
         </if>
     </select>
     <select id="selectGoodsOrder" resultType="com.mbyte.easy.recycle.entity.Goods">

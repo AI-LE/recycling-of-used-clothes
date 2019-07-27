@@ -112,5 +112,18 @@ public class ShopOrder extends BaseEntity {
     @TableField(exist = false)
     private List<Goods> goodsList;
 
+    /**
+     * 支付方式
+     */
+    private String payStyle;
+    /**
+     * 微信支付金额
+     */
+    private BigDecimal wxMoney;
+    /**
+     * 积分抵扣数
+     */
+    private BigDecimal points;
+
 }
 
