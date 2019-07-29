@@ -195,7 +195,7 @@ public class WxPayController extends BaseController {
             response.put("returnCode",return_code);
             return  this.success(response);
         }catch (Exception e){
-                System.out.println(e.getStackTrace());
+                e.getStackTrace();
         }
 
         return this.error();
@@ -239,7 +239,7 @@ public class WxPayController extends BaseController {
             String orderNo  = System.currentTimeMillis()+String.valueOf(r);
 
             //按比例换算提现金额,单位：分，这边需要转成字符串类型，否则后面的签名会失败
-            String money = amount.multiply(new BigDecimal("100")).toString().substring(0,amount.multiply(new BigDecimal("100")).toString().indexOf("."));
+            String money = amount.multiply(new BigDecimal("100")).toString();
 
             //生成订单
             TransferDetail transferDetail = new TransferDetail();
