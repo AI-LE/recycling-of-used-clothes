@@ -20,7 +20,12 @@
             and `name` = #{goodsImg.goodsName}
         </if>
     </select>
-    <select id="selectGoodsName" resultType="com.mbyte.easy.recycle.entity.GoodsImg">
-        SELECT  DISTINCT goods.id,goods.name as goodsName from goods left join goods_img on goods.id = goods_img.goods_id where goods_img.is_del = 2
-    </select>
+<!--    <select id="selectGoodsName" resultType="com.mbyte.easy.recycle.entity.GoodsImg">-->
+<!--        SELECT  DISTINCT goods.id,goods.name as goodsName from goods left join goods_img on goods.id = goods_img.goods_id where goods_img.is_del = 2-->
+<!--    </select>-->
+
+    <select id="selectGoodsName" resultType="com.mbyte.easy.recycle.entity.Goods">
+            SELECT  DISTINCT goods.id,goods.name  from goods where is_del =2
+        </select>
+
 </mapper>

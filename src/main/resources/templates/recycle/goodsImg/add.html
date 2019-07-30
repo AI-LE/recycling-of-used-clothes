@@ -12,7 +12,7 @@
             <div class="formControls col-xs-10 col-sm-10">
 
                 <select id="goodsName" type="input-text" class="input-text" name="goodsId"  >
-                    <option th:each="goodsImgList:${goodsImgList}" th:value="${goodsImgList.id}"><span th:text="${goodsImgList.goodsName}"></span></option>
+                    <option th:each="goodsImgList:${goodsImgList}" th:value="${goodsImgList.id}"><span th:text="${goodsImgList.name}"></span></option>
                 </select>
 
             </div>

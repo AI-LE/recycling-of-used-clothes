@@ -2,6 +2,7 @@ package com.mbyte.easy.recycle.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.GoodsImg;
 import com.mbyte.easy.recycle.mapper.GoodsImgMapper;
 import com.mbyte.easy.recycle.service.IGoodsImgService;
@@ -44,8 +45,8 @@ public class GoodsImgServiceImpl extends ServiceImpl<GoodsImgMapper, GoodsImg> i
      * @return
      */
     @Override
-    public List<GoodsImg> selectGoodsName() {
-        List<GoodsImg> goodsImgs = goodsImgMapper.selectGoodsName();
+    public List<Goods> selectGoodsName() {
+        List<Goods> goodsImgs = goodsImgMapper.selectGoodsName();
         return goodsImgs;
     }
 }

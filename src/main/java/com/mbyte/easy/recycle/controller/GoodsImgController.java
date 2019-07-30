@@ -3,6 +3,7 @@ package com.mbyte.easy.recycle.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.GoodsImg;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
 import com.mbyte.easy.recycle.service.IGoodsImgService;
@@ -76,8 +77,8 @@ public class GoodsImgController extends BaseController  {
     */
     @GetMapping("addBefore")
     public String addBefore( Model model){
-        List<GoodsImg> goodsImgList = goodsImgService.selectGoodsName();
-        model.addAttribute("goodsImgList",goodsImgList);
+        List<Goods> goodsList = goodsImgService.selectGoodsName();
+        model.addAttribute("goodsImgList",goodsList);
         return prefix+"add";
     }
     /**

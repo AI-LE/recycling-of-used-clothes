@@ -2,6 +2,7 @@ package com.mbyte.easy.recycle.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.Goods;
 import com.mbyte.easy.recycle.entity.GoodsImg;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -29,7 +30,7 @@ public interface IGoodsImgService extends IService<GoodsImg> {
      * 查询goods名字，在goodsImg中给对应的goods添加图片
      * @return
      */
-    List<GoodsImg> selectGoodsName();
+    List<Goods> selectGoodsName();
 
 
 }
