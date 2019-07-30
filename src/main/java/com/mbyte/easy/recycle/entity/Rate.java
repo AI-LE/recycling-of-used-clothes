@@ -25,5 +25,7 @@ public class Rate extends BaseEntity {
 
     private BigDecimal payRate;
 
+    private BigDecimal kgRate;
+
 
 }

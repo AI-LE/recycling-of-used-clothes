@@ -5,11 +5,12 @@
       <id column="id" jdbcType="BIGINT" property="id" />
       <id column="withdrawal_rate" jdbcType="DECIMAL" property="withdrawalRate" />
       <id column="pay_rate" jdbcType="DECIMAL" property="payRate" />
+      <id column="kg_rate" jdbcType="DECIMAL" property="kgRate" />
 
   </resultMap>
   <sql id="Base_Column_List">
               id,
-      withdrawal_rate, pay_rate
+      withdrawal_rate, pay_rate, kg_rate
   </sql>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->

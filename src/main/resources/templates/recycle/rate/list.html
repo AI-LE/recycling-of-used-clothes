@@ -41,6 +41,7 @@
                             <th width="25">序号</th>
                                 <th width="40">提现比例</th>
                                 <th width="40">购买商品比例</th>
+                                <th width="40">旧衣服每千克积分数</th>
                             <th width="100">操作</th>
                         </tr>
                         </thead>
@@ -52,8 +53,9 @@
                             <td><input type="checkbox" value="1" th:value="${rate.id}"
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
-                                        <td th:text="${rate.withdrawalRate}"></td>
-                                        <td th:text="${rate.payRate}"></td>
+                            <td th:text="${rate.withdrawalRate}"></td>
+                            <td th:text="${rate.payRate}"></td>
+                            <td th:text="${rate.kgRate}"></td>
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"
                                    th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'rate'+'/editBefore/'+${rate.id}+'\',900,500)'"
