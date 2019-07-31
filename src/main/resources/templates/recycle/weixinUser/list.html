@@ -50,7 +50,7 @@
                                                 <option value="1" th:attr="selected=${searchInfo.type == 1}">个人用户</option>
                                                 <option value="2" th:attr="selected=${searchInfo.type == 2}">取货员</option>
                                             </select>
-                                         <input type="input-text" class="input-text" th:value="${searchInfo.phone}" name="phone" placeholder="搜索电话号码" id="phone"/>
+
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
                                         class="Hui-iconfont">&#xe665;</i> 搜索
@@ -69,7 +69,7 @@
                                 <th width="40">省份</th>
                                 <th width="40">城市</th>
                                 <th width="40">用户类型</th>
-                                <th width="40">电话号码</th>
+
                             <th width="100">操作</th>
                         </tr>
                         </thead>
@@ -87,7 +87,7 @@
                                         <td th:text="${weixinUser.province}"></td>
                                         <td th:text="${weixinUser.city}"></td>
                                         <td th:text="${weixinUser.type eq 1 ? '普通用户':'取货员'}"></td>
-                                        <td th:text="${weixinUser.phone}"></td>
+
                             <td class="td-manage">
 
                                 <a title="删除" href="javascript:;"

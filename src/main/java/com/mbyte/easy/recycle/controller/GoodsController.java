@@ -141,11 +141,36 @@ public class GoodsController extends BaseController  {
     public AjaxResult edit(Goods goods ,@PathParam("file") MultipartFile file){
         goods.setUpdatetime(LocalDateTime.now());
         goods.setCreatetime(LocalDateTime.now());
+
 //        if(goods.getPic() == null) {
 //            String fileName = file.getOriginalFilename();
 //        }
-        goods.setPic("../images/" + FileUtil.uploadFile(file));
+        String uploadPath=FileUtil.uploadFile(file);
+        System.err.println(uploadPath);
+        if(uploadPath!=null)
+        {
+        goods.setPic("../images/" + uploadPath);
+        }
+        else
+        {
+            goods.setPic(goodsService.getById(goods.getId()).getPic());
+        }
+
         return toAjax(goodsService.updateById(goods));
+    }
+
+
+    /**
+     * 添加跳转页面(商品订单详情)
+     * @return
+     */
+    @GetMapping("detailBefore/{id}")
+    public String detailBefore(Model model,@PathVariable("id")Long id){
+        Goods byId = goodsService.getById(id);
+        model.addAttribute("goods",byId);
+        Goods goods = goodsService.selectDetail(id);
+        model.addAttribute("goods",goods);
+        return prefix+"details";
     }
     /**
     * 删除

@@ -57,8 +57,7 @@
                     <label class="form-label col-xs-2 col-sm-2"><span
                                 class="c-red">*</span>物品详情：</label>
                             <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${goods.info}" name="info"  placeholder="修改物品详情" id="info"/>
-
+                                <textarea style="resize: both;" cols rows class="textarea valid " name="info" id="info" th:text="${goods.info}" placeholder="商品详情"></textarea>
                             </div>
                     </div>
                 </div>

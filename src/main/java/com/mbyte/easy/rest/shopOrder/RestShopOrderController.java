@@ -136,7 +136,7 @@ public class RestShopOrderController extends BaseController  {
     @RequestMapping("viewAll")
     public AjaxResult viewAll(Long userId)
     {
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper queryWrapper = new QueryWrapper<ShopOrder>().orderByDesc("createtime");
         queryWrapper.eq("user_id",userId);
         //QueryWrapper queryWrapper1 = new QueryWrapper();
 //        QueryWrapper queryWrapper2 = new QueryWrapper();

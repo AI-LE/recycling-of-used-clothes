@@ -19,4 +19,9 @@ public interface IGoodsService extends IService<Goods> {
 
     IPage<Goods> selectAll(Page<Goods> page, String createTime, Goods goods);
 
+    /**
+     * 商品详情
+     */
+    Goods selectDetail(Long id);
+
 }

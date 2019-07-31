@@ -192,7 +192,7 @@ public class RestRecycleOrderController extends BaseController  {
     @RequestMapping("select")
     public AjaxResult select(@RequestParam(value = "status", required = false)Integer status, @RequestParam(value = "userId",required = false) Long userId, @RequestParam(value = "courierId",required = false) Long courierId){
 
-        QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<RecycleOrder>().orderByDesc("createtime");
         if(userId != null){
             queryWrapper = queryWrapper.eq("user_id",userId);
         }

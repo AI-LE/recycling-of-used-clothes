@@ -31,6 +31,11 @@ public interface GoodsMapper extends BaseMapper<Goods> {
      */
     Goods selectType (Long id);
 
+    /**
+     * 商品详情
+     */
+    Goods selectDetail(Long id);
+
 
 
 }
