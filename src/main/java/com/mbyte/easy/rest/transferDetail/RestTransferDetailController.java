@@ -72,7 +72,7 @@ public class RestTransferDetailController extends BaseController  {
 
     @RequestMapping ("getTransferDetail")
     public AjaxResult getTransferDetail(Long userId){
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper queryWrapper = new QueryWrapper<TransferDetail>().orderByDesc("createtime");;
         queryWrapper.eq("user_id",userId);
         return this.success( transferDetailService.list(queryWrapper));
     }

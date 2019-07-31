@@ -144,7 +144,16 @@ public class GoodsController extends BaseController  {
 //        if(goods.getPic() == null) {
 //            String fileName = file.getOriginalFilename();
 //        }
-        goods.setPic("../images/" + FileUtil.uploadFile(file));
+        String uploadPath=FileUtil.uploadFile(file);
+        System.err.println(uploadPath);
+        if(uploadPath!=null)
+        {
+        goods.setPic("../images/" + uploadPath);
+        }
+        else
+        {
+            goods.setPic(goodsService.getById(goods.getId()).getPic());
+        }
         return toAjax(goodsService.updateById(goods));
     }
     /**
