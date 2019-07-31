@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
+import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.entity.WeixinUser;
 import com.mbyte.easy.recycle.service.IRecycleOrderService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.service.IUserPropService;
+import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.util.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,12 @@ public class RecycleOrderController extends BaseController  {
 
     @Autowired
     private IRecycleOrderService recycleOrderService;
+
+    @Autowired
+    private IUserPropService userPropService;
+
+    @Autowired
+    private IWeixinUserService weixinUserService;
 
     /**
     * 查询列表
@@ -100,10 +109,24 @@ public class RecycleOrderController extends BaseController  {
     public String editBefore(Model model,@PathVariable("id")Long id){
         List<WeixinUser> nickName = recycleOrderService.selectCouier();
         model.addAttribute("nickName",nickName);
-
         RecycleOrder recycleOrder = recycleOrderService.getById(id);
         model.addAttribute("recycleOrder",recycleOrder);
         return prefix+"edit";
+    }
+
+    /**
+     * 添加跳转页面(商品订单详情)
+     * @return
+     */
+    @GetMapping("detailBefore/{id}")
+    public String detailBefore(Model model,@PathVariable("id")Long id){
+        RecycleOrder recycleOrder = recycleOrderService.getById(id);
+        UserProp userProp = userPropService.getById(recycleOrder.getAddressId());
+        WeixinUser weixinUser = weixinUserService.getById(recycleOrder.getCourierId());
+        model.addAttribute("weixinUser",weixinUser);
+        model.addAttribute("recycleOrder",recycleOrder);
+        model.addAttribute("userProp",userProp);
+        return prefix+"details";
     }
     /**
     * 添加
