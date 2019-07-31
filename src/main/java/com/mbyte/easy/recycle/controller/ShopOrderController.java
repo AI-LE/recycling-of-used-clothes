@@ -152,6 +152,9 @@ public class ShopOrderController extends BaseController  {
     @GetMapping("detailBefore/{id}")
     public String detailBefore(Model model,@PathVariable("id")Long id){
         ShopOrder byId = shopOrderService.getById(id);
+
+        UserProp userProp =userPropMapper.selectById(byId.getAddressId());
+        model.addAttribute("userProp",userProp);
         model.addAttribute("shopOrder",byId);
         List<Goods> goods = shopOrderService.selectGoodsOrder(id);
         model.addAttribute("goods",goods);

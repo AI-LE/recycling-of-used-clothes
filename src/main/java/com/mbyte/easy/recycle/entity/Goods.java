@@ -79,7 +79,7 @@ public class Goods extends BaseEntity {
 
 
     /**
-     * 商品类型
+     * 商品数量
      */
     @TableField(exist = false)
     private String buyNum;

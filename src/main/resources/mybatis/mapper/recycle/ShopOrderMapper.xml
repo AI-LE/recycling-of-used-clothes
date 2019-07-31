@@ -147,6 +147,7 @@
         <if test="shopOrders.payStyle != null ">
             and shop_order.paystyle = #{shopOrders.payStyle}
         </if>
+        order by shop_order.createtime desc
     </select>
     <select id="selectGoodsOrder" resultType="com.mbyte.easy.recycle.entity.Goods">
         select * from order_goods left join goods on order_goods.goodsid = goods.id where order_goods.order_id = #{shop_order.id}

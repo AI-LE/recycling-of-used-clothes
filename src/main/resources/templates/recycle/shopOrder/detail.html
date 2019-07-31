@@ -6,16 +6,76 @@
 <body>
 <article class="page-container">
     <form class="form form-horizontal" id="form-shopOrder-detail" action="#"
-          th:action="@{/recycle/shopOrder/detail}" th:object="${shopOrder}" enctype="multipart/form-data">
-        <input type="hidden" name="id" th:value="${shopOrder.id}"/>
+          th:action="@{/recycle/shopOrder/detail}" >
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red"></span>订单号：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" readonly th:value="${shopOrder.orderNo}"/>
 
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red"></span>姓名：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" readonly th:value="${userProp.userName}"/>
+
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red"></span>电话号码：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" readonly th:value="${userProp.phone}"/>
+
+            </div>
+        </div><div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2"><span
+                class="c-red"></span>商品总价格：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+            <input type="input-text" class="input-text" readonly th:value="${'￥ ' + shopOrder.price}"/>
+
+        </div>
+    </div><div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2"><span
+                class="c-red"></span>状态：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+            <input type="input-text" class="input-text" readonly th:value="${shopOrder.status == 1 ?'待付款' : (shopOrder.status == 2 ? '待发货':(shopOrder.status == 3 ? '待收货' :'待评价'))}"/>
+
+        </div>
+    </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red"></span>下单时间：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" readonly th:value="${#temporals.format(shopOrder.createtime, 'yyyy-MM-dd HH:mm:ss')}"/>
+
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red"></span>地址：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" readonly th:value="${userProp.address}"/>
+
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2"><span
+                    class="c-red"></span>快递单号：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" readonly th:value="${shopOrder.express==null || shopOrder.express=='' ? '暂无':shopOrder.express}"/>
+
+            </div>
+        </div>
         <div>
             <table class="layui-table text-c">
                 <thead>
                 <tr class="text-c">
 
-                    <th width="40">商品名字</th>
-                    <th width="40">商品价格</th>
+                    <th width="40">商品名称</th>
+                    <th width="40">商品单价</th>
                     <th width="40">数量</th>
                     <th width="40">图片</th>
 
@@ -25,8 +85,8 @@
                 <tr class="text-c" th:each="g,count:${goods}">
                     <td th:text="${g.name}"></td>
                     <td th:text="${g.price}"></td>
-                    <td th:text="${g.sales}"></td>
-                    <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${g.pic})}" /></td>
+                    <td th:text="${g.buyNum}"></td>
+                    <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${'../../'+g.pic})}" /></td>
                 </tr>
                 </tbody>
             </table>

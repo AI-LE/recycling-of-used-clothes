@@ -37,6 +37,10 @@
 
                             <!--                                         <input type="input-text" class="input-text" th:value="${searchInfo.status}" name="status" placeholder="搜索订单状态" id="status"/>-->
 
+
+                            <input type="input-text" class="input-text" th:value="${searchInfo.orderNo}" name="orderNo" placeholder="搜索订单号" id="orderNo"/>
+                            <input readonly type="input-text" placeholder="搜索下单时间" name="createtimeSpace" th:value="${createtimeSpace}" class="input-text  timeSpace" autocomplete="off"/>
+                            <input type="input-text" class="input-text" th:value="${searchInfo.phone}" name="phone" placeholder="搜索用户电话号码" id="phone"/>
                             <select class="input-text" ”placeholder="按状态搜索" th:value="${searchInfo.status}" id="status" name="status"
                                     style="width: 23.5%;margin-top: 5px">
                                 <option value="" >选择状态</option>
@@ -46,10 +50,6 @@
                                 <option value="4" th:attr="selected=${searchInfo.status == 4}">待评价</option>
 
                             </select>
-
-                            <input type="input-text" class="input-text" th:value="${searchInfo.orderNo}" name="orderNo" placeholder="搜索订单号" id="orderNo"/>
-                            <input type="input-text" placeholder="搜索下单时间" name="createtimeSpace" th:value="${createtimeSpace}" class="input-text  timeSpace" autocomplete="off"/>
-                            <input type="input-text" class="input-text" th:value="${searchInfo.phone}" name="phone" placeholder="搜索用户电话号码" id="phone"/>
                             <input type="input-text" class="input-text" th:value="${searchInfo.express}" name="express" placeholder="搜索快递单号" id="express"/>
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
@@ -64,14 +64,12 @@
                         <tr class="text-c">
                             <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
-                            <th width="25">下单人姓名</th>
-                            <th width="40">订单状态</th>
-                            <th width="40">订单号</th>
-                            <th width="40">下单时间</th>
-                            <th width="10">订单更新时间</th>
+                            <th width="20">订单号</th>
+                            <th width="25">姓名</th>
+                            <th width="40">电话号码</th>
                             <th width="40">价格</th>
-                            <th width="40">用户地址</th>
-                            <th width="40">用户电话号码</th>
+                            <th width="40">状态</th>
+                            <th width="90" style="min-width: 110px">下单时间</th>
                             <th width="40">快递单号</th>
                             <th width="100">操作</th>
                         </tr>
@@ -84,23 +82,22 @@
                             <td><input type="checkbox" value="1" th:value="${shopOrder.id}"
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
+                            <td ><a title="详情" href="javascript:;"th:onclick="'javascript:layer_show(\'详情\',\'/recycle/'+'shopOrder'+'/detailBefore/'+${shopOrder.id}+'\',900,500)'"
+                                                                  class="ml-5" style="text-decoration:none"><span th:text="${shopOrder.orderNo}"/></a></td>
                             <td th:text="${shopOrder.UserName}"></td>
-                            <td th:text="${shopOrder.status == 1 ?'代付款' : (shopOrder.status == 2 ? '代发货':(shopOrder.status == 3 ? '待收货' :'待评价'))}"></td>
-                            <td th:text="${shopOrder.orderNo}"></td>
-                            <td th:text="${#temporals.format(shopOrder.createtime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                            <td th:text="${#temporals.format(shopOrder.updatetime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                            <td th:text="${shopOrder.price}"></td>
-                            <td th:text="${shopOrder.address}"></td>
                             <td th:text="${shopOrder.phone}"></td>
-                            <td th:text="${shopOrder.express}"></td>
+                            <td th:text="${shopOrder.price}"></td>
+                            <td th:text="${shopOrder.status == 1 ?'待付款' : (shopOrder.status == 2 ? '待发货':(shopOrder.status == 3 ? '待收货' :'待评价'))}"></td>
+                            <td th:text="${#temporals.format(shopOrder.createtime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td th:text="${shopOrder.express==null || shopOrder.express=='' ? '暂无':shopOrder.express}"></td>
                             <td class="td-manage">
                                 <a title="详情" href="javascript:;"
                                    th:onclick="'javascript:layer_show(\'详情\',\'/recycle/'+'shopOrder'+'/detailBefore/'+${shopOrder.id}+'\',900,500)'"
-                                   class="ml-5" style="text-decoration:none"><input  class="btn btn-danger radius" type="button" th:value="详情"/></a>
+                                   class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe725;</i></a>
 
                                 <a title="编辑" href="javascript:;"
-                                   th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'shopOrder'+'/editBefore/'+${shopOrder.id}+'\',900,500)'"
-                                   class="ml-5" style="text-decoration:none"><input  class="btn btn-primary radius" type="button" th:value="修改订单"/></a>
+                                   th:onclick="'javascript:layer_show(\'修改订单\',\'/recycle/'+'shopOrder'+'/editBefore/'+${shopOrder.id}+'\',900,500)'"
+                                   class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 
                                 <a title="删除" href="javascript:;"
                                    th:onclick="'javascript:deleteById(\'/recycle/'+'shopOrder'+'/delete/'+${shopOrder.id}+'\')'"
