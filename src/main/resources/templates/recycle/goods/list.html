@@ -56,7 +56,7 @@
                                 <th width="40">物品详情</th>
                                 <th width="40">物品分类</th>
                                 <th width="40">货物创建时间</th>
-                                <th width="40">信息更新时间</th>
+
                                 <th width="40">状态</th>
                             <th width="100">操作</th>
                         </tr>
@@ -73,19 +73,22 @@
                                         <td th:text="${goods.sales}"></td>
                             <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${goods.pic})}" /></td>
                                         <td th:text="${goods.price}"></td>
-                                        <td th:text="${goods.info}"></td>
+                                        <td th:text="${#strings.abbreviate(goods.info,10)}" ></td>
                                         <td th:text="${goods.goodsType}"></td>
-
                                     <td th:text="${#temporals.format(goods.createtime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:text="${#temporals.format(goods.updatetime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                         <td th:text="${goods.isDel eq 1 ? '已删除':'正常'}"></td>
                             <td class="td-manage">
+                                <a title="详情" href="javascript:;"
+                                   th:onclick="'javascript:layer_show(\'详情\',\'/recycle/'+'goods'+'/detailBefore/'+${goods.id}+'\',900,500)'"
+                                   class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe725;</i></a>
                                 <a title="编辑" href="javascript:;"
                                    th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'goods'+'/editBefore/'+${goods.id}+'\',900,500)'"
-                                   class="ml-5" style="text-decoration:none"><input class="btn btn-primary radius" type="button" th:value="修改"/></a>
+                                   class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                                 <a title="删除" href="javascript:;"
                                    th:onclick="'javascript:deleteById(\'/recycle/'+'goods'+'/delete/'+${goods.id}+'\')'"
                                    class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+
+
                             </td>
                         </tr>
                         </tbody>

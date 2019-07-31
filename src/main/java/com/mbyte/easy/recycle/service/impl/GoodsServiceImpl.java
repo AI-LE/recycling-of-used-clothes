@@ -40,5 +40,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
         return goodsMapper.selectAll(page,beginTime,endTime,goods);
     }
+
+    @Override
+    public Goods selectDetail(Long id) {
+        return goodsMapper.selectDetail(id);
+    }
 }
 

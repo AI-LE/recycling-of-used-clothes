@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="_meta :: header">
+    <title>编辑</title>
+</head>
+<body>
+<article class="page-container">
+
+    <form class="form form-horizontal">
+    <div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2">商品名称：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+            <input type="input-text" class="input-text" th:value="${goods.name}" readonly=true/>
+
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2">商品销量：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+            <input type="input-text" class="input-text" th:value="${goods.sales}" readonly=true/>
+
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2">商品图片：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+<!--            <input type="input-text" class="input-text" th:value="${goods.name}" readonly=true/>-->
+            <div><img style="width: 100px; height: 100px"  th:src="${goods.pic}" /></div>
+
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2">商品价格：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+            <input type="input-text" class="input-text" th:value="${goods.price}" readonly=true/>
+
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2">商品详情：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+            <input  class="teextara radius" th:value="${goods.info}" readonly=true/>
+
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2">商品类型：</label>
+        <div class="formControls col-xs-10 col-sm-10">
+            <input type="input-text" class="input-text" th:value="${goods.goodsType}" readonly=true/>
+
+        </div>
+    </div>
+    </form>
+
+</article>
+<!--_footer 作为公共模版分离出去-->
+<div th:replace="_footer :: footerjs"></div>
+<div th:replace="_ueditor :: ueditor"></div>
+<!--/_footer 作为公共模版分离出去-->
+
+</body>
+</html>

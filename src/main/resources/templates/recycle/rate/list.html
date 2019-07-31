@@ -20,10 +20,6 @@
                     <hr style="margin: 0">
                     <div class="cl pd-5 bg-1 bk-gray">
 						<span class="l">
-						<a href="javascript:;"
-                           onclick="deleteAll('/recycle/rate/deleteAll')"
-                           class="layui-btn  layui-btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-
 						</span>
                         <span class="r wei-height">共有数据：<strong th:text="${pageInfo.total}"></strong> 条</span>
                     </div>
@@ -37,8 +33,8 @@
                     <table class="layui-table text-c">
                         <thead>
                         <tr class="text-c">
-                            <th width="25"><input type="checkbox" name="" value=""/></th>
-                            <th width="25">序号</th>
+
+
                                 <th width="40">提现比例</th>
                                 <th width="40">购买商品比例</th>
                                 <th width="40">旧衣服每千克积分数</th>
@@ -50,9 +46,8 @@
                             <td colspan="15"><strong>暂无数据</strong></td>
                         </tr>
                         <tr class="text-c" th:each="rate,count:${pageInfo.list}">
-                            <td><input type="checkbox" value="1" th:value="${rate.id}"
-                                       name="id"/></td>
-                            <td th:text="${count.count}"></td>
+
+
                             <td th:text="${rate.withdrawalRate}"></td>
                             <td th:text="${rate.payRate}"></td>
                             <td th:text="${rate.kgRate}"></td>
