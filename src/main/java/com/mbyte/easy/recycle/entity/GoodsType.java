@@ -31,7 +31,7 @@ public class GoodsType extends BaseEntity {
     /**
      * 状态（1：已删除；2：正常）
      */
-    private Integer isDel;
+    private Integer isDel=2;
 
 
 }

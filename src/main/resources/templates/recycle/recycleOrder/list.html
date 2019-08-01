@@ -62,7 +62,7 @@
                                 <th width="40">旧衣图片</th>
                                 <th width="40">价格</th>
                                 <th width="40">预约取货时间 </th>
-                                <th width="40">取货地址</th>
+                                <th width="120">取货地址</th>
                                 <th width="40">电话</th>
                                  <th width="40">取货员</th>
                                 <th width="40">订单状态</th>
@@ -80,7 +80,7 @@
                             <td><img style="width:50px;height: 50px;" th:src="@{{path}(path=${recycleOrder.imageUrl})}" /></td>
                                         <td th:text="${recycleOrder.price}"></td>
                                     <td th:text="${#temporals.format(recycleOrder.appointment, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                        <td th:text="${recycleOrder.address}"></td>
+                                        <td th:text="${#strings.abbreviate(recycleOrder.address,12)}" th:title="${recycleOrder.address}"></td>
                                         <td th:text="${recycleOrder.phone}"></td>
                                         <td th:text="${recycleOrder.nickName}"></td>
                                         <td th:text="${recycleOrder.status == 1 ?'待审核' : (recycleOrder.status == 2 ? '未通过':(recycleOrder.status == 3 ? '待取货' :'交易完成'))}"></td>
