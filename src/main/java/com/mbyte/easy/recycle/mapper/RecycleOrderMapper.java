@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mbyte.easy.recycle.entity.ShopOrder;
 import com.mbyte.easy.recycle.entity.WeixinUser;
 
 import java.util.List;
@@ -30,5 +31,7 @@ public interface RecycleOrderMapper extends BaseMapper<RecycleOrder> {
      * @return
      */
     IPage<RecycleOrder> selectAll(Page<RecycleOrder> page,  RecycleOrder recycleOrder);
+
+    List<ShopOrder> selectHistory(Long id);
 
 }

@@ -178,6 +178,7 @@ public class ShopOrderController extends BaseController  {
             userProp.setUserName(shopOrder.getUserName());
             userPropMapper.updateById(userProp);
         }
+
         shopOrder.setUpdatetime(LocalDateTime.now());
         return toAjax(shopOrderService.updateById(shopOrder));
     }

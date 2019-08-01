@@ -42,6 +42,14 @@
         </if>
         order by recycle_order.createtime desc
     </select>
+    <select id="selectHistory" resultType="com.mbyte.easy.recycle.entity.RecycleOrder">
+          select recycle_order.*,user_prop.address,  weixin_user.nickname as nickName  from recycle_order
+        left JOIN weixin_user on weixin_user.id = recycle_order.courier_id
+        left join user_prop on user_prop.id = recycle_order.address_id
+        left  join read_history on read_history.order_id = recycle_order.id
+        where recycle_order.is_del = 2 and recycle_order.status = 3
+         order by recycle_order.createtime desc
+        </select>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
 <!--
