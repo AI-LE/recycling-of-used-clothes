@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbyte.easy.recycle.mapper.FeatureMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.recycle.entity.Feature">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="info" jdbcType="VARCHAR" property="info" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      info
+  </sql>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from feature
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  feature
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.Feature">
+    insert into feature (info)
+    values (
+         info = #{info,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.mbyte.easy.recycle.entity.Feature">
+    insert into feature
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="info != null">
+        info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.recycle.entity.Feature">
+    update feature
+    <set>
+       <if test="info != null">
+         info = #{info,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.recycle.entity.Feature">
+    update feature
+    set
+        info = #{info,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

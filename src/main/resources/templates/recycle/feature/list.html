@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="_meta :: header">
+    <title>列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>功能介绍<span
+            class="c-gray en">&gt;</span>功能介绍<a class="btn btn-success radius r"
+                                                style="line-height:1.6em;margin-top:3px"
+                                                href="javascript:location.replace(location.href);" title="刷新"><i
+                class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <form action="#" th:action="@{/recycle/feature}" method="post">
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <fieldset class="layui-elem-field">
+                <legend>功能介绍</legend>
+                <div class="layui-field-box">
+
+
+                    <table class="layui-table text-c">
+                        <thead>
+                        <tr class="text-c">
+                                <th width="200">功能介绍</th>
+                            <th width="10">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-c" th:if="${pageInfo.list.size() == 0}">
+                            <td colspan="15"><strong>暂无数据</strong></td>
+                        </tr>
+                        <tr class="text-c" th:each="feature,count:${pageInfo.list}">
+                            <td><a title="查看详情" href="javascript:;"
+                                   th:onclick="'javascript:layer_show(\'查看详情\',\'/recycle/'+'feature'+'/detailsBefore'+'\',900,500)'"
+                                   class="ml-5" style="text-decoration:none">查看详情</a></td>
+                            <td class="td-manage">
+                                <a title="编辑" href="javascript:;"
+                                   th:onclick="'javascript:layer_show(\'编辑\',\'/recycle/'+'feature'+'/editBefore/'+${feature.id}+'\',900,500)'"
+                                   class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<div th:replace="_footer :: footerjs">
+</div>
+<!--/_footer 作为公共模版分离出去-->
+<script>
+    //日期时间范围选择
+    laydate.render({
+
+    });
+    lay('.timeSpace').each(function(){
+        laydate.render({
+            elem: this
+            ,type: 'datetime'
+            ,range: true //或 range: '~' 来自定义分割字符
+        });
+    });
+
+</script>
+</body>
+</html>
