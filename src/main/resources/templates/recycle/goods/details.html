@@ -25,7 +25,7 @@
         <label class="form-label col-xs-2 col-sm-2">商品图片：</label>
         <div class="formControls col-xs-10 col-sm-10">
 <!--            <input type="input-text" class="input-text" th:value="${goods.name}" readonly=true/>-->
-            <div><img style="width: 100px; height: 100px"  th:src="${goods.pic}" /></div>
+            <div><img style="width: 100px; height: 100px"  th:src="${'../../'+goods.pic}" /></div>
 
         </div>
     </div>
