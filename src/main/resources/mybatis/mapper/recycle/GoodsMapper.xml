@@ -34,6 +34,7 @@
         <if test="beginTime != null">
             and createtime between #{beginTime} and #{endTime}
         </if>
+        order by goods.createtime desc
     </select>
     <select id="selectType" resultType="com.mbyte.easy.recycle.entity.Goods">
         SELECT goods.* ,goods_type.type as goodsType  from goods left join goods_type on goods.goods_type_id = goods_type.id where goods.id = #{id}
