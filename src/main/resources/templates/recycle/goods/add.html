@@ -12,12 +12,12 @@
                     <input type="input-text" class="input-text" t name="name"  placeholder="商品名称" id="name"/>
             </div>
         </div>
-        <div class="row cl">
-             <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>销量：</label>
-            <div class="formControls col-xs-10 col-sm-10">
-                    <input type="input-text" class="input-text" t name="sales"  placeholder="销量" id="sales"/>
-            </div>
-        </div>
+<!--        <div class="row cl">-->
+<!--             <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>销量：</label>-->
+<!--            <div class="formControls col-xs-10 col-sm-10">-->
+<!--                    <input type="input-text" class="input-text" t name="sales"  placeholder="销量" id="sales"/>-->
+<!--            </div>-->
+<!--        </div>-->
 <!--        <div class="row cl">-->
 <!--             <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>图片地址：</label>-->
 <!--            <div class="formControls col-xs-10 col-sm-10">-->
@@ -41,7 +41,7 @@
         <div class="row cl">
              <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>物品详情：</label>
             <div class="formControls col-xs-10 col-sm-10">
-                    <input type="input-text" class="input-text" t name="info"  placeholder="物品详情" id="info"/>
+                <textarea style="resize: both;" cols rows class="textarea valid " name="info" id="info"  placeholder="商品详情"></textarea>
             </div>
         </div>
         <div class="row cl">
@@ -88,15 +88,7 @@
 <!--                女 &nbsp<input type="radio" name="isDel" value="2" th:title="正常" checked>-->
 <!--            </div>-->
 <!--        </div>-->
-        <div class="row cl">
-        <label style="margin-top: 6px;" class="form-label col-xs-2 col-sm-2"><span class="c-red" >*</span>状态：</label>
-        <select class="input-text"  placeholder="状态"  id="isDel" name="isDel"
-                style="width: 23.5%;margin-left: 15px">
-            <option value="2">正常</option>
-            <option value="1">已删除</option>
 
-        </select>
-        </div>
 	<div class="row cl">
 	<div class="col-xs-4 col-sm-3 col-xs-offset-4 col-sm-offset-3">
 		<input class="btn btn-primary radius" id="subbtn" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>

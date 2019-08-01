@@ -22,6 +22,7 @@ import javax.websocket.server.PathParam;
 import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 /**
 * <p>
@@ -111,7 +112,8 @@ public class GoodsController extends BaseController  {
         goods.setUpdatetime(LocalDateTime.now());
         String fileName = file.getOriginalFilename();
         goods.setPic("../images/" + FileUtil.uploadFile(file)  );
-
+        //初始添加商品不需要设置销量，所以设置为0
+        goods.setSales(new Random().nextInt(200));
         return toAjax(goodsService.save(goods));
     }
     /**
