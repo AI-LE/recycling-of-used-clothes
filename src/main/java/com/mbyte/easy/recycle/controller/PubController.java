@@ -5,15 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
-import com.mbyte.easy.recycle.entity.ProductModel;
-import com.mbyte.easy.recycle.entity.ShopOrder;
-import com.mbyte.easy.recycle.entity.UserProp;
-import com.mbyte.easy.recycle.entity.WeixinUser;
+import com.mbyte.easy.recycle.entity.*;
 import com.mbyte.easy.recycle.mapper.UserPropMapper;
-import com.mbyte.easy.recycle.service.IShopOrderService;
-import com.mbyte.easy.recycle.service.IUserPropService;
-import com.mbyte.easy.recycle.service.IWeixinUserService;
-import com.mbyte.easy.recycle.service.IPubService;
+import com.mbyte.easy.recycle.service.*;
 import com.mbyte.easy.vo.WeChatAppLoginReq;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -55,6 +49,9 @@ public class PubController extends BaseController {
 
     @Autowired
     private IShopOrderService shopOrderService;
+
+    @Autowired
+    private IRecycleOrderService recycleOrderService;
     /**
      * TODO 小程序appid
      **/
@@ -67,7 +64,26 @@ public class PubController extends BaseController {
     @Value("${weixin.secret}")
     private String secret = "";
 
+
+
+
     /**
+     * 提醒功能
+     */
+    @RequestMapping("getUnhandledOrders")
+    public AjaxResult unhandledOrders(){
+        QueryWrapper<RecycleOrder> queryWrapper = new QueryWrapper<RecycleOrder>();
+        queryWrapper  =  queryWrapper.eq("status",1);
+        List<RecycleOrder> recycleOrderList = recycleOrderService.list(queryWrapper);
+        QueryWrapper<ShopOrder> queryWrapper1 = new QueryWrapper<ShopOrder>();
+        queryWrapper1  =  queryWrapper1.eq("status",3);
+        List<ShopOrder> shopOrderList = shopOrderService.list(queryWrapper1);
+        Map<String,Integer> map = new HashMap<>();
+        map.put("recycleSize",recycleOrderList.size());
+        map.put("shopSize",shopOrderList.size());
+        return  this.success(map);
+    }
+    /**q
      * 获得微信授权
      */
     @RequestMapping("/wechatuser")
@@ -254,7 +270,6 @@ public class PubController extends BaseController {
         shopOrderService.updateById(shopOrder);
         return this.success();
     }
-
 
 
 

@@ -46,20 +46,72 @@
 <script type="text/javascript" th:src="@{/lib/jquery.contextmenu/jquery.contextmenu.r2.js}" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript">
 $(function(){
-	$.ajax({
-		url:,// 跳转到 action
-		type:'post',
-		cache:false
-		dataType:'json',
-		contentType:"application/json",
-		success:function(data) {
+    getNews();
+    setInterval(function(){getNews()},60000);
 
-		},
-		error : function() {
-
-		}
-	})
 });
+
+function getNews() {
+    $.ajax({
+        url: '/pub/getUnhandledOrders',
+        type: 'post',
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (data) {
+            if ( data.data.recycleSize != 0 && data.data.shopSize != 0) {
+                layer.open({
+                    type: 1,
+                    closeBtn: 1, //关闭按钮显示
+                    title: "提示", //标题
+                    shade: [0],
+                    area: ['340px', '215px'],
+                    offset: 'rb', //右下角弹出
+                    time: 6000, //自动关闭时间
+                    anim: 2,
+                    content: "您有新的旧衣回收订单和商城订单，请及时处理", //iframe的url，no代表不显示滚动条
+                    end: function () { //关闭后回调函数
+
+                    }
+                });
+            }
+            if ( data.data.shopSize != 0 && data.data.recycleSize == 0 ) {
+                layer.open({
+                    type: 1,
+                    closeBtn: 1, //关闭按钮显示
+                    title: "提示", //标题
+                    shade: [0],
+                    area: ['340px', '215px'],
+                    offset: 'rb', //右下角弹出
+                    time: 6000, //自动关闭时间
+                    anim: 2,
+                    content: "您有新的商场订单，请及时发货", //iframe的url，no代表不显示滚动条
+                    end: function () { //关闭后回调函数
+
+                    }
+                });
+            }
+            if ( data.data.shopSize == 0 && data.data.recycleSize != 0 ) {
+                layer.open({
+                    type: 1,
+                    closeBtn: 1, //关闭按钮显示
+                    title: "提示", //标题
+                    shade: [0],
+                    area: ['340px', '215px'],
+                    offset: 'rb', //右下角弹出
+                    time: 6000, //自动关闭时间
+                    anim: 2,
+                    content: "您有新的旧衣回收预约，请及时审核并分配取货员", //iframe的url，no代表不显示滚动条
+                    end: function () { //关闭后回调函数
+
+                    }
+                });
+            }
+        },
+        error: function () {
+
+        }
+    })
+}
 /*个人信息*/
 function myselfinfo(){
 	layer.open({
