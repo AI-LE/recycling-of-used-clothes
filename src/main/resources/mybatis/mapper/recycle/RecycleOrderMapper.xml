@@ -47,7 +47,7 @@
         left join weixin_user on weixin_user.id = recycle_order.courier_id
         left join user_prop on user_prop.id = recycle_order.address_id
         left  join read_history on read_history.order_id = recycle_order.id
-        where recycle_order.is_del = 2 and recycle_order.status = 3
+        where recycle_order.is_del = 2 and recycle_order.status = 3 AND recycle_order.courier_id=#{id} and read_history.is_read=1
          order by recycle_order.createtime desc
         </select>
 
