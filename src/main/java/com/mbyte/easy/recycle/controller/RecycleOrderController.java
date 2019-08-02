@@ -3,9 +3,11 @@ package com.mbyte.easy.recycle.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mbyte.easy.recycle.entity.ReadHistory;
 import com.mbyte.easy.recycle.entity.RecycleOrder;
 import com.mbyte.easy.recycle.entity.UserProp;
 import com.mbyte.easy.recycle.entity.WeixinUser;
+import com.mbyte.easy.recycle.service.IReadHistoryService;
 import com.mbyte.easy.recycle.service.IRecycleOrderService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
@@ -43,6 +45,9 @@ public class RecycleOrderController extends BaseController  {
 
     @Autowired
     private IWeixinUserService weixinUserService;
+
+    @Autowired
+    private IReadHistoryService readHistoryService;
 
     /**
     * 查询列表
@@ -136,7 +141,13 @@ public class RecycleOrderController extends BaseController  {
     @PostMapping("edit")
     @ResponseBody
     public AjaxResult edit(RecycleOrder recycleOrder) {
-        return toAjax(recycleOrderService.updateById(recycleOrder));
+        if(!ObjectUtils.isEmpty(recycleOrder.getCourierId())){
+            ReadHistory readHistory = new ReadHistory();
+            readHistory.setOrderId(recycleOrder.getId());
+            readHistoryService.save(readHistory);
+        }
+        boolean result = recycleOrderService.updateById(recycleOrder);
+        return toAjax(result);
     }
     /**
     * 删除

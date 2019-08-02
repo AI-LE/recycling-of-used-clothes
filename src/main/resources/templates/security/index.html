@@ -46,19 +46,19 @@
 <script type="text/javascript" th:src="@{/lib/jquery.contextmenu/jquery.contextmenu.r2.js}" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript">
 $(function(){
-	/*$("#min_title_list li").contextMenu('Huiadminmenu', {
-		bindings: {
-			'closethis': function(t) {
-				console.log(t);
-				if(t.find("i")){
-					t.find("i").trigger("click");
-				}		
-			},
-			'closeall': function(t) {
-				alert('Trigger was '+t.id+'\nAction was Email');
-			},
+	$.ajax({
+		url:,// 跳转到 action
+		type:'post',
+		cache:false
+		dataType:'json',
+		contentType:"application/json",
+		success:function(data) {
+
+		},
+		error : function() {
+
 		}
-	});*/
+	})
 });
 /*个人信息*/
 function myselfinfo(){
@@ -104,6 +104,8 @@ function product_add(title,url){
 function member_add(title,url,w,h){
 	layer_show(title,url,w,h);
 }
+
+$
 
 
 </script> 
