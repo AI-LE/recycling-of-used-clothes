@@ -32,6 +32,6 @@ public interface RecycleOrderMapper extends BaseMapper<RecycleOrder> {
      */
     IPage<RecycleOrder> selectAll(Page<RecycleOrder> page,  RecycleOrder recycleOrder);
 
-    List<ShopOrder> selectHistory(Long id);
+    List<RecycleOrder> selectHistory(Long id);
 
 }

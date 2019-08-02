@@ -98,5 +98,7 @@ public class RecycleOrder extends BaseEntity {
      */
     private Integer isDel;
 
+    @TableField(exist = false)
+    private long historyId;
 
 }

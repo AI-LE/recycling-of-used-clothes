@@ -43,7 +43,7 @@
         order by recycle_order.createtime desc
     </select>
     <select id="selectHistory" resultType="com.mbyte.easy.recycle.entity.RecycleOrder">
-        select recycle_order.*,user_prop.address,  weixin_user.nickname as nickName,read_history.is_read  from recycle_order
+        select recycle_order.*,user_prop.address,  weixin_user.nickname as nickName,read_history.id as historyId,read_history.is_read  from recycle_order
         left join weixin_user on weixin_user.id = recycle_order.courier_id
         left join user_prop on user_prop.id = recycle_order.address_id
         left  join read_history on read_history.order_id = recycle_order.id

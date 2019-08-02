@@ -79,7 +79,7 @@ public class RestReadHistoryController extends BaseController  {
      */
     @PostMapping("selectHistory")
     public AjaxResult selectHistory(Long id){
-        List<ShopOrder> list = recycleOrderMapper.selectHistory(id);
+        List<RecycleOrder> list = recycleOrderMapper.selectHistory(id);
         return  this.success(list);
 
     }
