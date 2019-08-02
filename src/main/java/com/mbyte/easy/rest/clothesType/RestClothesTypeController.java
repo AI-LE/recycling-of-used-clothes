@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.ClothesType;
+import com.mbyte.easy.recycle.entity.RecycleGuide;
 import com.mbyte.easy.recycle.service.IClothesTypeService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.service.IRecycleGuideService;
 import com.mbyte.easy.util.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,9 @@ public class RestClothesTypeController extends BaseController  {
     @Autowired
     private IClothesTypeService clothesTypeService;
 
+    @Autowired
+    private IRecycleGuideService recycleGuideService;
+
     /**
     * 查询列表
     *
@@ -68,6 +73,9 @@ public class RestClothesTypeController extends BaseController  {
         Map<String, Object> map = new HashMap<>();
         map.put("searchInfo",  clothesType);
         map.put("pageInfo", new PageInfo(pageInfo));
+
+        List<RecycleGuide> list = recycleGuideService.list();
+        map.put("List", list);
 
         return this.success(map);
     }

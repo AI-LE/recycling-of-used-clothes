@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="_meta :: header">
+    <title>详情</title>
+</head>
+<body>
+<article class="page-container">
+
+    <form class="form form-horizontal">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">标题：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="input-text" class="input-text" th:value="${recycleGuide.cont}" readonly=true/>
+
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">内容：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <textarea cols rows class="textarea valid " readonly style="height: 200px;" name="con" id="con" th:text="${recycleGuide.con}" placeholder="修改内容"></textarea>
+
+            </div>
+        </div>
+    </form>
+
+</article>
+<!--_footer 作为公共模版分离出去-->
+<div th:replace="_footer :: footerjs"></div>
+<div th:replace="_ueditor :: ueditor"></div>
+<!--/_footer 作为公共模版分离出去-->
+
+</body>
+</html>

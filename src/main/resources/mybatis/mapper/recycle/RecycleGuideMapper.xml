@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbyte.easy.recycle.mapper.RecycleGuideMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.recycle.entity.RecycleGuide">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="cont" jdbcType="VARCHAR" property="cont" />
+      <id column="con" jdbcType="VARCHAR" property="con" />
+      <id column="hiddena" jdbcType="BIT" property="hiddena" />
+      <id column="down" jdbcType="VARCHAR" property="down" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      cont, con, hiddena, down
+  </sql>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recycle_guide
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  recycle_guide
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mbyte.easy.recycle.entity.RecycleGuide">
+    insert into recycle_guide (cont, con, hiddena, down)
+    values (
+         cont = #{cont,jdbcType=VARCHAR},
+         con = #{con,jdbcType=VARCHAR},
+         hiddena = #{hiddena,jdbcType=BIT},
+         down = #{down,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.mbyte.easy.recycle.entity.RecycleGuide">
+    insert into recycle_guide
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cont != null">
+        cont,
+      </if>
+      <if test="con != null">
+        con,
+      </if>
+      <if test="hiddena != null">
+        hiddena,
+      </if>
+      <if test="down != null">
+        down,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="cont != null">
+        cont = #{cont,jdbcType=VARCHAR},
+      </if>
+
+      <if test="con != null">
+        con = #{con,jdbcType=VARCHAR},
+      </if>
+
+      <if test="hiddena != null">
+        hiddena = #{hiddena,jdbcType=BIT},
+      </if>
+
+      <if test="down != null">
+        down = #{down,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.recycle.entity.RecycleGuide">
+    update recycle_guide
+    <set>
+       <if test="cont != null">
+         cont = #{cont,jdbcType=VARCHAR},
+      </if>
+       <if test="con != null">
+         con = #{con,jdbcType=VARCHAR},
+      </if>
+       <if test="hiddena != null">
+         hiddena = #{hiddena,jdbcType=BIT},
+      </if>
+       <if test="down != null">
+         down = #{down,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.recycle.entity.RecycleGuide">
+    update recycle_guide
+    set
+        cont = #{cont,jdbcType=VARCHAR},
+        con = #{con,jdbcType=VARCHAR},
+        hiddena = #{hiddena,jdbcType=BIT},
+        down = #{down,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>
