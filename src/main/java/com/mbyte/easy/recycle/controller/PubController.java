@@ -76,7 +76,7 @@ public class PubController extends BaseController {
         queryWrapper  =  queryWrapper.eq("status",1);
         List<RecycleOrder> recycleOrderList = recycleOrderService.list(queryWrapper);
         QueryWrapper<ShopOrder> queryWrapper1 = new QueryWrapper<ShopOrder>();
-        queryWrapper1  =  queryWrapper1.eq("status",3);
+        queryWrapper1  =  queryWrapper1.eq("status",2);
         List<ShopOrder> shopOrderList = shopOrderService.list(queryWrapper1);
         Map<String,Integer> map = new HashMap<>();
         map.put("recycleSize",recycleOrderList.size());

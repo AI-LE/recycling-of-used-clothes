@@ -7,6 +7,7 @@ import com.mbyte.easy.recycle.entity.TransferDetail;
 import com.mbyte.easy.recycle.service.ITransferDetailService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
+import com.mbyte.easy.recycle.service.IWeixinUserService;
 import com.mbyte.easy.util.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class TransferDetailController extends BaseController  {
 
     @Autowired
     private ITransferDetailService transferDetailService;
+
+    @Autowired
+    private IWeixinUserService weixinUserService;
 
     /**
     * 查询列表
