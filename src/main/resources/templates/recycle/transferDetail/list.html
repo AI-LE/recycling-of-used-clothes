@@ -19,8 +19,6 @@
                     <div class="cl pd-5 bg-1 bk-gray ">
                         <div class="searchByField">
                                          <input type="input-text" class="input-text" th:value="${searchInfo.transferNo}" name="transferNo" placeholder="搜索提现单号" id="transferNo"/>
-                                         <input type="input-text" class="input-text" th:value="${searchInfo.price}" name="price" placeholder="搜索提现金额" id="price"/>
-                                         <input type="input-text" placeholder="搜索" name="createtimeSpace" th:value="${createtimeSpace}" class="input-text  timeSpace"/>
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
                                         class="Hui-iconfont">&#xe665;</i> 搜索
@@ -31,11 +29,11 @@
                     <table class="layui-table text-c">
                         <thead>
                         <tr class="text-c">
-                            <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
-                                <th width="40">提现单号</th>
-                                <th width="40">提现金额</th>
-                                <th width="40">提现时间</th>
+                            <th width="30">姓名</th>
+                            <th width="40">提现单号</th>
+                            <th width="40">提现金额</th>
+                            <th width="40">提现时间</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,12 +41,10 @@
                             <td colspan="15"><strong>暂无数据</strong></td>
                         </tr>
                         <tr class="text-c" th:each="transferDetail,count:${pageInfo.list}">
-                            <td><input type="checkbox" value="1" th:value="${transferDetail.id}"
-                                       name="id"/></td>
                             <td th:text="${count.count}"></td>
                             <td th:text="${transferDetail.name}"></td>
                             <td th:text="${transferDetail.transferNo}"></td>
-                            <td th:text="${transferDetail.price}"></td>
+                            <td th:text="${'￥'+transferDetail.price}"></td>
                             <td th:text="${#temporals.format(transferDetail.createtime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>

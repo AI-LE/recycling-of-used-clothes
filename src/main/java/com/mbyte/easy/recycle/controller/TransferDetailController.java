@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mbyte.easy.recycle.entity.TransferDetail;
+import com.mbyte.easy.recycle.mapper.TransferDetailMapper;
 import com.mbyte.easy.recycle.service.ITransferDetailService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
@@ -36,7 +37,7 @@ public class TransferDetailController extends BaseController  {
     private ITransferDetailService transferDetailService;
 
     @Autowired
-    private IWeixinUserService weixinUserService;
+    private TransferDetailMapper transferDetailMapper;
 
     /**
     * 查询列表
@@ -51,16 +52,7 @@ public class TransferDetailController extends BaseController  {
     public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String createtimeSpace, TransferDetail transferDetail) {
         Page<TransferDetail> page = new Page<TransferDetail>(pageNo, pageSize);
         QueryWrapper<TransferDetail> queryWrapper = new QueryWrapper<TransferDetail>();
-        if(!ObjectUtils.isEmpty(transferDetail.getTransferNo())) {
-            queryWrapper = queryWrapper.like("transfer_no",transferDetail.getTransferNo());
-         }
-        if(!ObjectUtils.isEmpty(transferDetail.getPrice())) {
-            queryWrapper = queryWrapper.like("price",transferDetail.getPrice());
-         }
-        if(!ObjectUtils.isEmpty(transferDetail.getCreatetime())) {
-            queryWrapper = queryWrapper.like("createtime",transferDetail.getCreatetime());
-         }
-        IPage<TransferDetail> pageInfo = transferDetailService.page(page, queryWrapper);
+        IPage<TransferDetail> pageInfo = transferDetailService.selectAll(page);
         model.addAttribute("createtimeSpace", createtimeSpace);
         model.addAttribute("searchInfo", transferDetail);
         model.addAttribute("pageInfo", new PageInfo(pageInfo));

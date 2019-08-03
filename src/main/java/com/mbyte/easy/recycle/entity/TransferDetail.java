@@ -1,6 +1,8 @@
 package com.mbyte.easy.recycle.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.mbyte.easy.common.entity.BaseEntity;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -39,6 +41,10 @@ public class TransferDetail extends BaseEntity {
     private LocalDateTime createtime;
 
     private  Integer status;
+
+
+    @TableField(exist = false)
+    private String name;
 
 
 }

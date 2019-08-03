@@ -8,12 +8,20 @@
       <id column="price" jdbcType="DECIMAL" property="price" />
       <id column="createtime" jdbcType="TIMESTAMP" property="createtime" />
       <id column="status" jdbcType="INTEGER" property="userId" />
-
+      <id column="name"  jdbcType="VARCHAR" property="name" />
   </resultMap>
   <sql id="Base_Column_List">
               id,
       transfer_no, price, createtime,user_id,status
   </sql>
+
+    <select id="selectAll"  resultMap="BaseResultMap">
+        select transfer_detail.id,transfer_detail.transfer_no,transfer_detail.price,transfer_detail.createtime,weixin_user.nickName as name
+        from transfer_detail
+        left join weixin_user
+        on transfer_detail.user_id=weixin_user.id
+        order by transfer_detail.createtime desc
+    </select>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
 <!--
